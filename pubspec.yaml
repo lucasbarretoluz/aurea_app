@@ -1,0 +1,52 @@
+name: aurea_app
+description: "A new Flutter project."
+
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  bloc: ^9.0.1
+  flutter_bloc: ^9.1.1
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  go_router: ^16.2.4
+  shared_preferences: ^2.5.3
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^7.0.1
+  firebase_auth: ^6.1.1
+  firebase_core: ^4.1.1
+  toastification: ^3.0.3
+  get_it: ^8.2.0
+  dio: ^5.9.0
+  flutter_dotenv: ^5.2.1
+  flutter_secure_storage: ^9.2.4
+  in_app_purchase: ^3.2.3
+  hydrated_bloc: ^10.0.0
+  path_provider: ^2.1.5
+  local_auth: ^2.3.0
+  local_auth_darwin: ^1.4.3
+  local_auth_android: ^1.0.49
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  freezed: ^3.0.6
+  build_runner: 2.4.15
+  json_serializable: 6.9.5  
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env.dev
+    - assets/images/
