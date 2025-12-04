@@ -8,9 +8,9 @@ import 'package:toastification/toastification.dart';
 
 import 'logic/cubit/local_auth/local_auth_cubit.dart';
 
-class ExclusiveApp extends StatelessWidget {
+class AureaApp extends StatelessWidget {
   final AppRouter appRouter;
-  const ExclusiveApp({super.key, required this.appRouter});
+  const AureaApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +22,20 @@ class ExclusiveApp extends StatelessWidget {
               GetIt.I<AuthBloc>()..add(const AppStartRequest()),
         ),
       ],
-      child: ExclusiveAppView(appRouter: appRouter),
+      child: AureaAppView(appRouter: appRouter),
     );
   }
 }
 
-class ExclusiveAppView extends StatefulWidget {
+class AureaAppView extends StatefulWidget {
   final AppRouter appRouter;
-  const ExclusiveAppView({super.key, required this.appRouter});
+  const AureaAppView({super.key, required this.appRouter});
 
   @override
-  State<ExclusiveAppView> createState() => _ExclusiveAppViewState();
+  State<AureaAppView> createState() => _AureaAppViewState();
 }
 
-class _ExclusiveAppViewState extends State<ExclusiveAppView>
+class _AureaAppViewState extends State<AureaAppView>
     with WidgetsBindingObserver {
   @override
   void initState() {
