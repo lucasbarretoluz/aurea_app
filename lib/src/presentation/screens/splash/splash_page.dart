@@ -47,13 +47,15 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeIn,
     );
 
-    _slideUpAnimation =
-        Tween<Offset>(begin: const Offset(0, 1.5), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _slideUpController,
-            curve: Curves.easeOutCubic,
-          ),
-        );
+    _slideUpAnimation = Tween<Offset>(
+      begin: const Offset(0, 1.5),
+      end: const Offset(0, 0.0),
+    ).animate(
+      CurvedAnimation(
+        parent: _slideUpController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
 
     _initAnimate();
   }
@@ -64,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
     _slideUpController.forward();
 
     await Future.delayed(const Duration(milliseconds: 2500));
+    await Future.delayed(const Duration(milliseconds: 1500));
 
     if (!mounted) return;
 
@@ -163,47 +166,59 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           Expanded(
             flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Transform.translate(
-                  offset: const Offset(-10, 0),
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: Text(
-                      'aurea',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 55,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 6,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black,
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: SlideTransition(
+                  position: _slideUpAnimation,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                      Transform.translate(
+                        offset: const Offset(-10, 0),
+                        child: RotatedBox(
+                          quarterTurns: 1,
+                          child: Text(
+                            'aurea',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 55,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 6,
+                            ),
+                          ),
+                        ),
                       ),
+                      Divider(
+                        height: 30,
+                        color: Colors.white,
+                        thickness: 2,
+                        indent: 3,
+                        endIndent: 23,
+                      ),
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Text(
+                          'design app',
+                          style: TextStyle(
+                            color: Colors.cyan.shade100,
+                            fontSize: 35,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 2.0,
+                          ),
+                        ),
+                      ),
+                    ],
                     ),
                   ),
                 ),
-
-                Divider(
-                  height: 30,
-                  color: Colors.white,
-                  thickness: 2,
-                  indent: 3,
-                  endIndent: 23,
-                ),
-
-                RotatedBox(
-                  quarterTurns: 1,
-                  child: Text(
-                    'design app',
-                    style: TextStyle(
-                      color: Colors.cyan.shade100,
-                      fontSize: 35,
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 2.0,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
