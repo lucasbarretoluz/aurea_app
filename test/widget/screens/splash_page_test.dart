@@ -8,11 +8,11 @@ void main() {
     testWidgets('should render the splash page', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: SplashPage(),
+          home: SplashScreen(),
         ),
       );
 
-      expect(find.byType(SplashPage), findsOneWidget);
+      expect(find.byType(SplashScreen), findsOneWidget);
     });
   });
 }

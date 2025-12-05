@@ -45,7 +45,7 @@ class AppRouter {
         return null;
       },
       routes: <RouteBase>[
-        GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+        GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
         GoRoute(
           path: '/login',
           builder: (context, state) {

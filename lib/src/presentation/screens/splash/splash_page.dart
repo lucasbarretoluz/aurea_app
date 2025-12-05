@@ -1,24 +1,213 @@
+import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
+import 'package:aurea_app/src/logic/cubit/local_auth/local_auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+import 'package:local_auth/error_codes.dart' as auth_error;
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/types/auth_messages_ios.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return SplashPageView();
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AuthState _authState;
+  late LocalAuthState _localAuthState;
+  LocalAuthentication deviceAuthAPI = LocalAuthentication();
+
+  late AnimationController _fadeController;
+  late AnimationController _slideUpController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideUpAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    _slideUpController = AnimationController(
+      duration: const Duration(milliseconds: 2500),
+      vsync: this,
+    );
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeIn,
+    );
+
+    _slideUpAnimation =
+        Tween<Offset>(begin: const Offset(0, 1.5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _slideUpController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    _initAnimate();
   }
-}
 
-class SplashPageView extends StatefulWidget {
-  const SplashPageView({super.key});
+  void _initAnimate() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    _fadeController.forward();
+    _slideUpController.forward();
+
+    await Future.delayed(const Duration(milliseconds: 2500));
+
+    if (!mounted) return;
+
+    if (_authState is Authenticated) {
+      if (_localAuthState is LocalAuthEnabled) {
+        final isAuthenticated = await _requireDeviceAuth();
+        if (!mounted) return;
+
+        if (isAuthenticated) {
+          context.go('/home');
+        } else {
+          context.go('/login');
+        }
+      } else {
+        context.go('/home');
+      }
+    } else {
+      context.go('/login');
+    }
+  }
 
   @override
-  State<SplashPageView> createState() => _SplashPageViewState();
-}
+  void dispose() {
+    _fadeController.dispose();
+    _slideUpController.dispose();
+    super.dispose();
+  }
 
-class _SplashPageViewState extends State<SplashPageView> {
+  Future<bool> _requireDeviceAuth() async {
+    bool didAuthenticate = false;
+    int attempts = 0;
+    try {
+      do {
+        didAuthenticate = await deviceAuthAPI.authenticate(
+          options: const AuthenticationOptions(
+            // stickyAuth: true,
+            useErrorDialogs: false,
+          ),
+          localizedReason: 'Por favor, autentique-se para continuar',
+          authMessages: const <AuthMessages>[
+            AndroidAuthMessages(
+              signInTitle: 'Autenticação necessária',
+              cancelButton: 'Cancelar',
+              biometricHint: "",
+            ),
+            IOSAuthMessages(cancelButton: 'Cancelar'),
+          ],
+        );
+        attempts++;
+      } while (!didAuthenticate && attempts <= 2);
+
+      return didAuthenticate;
+    } on PlatformException catch (e) {
+      if (e.code == auth_error.notAvailable) {
+        return false;
+      } else if (e.code == auth_error.notEnrolled) {
+        return false;
+      } else {
+        return false;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    _authState = BlocProvider.of<AuthBloc>(context, listen: true).state;
+    _localAuthState = BlocProvider.of<LocalAuthCubit>(
+      context,
+      listen: true,
+    ).state;
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Row(
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(color: Colors.black),
+              clipBehavior: Clip.hardEdge,
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: Transform.translate(
+                  offset: const Offset(-50, 0),
+                  child: Image.asset(
+                    'assets/images/tooth_splash.jpg',
+                    fit: BoxFit.fitHeight,
+                    alignment: Alignment.centerLeft,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Transform.translate(
+                  offset: const Offset(-10, 0),
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: Text(
+                      'aurea',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 55,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 6,
+                      ),
+                    ),
+                  ),
+                ),
+
+                Divider(
+                  height: 30,
+                  color: Colors.white,
+                  thickness: 2,
+                  indent: 3,
+                  endIndent: 23,
+                ),
+
+                RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    'design app',
+                    style: TextStyle(
+                      color: Colors.cyan.shade100,
+                      fontSize: 35,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
