@@ -48,9 +48,16 @@ class AppRouter {
         GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
         GoRoute(
           path: '/login',
-          builder: (context, state) {
-            return LoginPage();
-          },
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: const Duration(milliseconds: 1500),
+            child: const LoginPage(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
         ),
         GoRoute(
           path: '/home',

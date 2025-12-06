@@ -25,8 +25,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   late AnimationController _fadeController;
   late AnimationController _slideUpController;
+  late AnimationController _rotationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideUpAnimation;
+  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
@@ -42,20 +44,34 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
     );
 
+    _rotationController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
     _fadeAnimation = CurvedAnimation(
       parent: _fadeController,
       curve: Curves.easeIn,
     );
 
-    _slideUpAnimation = Tween<Offset>(
-      begin: const Offset(0, 1.5),
-      end: const Offset(0, 0.0),
-    ).animate(
-      CurvedAnimation(
-        parent: _slideUpController,
-        curve: Curves.easeOutCubic,
-      ),
-    );
+    _slideUpAnimation =
+        Tween<Offset>(
+          begin: const Offset(0, 1.5),
+          end: const Offset(0, 0.0),
+        ).animate(
+          CurvedAnimation(
+            parent: _slideUpController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    _rotationAnimation =
+        Tween<double>(
+          begin: 0.0,
+          end: -1.5708, // -90 graus em radianos (sentido horário)
+        ).animate(
+          CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
+        );
 
     _initAnimate();
   }
@@ -78,20 +94,28 @@ class _SplashScreenState extends State<SplashScreen>
         if (isAuthenticated) {
           context.go('/home');
         } else {
-          context.go('/login');
+          _navigateToLoginWithAnimation();
         }
       } else {
         context.go('/home');
       }
     } else {
-      context.go('/login');
+      _navigateToLoginWithAnimation();
     }
+  }
+
+  void _navigateToLoginWithAnimation() async {
+    _rotationController.forward();
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (!mounted) return;
+    context.go('/login');
   }
 
   @override
   void dispose() {
     _fadeController.dispose();
     _slideUpController.dispose();
+    _rotationController.dispose();
     super.dispose();
   }
 
@@ -151,15 +175,23 @@ class _SplashScreenState extends State<SplashScreen>
               clipBehavior: Clip.hardEdge,
               child: FadeTransition(
                 opacity: _fadeAnimation,
-                child: Transform.translate(
-                  offset: const Offset(-50, 0),
-                  child: Image.asset(
-                    'assets/images/tooth_splash.jpg',
-                    fit: BoxFit.fitHeight,
-                    alignment: Alignment.centerLeft,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
+                child: AnimatedBuilder(
+                  animation: _rotationAnimation,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: _rotationAnimation.value, // 90 graus em radianos
+                      child: Transform.translate(
+                        offset: const Offset(-50, 0),
+                        child: Image.asset(
+                          'assets/images/tooth_splash.jpg',
+                          fit: BoxFit.fitHeight,
+                          alignment: Alignment.centerLeft,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -180,41 +212,41 @@ class _SplashScreenState extends State<SplashScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                      Transform.translate(
-                        offset: const Offset(-10, 0),
-                        child: RotatedBox(
-                          quarterTurns: 1,
-                          child: Text(
-                            'aurea',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 55,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 6,
+                        Transform.translate(
+                          offset: const Offset(-10, 0),
+                          child: RotatedBox(
+                            quarterTurns: 1,
+                            child: Text(
+                              'aurea',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 55,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 25,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Divider(
-                        height: 30,
-                        color: Colors.white,
-                        thickness: 2,
-                        indent: 3,
-                        endIndent: 23,
-                      ),
-                      RotatedBox(
-                        quarterTurns: 1,
-                        child: Text(
-                          'design app',
-                          style: TextStyle(
-                            color: Colors.cyan.shade100,
-                            fontSize: 35,
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 2.0,
+                        Divider(
+                          height: 30,
+                          color: Colors.white,
+                          thickness: 2,
+                          indent: 3,
+                          endIndent: 23,
+                        ),
+                        RotatedBox(
+                          quarterTurns: 1,
+                          child: Text(
+                            'design app',
+                            style: TextStyle(
+                              color: Colors.cyan.shade100,
+                              fontSize: 35,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 10.0,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
                     ),
                   ),
                 ),
