@@ -25,10 +25,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   late AnimationController _fadeController;
   late AnimationController _slideUpController;
-  late AnimationController _rotationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideUpAnimation;
-  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
@@ -41,11 +39,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _slideUpController = AnimationController(
       duration: const Duration(milliseconds: 2500),
-      vsync: this,
-    );
-
-    _rotationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -63,14 +56,6 @@ class _SplashScreenState extends State<SplashScreen>
             parent: _slideUpController,
             curve: Curves.easeOutCubic,
           ),
-        );
-
-    _rotationAnimation =
-        Tween<double>(
-          begin: 0.0,
-          end: -1.5708, // -90 graus em radianos (sentido horário)
-        ).animate(
-          CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
         );
 
     _initAnimate();
@@ -104,9 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
     }
   }
 
-  void _navigateToLoginWithAnimation() async {
-    _rotationController.forward();
-    await Future.delayed(const Duration(milliseconds: 1500));
+  void _navigateToLoginWithAnimation() {
     if (!mounted) return;
     context.go('/login');
   }
@@ -115,7 +98,6 @@ class _SplashScreenState extends State<SplashScreen>
   void dispose() {
     _fadeController.dispose();
     _slideUpController.dispose();
-    _rotationController.dispose();
     super.dispose();
   }
 
@@ -175,23 +157,15 @@ class _SplashScreenState extends State<SplashScreen>
               clipBehavior: Clip.hardEdge,
               child: FadeTransition(
                 opacity: _fadeAnimation,
-                child: AnimatedBuilder(
-                  animation: _rotationAnimation,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _rotationAnimation.value, // 90 graus em radianos
-                      child: Transform.translate(
-                        offset: const Offset(-50, 0),
-                        child: Image.asset(
-                          'assets/images/tooth_splash.jpg',
-                          fit: BoxFit.fitHeight,
-                          alignment: Alignment.centerLeft,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
-                    );
-                  },
+                child: Transform.translate(
+                  offset: const Offset(-50, 0),
+                  child: Image.asset(
+                    'assets/images/tooth_splash.jpg',
+                    fit: BoxFit.fitHeight,
+                    alignment: Alignment.centerLeft,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
                 ),
               ),
             ),
