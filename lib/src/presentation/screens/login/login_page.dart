@@ -75,6 +75,62 @@ class LoginPageView extends StatelessWidget {
                 color: Color(0xffefefef).withOpacity(0.5),
                 borderRadius: BorderRadius.circular(25),
               ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Faça login',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w200,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.white,
+                            thickness: 0.3,
+                            indent: 75,
+                            endIndent: 75,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+                      Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Crie sua conta',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w200,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.white,
+                            thickness: 0.3,
+                            indent: 75,
+                            endIndent: 75,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(),
+                  SizedBox(),
+                ],
+              ),
             ),
           ),
         ],
