@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_label.dart';
+import 'package:aurea_app/src/presentation/widgets/logo/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -80,34 +81,7 @@ class _LoginPageViewState extends State<LoginPageView>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(),
-                Column(
-                  children: [
-                    Text(
-                      'aurea',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 20,
-                      ),
-                    ),
-                    Divider(
-                      color: Colors.white,
-                      thickness: 0.3,
-                      indent: 75,
-                      endIndent: 75,
-                    ),
-                    Text(
-                      'design app',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 8.0,
-                      ),
-                    ),
-                  ],
-                ),
+                LogoWidget(),
                 SizedBox(),
                 SizedBox(),
                 Container(
@@ -320,7 +294,10 @@ class _LoginPageViewState extends State<LoginPageView>
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(Icons.g_mobiledata_rounded, color: Colors.white),
+                        child: Icon(
+                          Icons.g_mobiledata_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(width: 10),
                       Container(
