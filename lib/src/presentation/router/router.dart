@@ -1,5 +1,5 @@
-
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
+import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -51,24 +51,32 @@ class AppRouter {
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             transitionDuration: const Duration(milliseconds: 1500),
             child: const LoginPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
           ),
         ),
         GoRoute(
           path: '/home',
-          pageBuilder:
-              (context, state) => CustomTransitionPage<void>(
-                transitionDuration: const Duration(milliseconds: 1000),
-                child: const HomePage(),
-                transitionsBuilder: (context, animation, _, child) {
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: const Duration(milliseconds: 1000),
+            child: const HomePage(),
+            transitionsBuilder: (context, animation, _, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          ),
+        ),
+        GoRoute(
+          path: '/sing-up',
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: const Duration(milliseconds: 1000),
+            child: const SingUpPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
                   return FadeTransition(opacity: animation, child: child);
                 },
-              ),
+          ),
         ),
       ],
     );

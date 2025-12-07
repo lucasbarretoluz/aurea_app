@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -106,7 +107,7 @@ class LoginPageView extends StatelessWidget {
                       Column(
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () => context.push('/sing-up'),
                             child: Text(
                               'Crie sua conta',
                               style: TextStyle(
