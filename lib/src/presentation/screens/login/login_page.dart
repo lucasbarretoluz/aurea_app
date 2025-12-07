@@ -242,28 +242,25 @@ class _LoginPageViewState extends State<LoginPageView>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 0.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showLoginForm = false;
-                      });
-                    },
-                    child: Icon(Icons.arrow_back, color: Colors.white),
+              padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 0.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showLoginForm = false;
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Faça Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Montserrat',
-                    ),
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                    size: 20,
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
