@@ -72,9 +72,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               Text(widget.label!,
                   style: widget.styleLabel ??
                       TextStyle(
-                        color: widget.colorLabel,
+                        color: widget.colorLabel?.withOpacity(0.7) ?? Colors.white.withOpacity(0.7),
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: 'Montserrat',
                       )),
               const SizedBox(height: 8),
             ],
@@ -93,7 +94,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
           autofocus: widget.autofocus ?? false,
           onChanged: widget.onChanged,
           style: TextStyle(
-            color: widget.colorLabel,
+            color: widget.colorLabel ?? Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Montserrat',
           ),
           decoration: InputDecoration(
             suffixText: widget.suffixText,
@@ -118,32 +122,38 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               color: widget.colorLabel?.withOpacity(0.5) ?? Theme.of(context).colorScheme.outline,
               fontWeight: FontWeight.w400,
             ),
-            fillColor: widget.fillColor ??
-                Theme.of(context).colorScheme.secondaryContainer,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: BorderSide.none,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: widget.colorLabel ?? Colors.white,
+                width: 1,
+              ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: BorderSide.none,
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: widget.colorLabel ?? Colors.white,
+                width: 1,
+              ),
             ),
-            errorStyle:
-                widget.hideErrorText ? const TextStyle(height: 0) : null,
-            errorText: widget.hasError ? ' ' : widget.errorText,
-            isCollapsed: true,
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
+            errorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Theme.of(context).colorScheme.error,
                 width: 1,
               ),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 12,
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
+                width: 1,
+              ),
             ),
+            errorStyle: widget.hideErrorText
+                ? const TextStyle(height: 0)
+                : TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontSize: 12,
+                  ),
+            errorText: widget.hasError ? ' ' : widget.errorText,
+            contentPadding: const EdgeInsets.only(bottom: 8),
           ),
         ),
       ],
