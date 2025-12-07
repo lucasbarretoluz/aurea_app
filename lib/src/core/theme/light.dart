@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData lightTheme() {
   const ColorScheme defaultColors = ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xffD81B60),
+    primary: Color.fromARGB(255, 148, 145, 146),
     onPrimary: Color(0xffffffff),
     primaryContainer: Color(0xffF8BBD0),
     onPrimaryContainer: Color(0xff3D0017),
