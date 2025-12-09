@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_label.dart';
 import 'package:aurea_app/src/presentation/widgets/logo/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class SingUpPage extends StatelessWidget {
@@ -34,13 +37,21 @@ class _SingUpPageViewState extends State<SingUpPageView>
   void _handleSignUp() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
-            SingUpRequest(
-              name: _nameController.text,
-              email: _emailController.text,
-              password: _passwordController.text,
-            ),
-          );
+        SingUpRequest(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
     }
+  }
+
+  void _handleGoogleSignIn() {
+    context.read<AuthBloc>().add(const SingInGoogleRequest());
+  }
+
+  void _handleAppleSignIn() {
+    context.read<AuthBloc>().add(const SingInAppleRequest());
   }
 
   @override
@@ -59,17 +70,20 @@ class _SingUpPageViewState extends State<SingUpPageView>
       listener: (context, state) {
         if (state is Authenticated) {
           context.go('/home');
-        } else if (state is AuthSingUpError) {
+        } else if (state is AuthSingUpError || state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.error),
+              content: Text(
+                state is AuthSingUpError ? state.error : (state as AuthError).error,
+              ),
               backgroundColor: Colors.red,
             ),
           );
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.black, 
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.black,
         body: Stack(
           children: [
             Positioned.fill(
@@ -99,10 +113,13 @@ class _SingUpPageViewState extends State<SingUpPageView>
                       child: Form(
                         key: _formKey,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             LogoWidget(),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -111,16 +128,16 @@ class _SingUpPageViewState extends State<SingUpPageView>
                                     'Crie sua conta',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 28,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat',
                                       letterSpacing: 0.5,
                                     ),
                                   ),
-                                  SizedBox(height: 40),
+                                  SizedBox(height: 20),
                                   TextFieldWithLabel(
                                     controller: _nameController,
-                                    label: 'Nome Completo',
+                                    hint: 'Nome Completo',
                                     colorLabel: Colors.white,
                                     iconColor: Colors.white,
                                     validator: (value) {
@@ -133,7 +150,7 @@ class _SingUpPageViewState extends State<SingUpPageView>
                                   SizedBox(height: 32),
                                   TextFieldWithLabel(
                                     controller: _emailController,
-                                    label: 'Email',
+                                    hint: 'Email',
                                     keyboardType: TextInputType.emailAddress,
                                     colorLabel: Colors.white,
                                     iconColor: Colors.white,
@@ -150,7 +167,7 @@ class _SingUpPageViewState extends State<SingUpPageView>
                                   SizedBox(height: 32),
                                   TextFieldWithLabel(
                                     controller: _passwordController,
-                                    label: 'Senha',
+                                    hint: 'Senha',
                                     obscureText: true,
                                     colorLabel: Colors.white,
                                     iconColor: Colors.white,
@@ -167,28 +184,85 @@ class _SingUpPageViewState extends State<SingUpPageView>
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                right: 30,
+                                left: 30,
+                              ),
+                              child: BlocBuilder<AuthBloc, AuthState>(
+                                builder: (context, state) {
+                                  final isLoading = state is AuthLoading;
+                                  return LoadingButton(
+                                    onPressed: isLoading ? null : _handleSignUp,
+                                    isLoading: isLoading,
+                                    text: 'Continuar',
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(),
+                            BlocBuilder<AuthBloc, AuthState>(
+                              builder: (context, state) {
+                                final isLoading = state is AuthLoading;
+                                return Column(
+                                  children: [
+                                    Text(
+                                      'Ou faça login com',
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.7),
+                                        fontSize: 14,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
+                                    SizedBox(height: 16),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: isLoading ? null : _handleGoogleSignIn,
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: SvgPicture.asset('assets/icons/google.svg'),
+                                          ),
+                                        ),
+                                        if (Platform.isIOS) ...[
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                            onTap: isLoading ? null : _handleAppleSignIn,
+                                            child: Container(
+                                              width: 50,
+                                              height: 50,
+                                              padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white.withOpacity(0.2),
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/icons/apple.svg',
+                                                colorFilter: const ColorFilter.mode(
+                                                  Colors.white,
+                                                  BlendMode.srcIn,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            SizedBox(height: 20),
                           ],
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 40.0),
-                      child: BlocBuilder<AuthBloc, AuthState>(
-                        builder: (context, state) {
-                          final isLoading = state is AuthLoading;
-                          return LoadingButton(
-                            onPressed: isLoading ? null : _handleSignUp,
-                            isLoading: isLoading,
-                            text: 'Continuar',
-                            backgroundColor: Colors.grey.shade300,
-                            textColor: Colors.black,
-                            textStyle: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Montserrat',
-                            ),
-                          );
-                        },
                       ),
                     ),
                   ],
