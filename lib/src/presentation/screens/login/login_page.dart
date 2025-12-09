@@ -6,6 +6,7 @@ import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_l
 import 'package:aurea_app/src/presentation/widgets/logo/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
@@ -290,24 +291,26 @@ class _LoginPageViewState extends State<LoginPageView>
                       Container(
                         width: 50,
                         height: 50,
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(
-                          Icons.g_mobiledata_rounded,
-                          color: Colors.white,
-                        ),
+                        child: SvgPicture.asset('assets/icons/google.svg'),
                       ),
                       SizedBox(width: 10),
                       Container(
                         width: 50,
                         height: 50,
+                        padding: EdgeInsets.fromLTRB(6, 6, 6, 10),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(Icons.apple, color: Colors.white),
+                        child: SvgPicture.asset(
+                          'assets/icons/apple.svg',
+                          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                        ),
                       ),
                     ],
                   ),

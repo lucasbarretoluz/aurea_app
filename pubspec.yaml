@@ -34,6 +34,7 @@ dependencies:
   local_auth: ^2.3.0
   local_auth_darwin: ^1.4.3
   local_auth_android: ^1.0.49
+  flutter_svg: ^2.2.3
   
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,7 @@ flutter:
   assets:
     - .env.dev
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: Montserrat
