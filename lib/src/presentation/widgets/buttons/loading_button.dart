@@ -10,7 +10,7 @@ class LoadingButton extends StatelessWidget {
   final double? height;
   final double? width;
   final Color? backgroundColor;
-  
+
   const LoadingButton({
     super.key,
     this.onPressed,
@@ -25,15 +25,15 @@ class LoadingButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return SizedBox(
       height: height ?? 45.0,
       width: width ?? double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
+          backgroundColor: backgroundColor ?? Color(0xffefefef),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(20),
           ),
           padding: EdgeInsets.zero,
         ),
@@ -48,12 +48,13 @@ class LoadingButton extends StatelessWidget {
             : Text(
                 text,
                 textAlign: TextAlign.center,
-                style: textStyle ??
+                style:
+                    textStyle ??
                     TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: textColor ??
-                            Colors.white,),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: textColor ?? Colors.black,
+                    ),
               ),
       ),
     );
