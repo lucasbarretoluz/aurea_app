@@ -37,25 +37,25 @@ ThemeData lightTheme() {
       displayLarge: base.displayLarge?.copyWith(
         fontSize: 72.0,
         fontWeight: FontWeight.bold,
-        fontFamily: 'DDin',
+        fontFamily: 'Montserrat',
         color: defaultColors.onSurface,
       ),
       headlineSmall: base.headlineMedium?.copyWith(
         fontSize: 18.0,
-        fontFamily: 'DDin',
+        fontFamily: 'Montserrat',
         color: defaultColors.onSurface,
       ),
       bodySmall: base.headlineSmall?.copyWith(
         fontSize: 12.0,
-        fontFamily: 'DDin',
+        fontFamily: 'Montserrat',
       ),
       titleLarge: base.titleLarge?.copyWith(
         fontSize: 23.0,
-        fontFamily: 'DDin',
+        fontFamily: 'Montserrat',
       ),
       bodyLarge: base.bodyLarge?.copyWith(
         color: defaultColors.onSurface,
-        fontFamily: 'DDin',
+        fontFamily: 'Montserrat',
         fontSize: 14,
       ),
     );
@@ -83,6 +83,6 @@ ThemeData lightTheme() {
     textTheme: basicTextTheme(const TextTheme()),
     scaffoldBackgroundColor: const Color(0xffFFF8F7),
     inputDecorationTheme: inputDecorationTheme,
-    fontFamily: 'DDin',
+    fontFamily: 'Montserrat',
   );
 }
