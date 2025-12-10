@@ -1,3 +1,5 @@
+import 'package:aurea_app/src/data/models/auth_token/auth_token.dart';
+import 'package:aurea_app/src/data/repository/token_repository.dart';
 import 'package:aurea_app/src/presentation/router/router.dart';
 import 'package:aurea_app/src/presentation/widgets/toast/custom_toast.dart';
 import 'package:dio/dio.dart';
@@ -5,8 +7,6 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 import '../../../logic/bloc/auth/auth_bloc.dart';
-import '../../models/auth_token/auth_token.dart';
-import '../../repository/token_repository.dart';
 
 class RevokeTokenException implements Exception {
   final String message;
@@ -74,14 +74,17 @@ class AppInterceptorsRefreshToken extends QueuedInterceptorsWrapper {
         return; 
       } on RevokeTokenException {
         _signOutUser();
-        return;
+        return handler.reject(DioException(
+          requestOptions: err.requestOptions,
+          response: err.response,
+          error: err,
+        ));
       } on DioException catch (error) {
         if (error.response?.statusCode == 401) {
           _signOutUser();
-          return;
+          return handler.reject(error);
         }
-        handler.next(error);
-        return;
+        return handler.next(error);
       }
     }
     return handler.next(err);

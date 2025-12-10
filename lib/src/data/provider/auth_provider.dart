@@ -7,6 +7,15 @@ class AuthProvider {
   final Api _api = Api.instance;
   final String _path = '/identity/user/';
 
+  Future<Response<dynamic>> healthCheck() async {
+    try {
+      var response = await _api.dio.get('/healthz');
+      return response;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
+
   Future<Response<dynamic>> signIn({
     required String identifier,
     required password,
@@ -51,9 +60,9 @@ class AuthProvider {
 
   Future<Response<dynamic>> firebaseAuthValid({required String token}) async {
     try {
-      var response = _api.dio.get(
+      var response = await _api.dio.get(
         '$_path/firebaseAuth',
-        data: {
+        queryParameters: {
           'idToken': token,
         },
       );

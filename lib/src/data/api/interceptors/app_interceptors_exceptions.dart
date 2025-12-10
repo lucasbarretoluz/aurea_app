@@ -1,6 +1,5 @@
+import 'package:aurea_app/src/core/execptions/http_exceptions.dart';
 import 'package:dio/dio.dart';
-
-import '../../../core/execptions/http_exceptions.dart';
 
 
 class AppInterceptorsExceptions extends Interceptor {
@@ -15,38 +14,50 @@ class AppInterceptorsExceptions extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    DioException customException;
 
     switch (err.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        throw DeadlineExceededException(err);
+        customException = DeadlineExceededException(err);
+        return handler.reject(customException);
       case DioExceptionType.badResponse:
         switch (err.response?.statusCode) {
           case 400:
-            throw BadRequestException(err);
+            customException = BadRequestException(err);
+            return handler.reject(customException);
           case 401:
-            throw UnauthorizedException(err);
+            customException = UnauthorizedException(err);
+            return handler.reject(customException);
           case 404:
-            throw NotFoundException(err);
+            customException = NotFoundException(err);
+            return handler.reject(customException);
           case 409:
-            throw ConflictException(err);
+            customException = ConflictException(err);
+            return handler.reject(customException);
           case 429:
-            throw TooManyRequestsException(err);
+            customException = TooManyRequestsException(err);
+            return handler.reject(customException);
           case 503:
-            throw ServiceUnavailableException(err);
+            customException = ServiceUnavailableException(err);
+            return handler.reject(customException);
           case 500:
-            throw InternalServerErrorException(err);
+            customException = InternalServerErrorException(err);
+            return handler.reject(customException);
         }
         break;
       case DioExceptionType.cancel:
-        break;
+        return handler.next(err);
       case DioExceptionType.unknown:
-        throw NoInternetConnectionException(err);
+        customException = NoInternetConnectionException(err);
+        return handler.reject(customException);
       case DioExceptionType.badCertificate:
-        throw InternalServerErrorException(err);
+        customException = InternalServerErrorException(err);
+        return handler.reject(customException);
       case DioExceptionType.connectionError:
-        throw NoInternetConnectionException(err);
+        customException = NoInternetConnectionException(err);
+        return handler.reject(customException);
     }
 
     return handler.next(err);

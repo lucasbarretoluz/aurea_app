@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:aurea_app/src/data/provider/auth_provider.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_label.dart';
 import 'package:aurea_app/src/presentation/widgets/logo/logo_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +42,11 @@ class _LoginPageViewState extends State<LoginPageView>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
+
+    if (kDebugMode) {
+      _emailController.text = 'luz@hotmail.com';
+      _passwordController.text = '123456';
+    }
   }
 
   @override
@@ -58,6 +65,34 @@ class _LoginPageViewState extends State<LoginPageView>
           password: _passwordController.text,
         ),
       );
+    }
+  }
+
+  Future<void> _testHealthCheck() async {
+    final authProvider = AuthProvider();
+    try {
+      final response = await authProvider.healthCheck();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Health check OK!\nStatus: ${response.statusCode}\nData: ${response.data}',
+            ),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Health check failed: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
     }
   }
 
@@ -284,6 +319,20 @@ class _LoginPageViewState extends State<LoginPageView>
                       );
                     },
                   ),
+                  if (kDebugMode) ...[
+                    SizedBox(height: 10),
+                    TextButton(
+                      onPressed: _testHealthCheck,
+                      child: Text(
+                        'Test Health Check',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.7),
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                    ),
+                  ],
                   SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -309,7 +358,10 @@ class _LoginPageViewState extends State<LoginPageView>
                         ),
                         child: SvgPicture.asset(
                           'assets/icons/apple.svg',
-                          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
                     ],

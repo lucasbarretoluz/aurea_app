@@ -15,8 +15,17 @@ class Api {
   }
 
   Dio _createDio() {
-    final baseUrl = dotenv.env['BASE_URL'].toString();
-    var dio = Dio(BaseOptions(baseUrl: baseUrl));
+    final baseUrl = dotenv.env['BASE_URL'] ?? '';
+    if (baseUrl.isEmpty) {
+      throw Exception('BASE_URL não está configurada no .env.dev');
+    }
+    var dio = Dio(BaseOptions(
+      baseUrl: baseUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    ));
 
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
