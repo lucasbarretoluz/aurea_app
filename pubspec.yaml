@@ -41,7 +41,7 @@ dependencies:
   google_sign_in: ^7.2.0
   sign_in_with_apple: ^7.0.1
   firebase_auth: ^6.1.1
-  firebase_core: ^4.1.1
+  firebase_core: ^4.2.1
   toastification: ^3.0.3
   get_it: ^8.2.0
   dio: ^5.9.0

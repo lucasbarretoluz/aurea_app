@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'aurea-522a8.firebasestorage.app',
     iosBundleId: 'com.example.aureaApp',
   );
+
 }
