@@ -62,8 +62,10 @@ class _NavBarButtonState extends State<NavBarButton>
   @override
   void didUpdateWidget(NavBarButton oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print('[DEBUG] 🟦 NavBarButton didUpdateWidget - oldIndex: ${oldWidget.index}, newIndex: ${widget.index}');
     if (oldWidget.index != widget.index) {
       final newPosition = widget.index / _length;
+      print('[DEBUG] 🟦 Índice mudou! Animando de ${oldWidget.index} para ${widget.index}');
       _startingPos = _pos;
       _endingIndex = widget.index;
       _animationController.animateTo(newPosition,
@@ -78,16 +80,23 @@ class _NavBarButtonState extends State<NavBarButton>
   }
 
   void _buttonTap(int index) {
+    print('[DEBUG] 🟪 NavBarButton _buttonTap - index: $index, widget.index atual: ${widget.index}');
     if (widget.onTap != null) {
       widget.onTap!(index);
     }
-    final newPosition = index / _length;
-    setState(() {
-      _startingPos = _pos;
-      _endingIndex = index;
-      _animationController.animateTo(newPosition,
-          duration: animationDuration, curve: animationCurve);
-    });
+    
+    if (index == widget.index) {
+      final newPosition = index / _length;
+      print('[DEBUG] 🟪 Animando para posição: $newPosition (mesmo índice)');
+      setState(() {
+        _startingPos = _pos;
+        _endingIndex = index;
+        _animationController.animateTo(newPosition,
+            duration: animationDuration, curve: animationCurve);
+      });
+    } else {
+      print('[DEBUG] 🟪 Não animando - índice clicado ($index) diferente do índice atual (${widget.index})');
+    }
   }
 
   @override

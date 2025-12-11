@@ -21,10 +21,11 @@ class ConfigHomePageView extends StatefulWidget {
 }
 
 class _ConfigHomePageViewState extends State<ConfigHomePageView> {
-  String selectedRoute = "/home";
+  static const String selectedRoute = "/home";
 
   @override
   Widget build(BuildContext context) {
+    print('[DEBUG] ⚪ ConfigHomePage build - selectedRoute: $selectedRoute');
     return Scaffold(
       appBar: AureaAppBar(),
       body: HomePage(),
@@ -33,21 +34,22 @@ class _ConfigHomePageViewState extends State<ConfigHomePageView> {
         child: MainNavbar(
           selectedRoute: selectedRoute,
           onItemSelected: (index) {
+            print('[DEBUG] 🟣 onItemSelected chamado - index: $index');
             switch (index) {
               case 0:
-                setState(() {
-                  selectedRoute = "/home";
-                });
+                print('[DEBUG] 🟣 case 0 - Home');
                 break;
               case 1:
+                print('[DEBUG] 🟣 case 1 - Navegando para /support');
                 context.push('/support');
                 break;
               case 2:
+                print('[DEBUG] 🟣 case 2 - Navegando para /profile');
                 context.push('/profile');
                 break;
               case 3:
+                print('[DEBUG] 🟣 case 3 - Navegando para /settings');
                 context.push('/settings');
-
                 break;
             }
           },
