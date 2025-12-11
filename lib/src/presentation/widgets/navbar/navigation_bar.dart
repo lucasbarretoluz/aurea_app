@@ -2,31 +2,29 @@ import 'package:aurea_app/src/presentation/widgets/navbar/nav_button.dart';
 import 'package:aurea_app/src/presentation/widgets/navbar/nav_custom_painter.dart';
 import 'package:flutter/material.dart';
 
-class EMVButtonBar extends StatefulWidget {
+class NavBarButton extends StatefulWidget {
   final List<Widget> items;
   final ValueChanged<int>? onTap;
   final int index;
   final double height;
   final Color color;
-  final bool showIsNew;
   final int indexShowIsNew;
 
-  const EMVButtonBar({
+  const NavBarButton({
     super.key,
     required this.items,
     this.onTap,
     this.index = 0,
     this.height = 75.0,
-    this.color = Colors.white,
-    this.showIsNew = false,
+    this.color = const Color(0xFFF5F5F5),
     this.indexShowIsNew = 0,
   });
 
   @override
-  State<EMVButtonBar> createState() => _EMVButtonBarState();
+  State<NavBarButton> createState() => _NavBarButtonState();
 }
 
-class _EMVButtonBarState extends State<EMVButtonBar>
+class _NavBarButtonState extends State<NavBarButton>
     with SingleTickerProviderStateMixin {
   late double _startingPos;
   int _endingIndex = 0;
@@ -62,7 +60,7 @@ class _EMVButtonBarState extends State<EMVButtonBar>
   }
 
   @override
-  void didUpdateWidget(EMVButtonBar oldWidget) {
+  void didUpdateWidget(NavBarButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.index != widget.index) {
       final newPosition = widget.index / _length;
@@ -101,22 +99,22 @@ class _EMVButtonBarState extends State<EMVButtonBar>
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          Container(
-            height: widget.height - 2,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0),
-                topRight: Radius.circular(4.0),
-              ),
-            )),
+          // Container(
+          //   height: widget.height - 2,
+          //   decoration: const BoxDecoration(
+          //     color: Color(0xFFF5F5F5),
+          //     borderRadius: BorderRadius.only(
+          //       topLeft: Radius.circular(4.0),
+          //       topRight: Radius.circular(4.0),
+          //     ),
+          //   )),
           Positioned(
             top: 0,
             left: 0,
             right: 0,
             child: Container(
               height: (widget.height - 2) / 2,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           Positioned(
@@ -132,14 +130,17 @@ class _EMVButtonBarState extends State<EMVButtonBar>
               child: Transform.translate(
                 offset: Offset(
                   0,
-                  -(1 - _buttonHide) * 80,
+                  -(1 - _buttonHide) * 85,
                 ),
-                child: Material(
-                  color: widget.index == 0 ? Colors.black : const Color(0xFF9E9E9E),
-                  type: MaterialType.circle,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: _icon,
+                child: Transform.scale(
+                  scale: 1.1,
+                  child: Material(
+                    color: Colors.black,
+                    type: MaterialType.circle,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: _icon,
+                    ),
                   ),
                 ),
               ),
@@ -169,9 +170,9 @@ class _EMVButtonBarState extends State<EMVButtonBar>
             ),
           ),
           Positioned(
-            left: 0,
+            left: 30,
             right: 0,
-            bottom: 0 - (75.0 - widget.height),
+            bottom: 0 - (80.0 - widget.height),
             child: SizedBox(
                 height: 100.0,
                 child: Row(
@@ -182,7 +183,6 @@ class _EMVButtonBarState extends State<EMVButtonBar>
                     length: _length,
                     index: widget.items.indexOf(item),
                     child: Center(child: item),
-                    showIsNew: widget.showIsNew,
                     indexShowIsNew: widget.indexShowIsNew,
                   );
                 }).toList())),
