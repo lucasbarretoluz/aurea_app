@@ -47,22 +47,7 @@ class AppRouter {
       },
       routes: <RouteBase>[
         GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
-        GoRoute(
-          path: '/login',
-          pageBuilder:
-              (context, state) => CustomTransitionPage<void>(
-                transitionDuration: const Duration(milliseconds: 1500),
-                child: const LoginPage(),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              ),
-        ),
+        GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
         GoRoute(
           path: '/home',
           pageBuilder:
@@ -76,19 +61,7 @@ class AppRouter {
         ),
         GoRoute(
           path: '/sing-up',
-          pageBuilder:
-              (context, state) => CustomTransitionPage<void>(
-                transitionDuration: const Duration(milliseconds: 1000),
-                child: const SingUpPage(),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              ),
+          builder: (context, state) => const SingUpPage(),
         ),
         GoRoute(
           path: '/profile',
