@@ -1,3 +1,4 @@
+import 'package:aurea_app/src/presentation/widgets/app_bar/aurea_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,10 +20,9 @@ class HomePageView extends StatefulWidget {
 class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Page'),
-      ),
+    return Scaffold(
+      appBar: AureaAppBar(),
+      body: Center(child: Text('Home Page')),
     );
   }
 }
