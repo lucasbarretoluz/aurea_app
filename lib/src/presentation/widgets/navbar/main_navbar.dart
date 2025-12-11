@@ -27,34 +27,27 @@ class _MainNavbarState extends State<MainNavbar> {
   void initState() {
     super.initState();
     selectedRoute = widget.selectedRoute;
-    print('[DEBUG] 🔵 MainNavbar initState - selectedRoute: $selectedRoute');
     _updateIndexFromRoute(selectedRoute);
   }
 
   void _updateIndexFromRoute(String route) {
-    print('[DEBUG] 🟢 _updateIndexFromRoute chamado - route: $route, initialIndex será: 0');
     setState(() {
       initialIndex = 0;
     });
-    print('[DEBUG] 🟢 initialIndex atualizado para: $initialIndex');
   }
 
   @override
   void didUpdateWidget(covariant MainNavbar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print('[DEBUG] 🟡 didUpdateWidget - oldRoute: ${oldWidget.selectedRoute}, newRoute: ${widget.selectedRoute}');
     setState(() {
       selectedRoute = widget.selectedRoute;
       initialIndex = 0;
     });
-    print('[DEBUG] 🟡 didUpdateWidget - selectedRoute atualizado: $selectedRoute, initialIndex: $initialIndex');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('[DEBUG] 🔴 MainNavbar build - initialIndex: $initialIndex, selectedRoute: $selectedRoute');
     void handleTap(int index) {
-      print('[DEBUG] 🟠 handleTap chamado - index: $index');
       widget.onItemSelected?.call(index);
     }
 
