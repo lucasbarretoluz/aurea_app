@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../screens/home/home_page.dart';
+import '../screens/home/config_home_page.dart';
 import '../screens/login/login_page.dart';
 import '../screens/splash/splash_page.dart';
 
@@ -55,7 +55,7 @@ class AppRouter {
           pageBuilder:
               (context, state) => CustomTransitionPage<void>(
                 transitionDuration: const Duration(milliseconds: 1000),
-                child: const HomePage(),
+                child: const ConfigHomePage(),
                 transitionsBuilder: (context, animation, _, child) {
                   return FadeTransition(opacity: animation, child: child);
                 },
