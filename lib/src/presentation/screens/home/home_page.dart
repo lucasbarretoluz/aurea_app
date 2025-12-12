@@ -1,9 +1,14 @@
 import 'package:aurea_app/src/data/models/clinic/clinic_model.dart';
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
+import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
+import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
+import 'package:aurea_app/src/presentation/widgets/clinic/clinic_card.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_cards_grid.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,8 +20,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ClinicCubit()..loadClinics(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ClinicCubit()..loadClinics(),
+        ),
+        BlocProvider(
+          create: (context) => PatientCubit()..loadPatients(page: 1, limit: 5),
+        ),
+      ],
       child: const HomePageView(),
     );
   }
@@ -38,7 +50,7 @@ class _HomePageViewState extends State<HomePageView> {
       builder: (context, clinicState) {
         final List<String> tabs = [];
         List<ClinicModel> clinics = [];
-        
+
         if (clinicState.toString().startsWith('ClinicState.loaded')) {
           try {
             final loadedState = clinicState as dynamic;
@@ -60,10 +72,12 @@ class _HomePageViewState extends State<HomePageView> {
                 });
               },
             ),
+            //nao coloque um expanded aqui!
             HomePageContent(
               selectedTabIndex: _selectedTabIndex,
               clinics: clinics,
             ),
+            const AllPatientsSection(),
           ],
         );
       },
@@ -86,16 +100,18 @@ class HomePageContent extends StatelessWidget {
     return BlocBuilder<ClinicCubit, ClinicState>(
       builder: (context, state) {
         final stateString = state.toString();
-        
-        if (stateString.startsWith('ClinicState.initial') || 
+
+        if (stateString.startsWith('ClinicState.initial') ||
             stateString.startsWith('ClinicState.loading')) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         if (stateString.startsWith('ClinicState.error')) {
           try {
             final errorState = state as dynamic;
-            return Center(child: Text('Erro: ${errorState.message ?? "Erro desconhecido"}'));
+            return Center(
+              child: Text('Erro: ${errorState.message ?? "Erro desconhecido"}'),
+            );
           } catch (_) {
             return const Center(child: Text('Erro ao carregar dados'));
           }
@@ -105,9 +121,10 @@ class HomePageContent extends StatelessWidget {
           return const Center(child: Text('Nenhuma clínica encontrada'));
         }
 
-        final selectedClinic = selectedTabIndex < clinics.length 
-            ? clinics[selectedTabIndex] 
-            : null;
+        final selectedClinic =
+            selectedTabIndex < clinics.length
+                ? clinics[selectedTabIndex]
+                : null;
 
         if (selectedClinic == null) {
           return const Center(child: Text('Clínica não encontrada'));
@@ -117,6 +134,87 @@ class HomePageContent extends StatelessWidget {
           patients: selectedClinic.patients,
           category: selectedClinic.name,
         );
+      },
+    );
+  }
+}
+
+class AllPatientsSection extends StatelessWidget {
+  const AllPatientsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PatientCubit, PatientState>(
+      builder: (context, state) {
+        final stateString = state.toString();
+
+        if (stateString.startsWith('PatientState.loaded')) {
+          try {
+            final loadedState = state as dynamic;
+            final patients = loadedState.patients as List<PatientModel>;
+
+            return Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Todos os pacientes',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.go('/patients');
+                        },
+                        child: const Text('Ver todos'),
+                      ),
+                    ],
+                  ),
+                  if (patients.isNotEmpty)
+                    SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: patients.length,
+                        itemBuilder: (context, index) {
+                          final patient = patients[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: SizedBox(
+                              width: 200,
+                              child: ClinicCard(
+                                title: patient.name,
+                                subtitle: patient.description ?? 'Paciente ativo da pasta',
+                                category: 'Paciente',
+                                imageUrl: patient.profilePhotoUrl,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            );
+          } catch (e) {
+            return const SizedBox.shrink();
+          }
+        }
+
+        if (stateString.startsWith('PatientState.loading')) {
+          return const Padding(
+            padding: EdgeInsets.all(16),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        return const SizedBox.shrink();
       },
     );
   }

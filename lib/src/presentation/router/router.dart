@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../screens/home/config_home_page.dart';
 import '../screens/login/login_page.dart';
+import '../screens/patients/patients_page.dart';
 import '../screens/splash/splash_page.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -76,6 +77,10 @@ class AppRouter {
         GoRoute(
           path: '/settings',
           builder: (context, state) => const SettingsPage(),
+        ),
+        GoRoute(
+          path: '/patients',
+          builder: (context, state) => const PatientsPage(),
         ),
       ],
     );
