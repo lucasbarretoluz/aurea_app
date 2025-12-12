@@ -3,9 +3,9 @@ import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
-import 'package:aurea_app/src/presentation/widgets/clinic/clinic_card.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_cards_grid.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_tab_bar.dart';
+import 'package:aurea_app/src/presentation/screens/home/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,16 +19,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final patientCubit = context.read<PatientCubit>();
+      final stateString = patientCubit.state.toString();
+      if (stateString.startsWith('PatientState.initial')) {
+        patientCubit.loadPatients(page: 1, limit: 5);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ClinicCubit()..loadClinics(),
-        ),
-        BlocProvider(
-          create: (context) => PatientCubit()..loadPatients(page: 1, limit: 5),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => ClinicCubit()..loadClinics(),
       child: const HomePageView(),
     );
   }
@@ -178,7 +183,7 @@ class AllPatientsSection extends StatelessWidget {
                   ),
                   if (patients.isNotEmpty)
                     SizedBox(
-                      height: 300,
+                      height: 130,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: patients.length,
@@ -187,11 +192,11 @@ class AllPatientsSection extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.only(right: 16),
                             child: SizedBox(
-                              width: 200,
-                              child: ClinicCard(
-                                title: patient.name,
-                                subtitle: patient.description ?? 'Paciente ativo da pasta',
-                                category: 'Paciente',
+                              width: 240,
+                              child: PatientCard(
+                                name: patient.name,
+                                clinicName: patient.clinicName,
+                                subtitle: patient.description,
                                 imageUrl: patient.profilePhotoUrl,
                               ),
                             ),
@@ -205,13 +210,6 @@ class AllPatientsSection extends StatelessWidget {
           } catch (e) {
             return const SizedBox.shrink();
           }
-        }
-
-        if (stateString.startsWith('PatientState.loading')) {
-          return const Padding(
-            padding: EdgeInsets.all(16),
-            child: Center(child: CircularProgressIndicator()),
-          );
         }
 
         return const SizedBox.shrink();

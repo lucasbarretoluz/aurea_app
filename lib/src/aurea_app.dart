@@ -1,5 +1,6 @@
 import 'package:aurea_app/src/core/theme/light.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
+import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/presentation/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class AureaApp extends StatelessWidget {
           create: (context) =>
               GetIt.I<AuthBloc>()..add(const AppStartRequest()),
         ),
+        BlocProvider(create: (context) => PatientCubit()),
       ],
       child: AureaAppView(appRouter: appRouter),
     );

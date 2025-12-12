@@ -1,23 +1,68 @@
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_card.dart';
+import 'package:aurea_app/src/presentation/widgets/infinite_scroll/infinite_scroll_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PatientsPage extends StatelessWidget {
+class PatientsPage extends StatefulWidget {
   const PatientsPage({super.key});
 
   @override
+  State<PatientsPage> createState() => _PatientsPageState();
+}
+
+class _PatientsPageState extends State<PatientsPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final patientCubit = context.read<PatientCubit>();
+      final stateString = patientCubit.state.toString();
+      if (stateString.startsWith('PatientState.initial')) {
+        patientCubit.loadPatients(page: 1, limit: 20);
+      } else if (stateString.startsWith('PatientState.loaded')) {
+        try {
+          final loadedState = patientCubit.state as dynamic;
+          final limit = loadedState.limit as int;
+          if (limit < 20) {
+            patientCubit.loadPatients(page: 1, limit: 20);
+          }
+        } catch (_) {
+          // Se houver erro ao acessar o limit, recarrega com limit 20
+          patientCubit.loadPatients(page: 1, limit: 20);
+        }
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PatientCubit()..loadPatients(page: 1, limit: 20),
-      child: const PatientsPageView(),
-    );
+    return const PatientsPageView();
   }
 }
 
-class PatientsPageView extends StatelessWidget {
+class PatientsPageView extends StatefulWidget {
   const PatientsPageView({super.key});
+
+  @override
+  State<PatientsPageView> createState() => _PatientsPageViewState();
+}
+
+class _PatientsPageViewState extends State<PatientsPageView> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,35 +100,31 @@ class PatientsPageView extends StatelessWidget {
                 return const Center(child: Text('Nenhum paciente encontrado'));
               }
 
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: patients.length + (hasMore ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index == patients.length) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            context.read<PatientCubit>().loadMore();
-                          },
-                          child: const Text('Carregar mais'),
-                        ),
+              return InfiniteScrollWidget(
+                hasMoreData: hasMore,
+                isLoading: false,
+                scrollController: _scrollController,
+                onLoadMore: () async {
+                  await context.read<PatientCubit>().loadMore();
+                },
+                wrapInScrollView: false,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(16),
+                  itemCount: patients.length,
+                  itemBuilder: (context, index) {
+                    final patient = patients[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ClinicCard(
+                        title: patient.name,
+                        subtitle: patient.description ?? 'Paciente ativo da pasta',
+                        category: 'Paciente',
+                        imageUrl: patient.profilePhotoUrl,
                       ),
                     );
-                  }
-
-                  final patient = patients[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: ClinicCard(
-                      title: patient.name,
-                      subtitle: patient.description ?? 'Paciente ativo da pasta',
-                      category: 'Paciente',
-                      imageUrl: patient.profilePhotoUrl,
-                    ),
-                  );
-                },
+                  },
+                ),
               );
             } catch (_) {
               return const Center(child: Text('Erro ao carregar pacientes'));

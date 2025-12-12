@@ -9,6 +9,7 @@ abstract class PatientModel with _$PatientModel {
     @Default(0) int patientId,
     @Default(0) int clinicId,
     @Default('') String name,
+    @Default('') String clinicName,
     String? profilePhotoUrl,
     String? description,
     required DateTime createdAt,
