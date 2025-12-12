@@ -1,1 +1,0 @@
-genhtml coverage/lcov.info -o coverage/html --no-function-coverage --no-branch-coverage

@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Test coverage
+coverage/html/
+# Note: coverage/lcov.info can be useful for CI/CD, but HTML reports are generated files
