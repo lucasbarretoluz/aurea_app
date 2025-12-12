@@ -8,6 +8,7 @@ class AuthEvent with _$AuthEvent {
     required String password,
   }) = SignInRequest;
   const factory AuthEvent.signOutRequest() = SignOutRequest;
+  const factory AuthEvent.deleteAccountRequest() = DeleteAccountRequest;
   const factory AuthEvent.singInGoogleRequest() = SingInGoogleRequest;
   const factory AuthEvent.singInAppleRequest() = SingInAppleRequest;
   const factory AuthEvent.singUpRequest({

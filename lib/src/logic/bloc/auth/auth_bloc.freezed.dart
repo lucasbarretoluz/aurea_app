@@ -177,6 +177,38 @@ String toString() {
 /// @nodoc
 
 
+class DeleteAccountRequest implements AuthEvent {
+  const DeleteAccountRequest();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteAccountRequest);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthEvent.deleteAccountRequest()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class SingInGoogleRequest implements AuthEvent {
   const SingInGoogleRequest();
   

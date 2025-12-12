@@ -161,11 +161,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await firebaseAuthRepository.signOut();
       } catch (e) {
+        rethrow;
       }
       
       await tokenRepository.deleteAll();
       await profileUserRepository.deleteProfile();
       emit(const UnAuth());
+    });
+
+    on<DeleteAccountRequest>((event, emit) async {
+      emit(const AuthLoading());
+      try {
+        await authRepository.deleteAccount();
+        try {
+          await firebaseAuthRepository.signOut();
+        } catch (e) {
+          rethrow;
+        }
+        
+        await tokenRepository.deleteAll();
+        await profileUserRepository.deleteProfile();
+        emit(const UnAuth());
+      } catch (e) {
+        emit(
+          AuthError(
+            error: e is RepositoryException ? e.message : e.toString(),
+          ),
+        );
+      }
     });
   }
 
