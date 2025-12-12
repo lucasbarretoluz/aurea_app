@@ -1,0 +1,21 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'patient_model.freezed.dart';
+part 'patient_model.g.dart';
+
+@freezed
+abstract class PatientModel with _$PatientModel {
+  const factory PatientModel({
+    @Default(0) int patientId,
+    @Default(0) int clinicId,
+    @Default('') String name,
+    String? profilePhotoUrl,
+    String? description,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _PatientModel;
+
+  factory PatientModel.fromJson(Map<String, dynamic> json) =>
+      _$PatientModelFromJson(json);
+}
+

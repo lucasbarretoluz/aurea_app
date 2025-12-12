@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ClinicModel {
 
- int get clinicId; int get userId; String get name; DateTime get createdAt; DateTime get updatedAt;
+ int get clinicId; int get userId; String get name; DateTime get createdAt; DateTime get updatedAt; List<PatientModel> get patients;
 /// Create a copy of ClinicModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $ClinicModelCopyWith<ClinicModel> get copyWith => _$ClinicModelCopyWithImpl<Clin
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClinicModel&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClinicModel&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.patients, patients));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,clinicId,userId,name,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,clinicId,userId,name,createdAt,updatedAt,const DeepCollectionEquality().hash(patients));
 
 @override
 String toString() {
-  return 'ClinicModel(clinicId: $clinicId, userId: $userId, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ClinicModel(clinicId: $clinicId, userId: $userId, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, patients: $patients)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $ClinicModelCopyWith<$Res>  {
   factory $ClinicModelCopyWith(ClinicModel value, $Res Function(ClinicModel) _then) = _$ClinicModelCopyWithImpl;
 @useResult
 $Res call({
- int clinicId, int userId, String name, DateTime createdAt, DateTime updatedAt
+ int clinicId, int userId, String name, DateTime createdAt, DateTime updatedAt, List<PatientModel> patients
 });
 
 
@@ -66,14 +66,15 @@ class _$ClinicModelCopyWithImpl<$Res>
 
 /// Create a copy of ClinicModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? clinicId = null,Object? userId = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? clinicId = null,Object? userId = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,Object? patients = null,}) {
   return _then(_self.copyWith(
 clinicId: null == clinicId ? _self.clinicId : clinicId // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,patients: null == patients ? _self.patients : patients // ignore: cast_nullable_to_non_nullable
+as List<PatientModel>,
   ));
 }
 
@@ -84,7 +85,7 @@ as DateTime,
 @JsonSerializable()
 
 class _ClinicModel implements ClinicModel {
-  const _ClinicModel({this.clinicId = 0, this.userId = 0, this.name = '', required this.createdAt, required this.updatedAt});
+  const _ClinicModel({this.clinicId = 0, this.userId = 0, this.name = '', required this.createdAt, required this.updatedAt, final  List<PatientModel> patients = const []}): _patients = patients;
   factory _ClinicModel.fromJson(Map<String, dynamic> json) => _$ClinicModelFromJson(json);
 
 @override@JsonKey() final  int clinicId;
@@ -92,6 +93,13 @@ class _ClinicModel implements ClinicModel {
 @override@JsonKey() final  String name;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
+ final  List<PatientModel> _patients;
+@override@JsonKey() List<PatientModel> get patients {
+  if (_patients is EqualUnmodifiableListView) return _patients;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_patients);
+}
+
 
 /// Create a copy of ClinicModel
 /// with the given fields replaced by the non-null parameter values.
@@ -106,16 +114,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClinicModel&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClinicModel&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other._patients, _patients));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,clinicId,userId,name,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,clinicId,userId,name,createdAt,updatedAt,const DeepCollectionEquality().hash(_patients));
 
 @override
 String toString() {
-  return 'ClinicModel(clinicId: $clinicId, userId: $userId, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ClinicModel(clinicId: $clinicId, userId: $userId, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, patients: $patients)';
 }
 
 
@@ -126,7 +134,7 @@ abstract mixin class _$ClinicModelCopyWith<$Res> implements $ClinicModelCopyWith
   factory _$ClinicModelCopyWith(_ClinicModel value, $Res Function(_ClinicModel) _then) = __$ClinicModelCopyWithImpl;
 @override @useResult
 $Res call({
- int clinicId, int userId, String name, DateTime createdAt, DateTime updatedAt
+ int clinicId, int userId, String name, DateTime createdAt, DateTime updatedAt, List<PatientModel> patients
 });
 
 
@@ -143,14 +151,15 @@ class __$ClinicModelCopyWithImpl<$Res>
 
 /// Create a copy of ClinicModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? clinicId = null,Object? userId = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? clinicId = null,Object? userId = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,Object? patients = null,}) {
   return _then(_ClinicModel(
 clinicId: null == clinicId ? _self.clinicId : clinicId // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,patients: null == patients ? _self._patients : patients // ignore: cast_nullable_to_non_nullable
+as List<PatientModel>,
   ));
 }
 

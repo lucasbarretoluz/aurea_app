@@ -4,12 +4,14 @@ class ClinicCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String category;
+  final String? imageUrl;
 
   const ClinicCard({
     super.key,
     required this.title,
     required this.subtitle,
     required this.category,
+    this.imageUrl,
   });
 
   @override
@@ -26,16 +28,33 @@ class ClinicCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Container(
               color: Colors.grey[400],
-              child: Image.asset(
-                'assets/images/smile_woman.jpg',
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[400],
-                    child: const Icon(Icons.person, size: 80, color: Colors.white70),
-                  );
-                },
-              ),
+              child: imageUrl != null && imageUrl!.isNotEmpty
+                  ? Image.network(
+                      imageUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/smile_woman.jpg',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey[400],
+                              child: const Icon(Icons.person, size: 80, color: Colors.white70),
+                            );
+                          },
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/smile_woman.jpg',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[400],
+                          child: const Icon(Icons.person, size: 80, color: Colors.white70),
+                        );
+                      },
+                    ),
             ),
           ),
           Positioned(

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../patient/patient_model.dart';
 
 part 'clinic_model.freezed.dart';
 part 'clinic_model.g.dart';
@@ -12,6 +13,7 @@ abstract class ClinicModel with _$ClinicModel {
     @Default('') String name,
     required DateTime createdAt,
     required DateTime updatedAt,
+    @Default([]) List<PatientModel> patients,
   }) = _ClinicModel;
 
   factory ClinicModel.fromJson(Map<String, dynamic> json) =>
