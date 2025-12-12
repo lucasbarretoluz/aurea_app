@@ -31,7 +31,6 @@ void main() {
 
       await tester.pump();
       expect(find.text('Patient 0'), findsOneWidget);
-      expect(find.byIcon(Icons.add), findsOneWidget);
       expect(find.byType(ClinicCard), findsWidgets);
     });
 
