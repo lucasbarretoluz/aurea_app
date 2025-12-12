@@ -31,18 +31,14 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">5.9&nbsp;%</td>
+            <td class="headerCovTableEntryLo">10.6&nbsp;%</td>
             <td class="headerCovTableEntry">85</td>
-            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">9</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-12-12 11:39:45</td>
+            <td class="headerValue">2025-12-12 11:44:42</td>
             <td></td>
-            <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">-</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
           </tr>
                   <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -124,11 +120,11 @@
 <span id="L62"><span class="lineNum">      62</span>              :     }</span>
 <span id="L63"><span class="lineNum">      63</span>              :   }</span>
 <span id="L64"><span class="lineNum">      64</span>              : </span>
-<span id="L65"><span class="lineNum">      65</span> <span class="tlaUNC">           0 :   @override</span></span>
+<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">           1 :   @override</span></span>
 <span id="L66"><span class="lineNum">      66</span>              :   void onError(err, handler) async {</span>
-<span id="L67"><span class="lineNum">      67</span> <span class="tlaUNC">           0 :     var token = await _secureStorage.getTokenData();</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">           2 :     var token = await _secureStorage.getTokenData();</span></span>
 <span id="L68"><span class="lineNum">      68</span>              : </span>
-<span id="L69"><span class="lineNum">      69</span> <span class="tlaUNC">           0 :     if (err.response?.statusCode == 401 &amp;&amp; token.accessToken != null) {</span></span>
+<span id="L69"><span class="lineNum">      69</span> <span class="tlaGNC">           3 :     if (err.response?.statusCode == 401 &amp;&amp; token.accessToken != null) {</span></span>
 <span id="L70"><span class="lineNum">      70</span> <span class="tlaUNC">           0 :       final response = err.response;</span></span>
 <span id="L71"><span class="lineNum">      71</span>              :       try {</span>
 <span id="L72"><span class="lineNum">      72</span> <span class="tlaUNC">           0 :         final refreshResponse = await _tryRefresh(response!);</span></span>
@@ -149,7 +145,7 @@
 <span id="L87"><span class="lineNum">      87</span> <span class="tlaUNC">           0 :         return handler.next(error);</span></span>
 <span id="L88"><span class="lineNum">      88</span>              :       }</span>
 <span id="L89"><span class="lineNum">      89</span>              :     }</span>
-<span id="L90"><span class="lineNum">      90</span> <span class="tlaUNC">           0 :     return handler.next(err);</span></span>
+<span id="L90"><span class="lineNum">      90</span> <span class="tlaGNC">           1 :     return handler.next(err);</span></span>
 <span id="L91"><span class="lineNum">      91</span>              :   }</span>
 <span id="L92"><span class="lineNum">      92</span>              : </span>
 <span id="L93"><span class="lineNum">      93</span> <span class="tlaUNC">           0 :   void _signOutUser() {</span></span>

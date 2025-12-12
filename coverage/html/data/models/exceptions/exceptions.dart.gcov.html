@@ -37,12 +37,8 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-12-12 11:39:45</td>
+            <td class="headerValue">2025-12-12 11:44:42</td>
             <td></td>
-            <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">-</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
           </tr>
                   <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -62,14 +58,14 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : abstract class CustomException implements Exception {</span>
 <span id="L2"><span class="lineNum">       2</span>              :   final String message;</span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC">           2 :   const CustomException(this.message) : super();</span></span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC">           4 :   const CustomException(this.message) : super();</span></span>
 <span id="L4"><span class="lineNum">       4</span>              : </span>
 <span id="L5"><span class="lineNum">       5</span> <span class="tlaUNC">           0 :   @override</span></span>
 <span id="L6"><span class="lineNum">       6</span> <span class="tlaUNC">           0 :   String toString() =&gt; message;</span></span>
 <span id="L7"><span class="lineNum">       7</span>              : }</span>
 <span id="L8"><span class="lineNum">       8</span>              : </span>
 <span id="L9"><span class="lineNum">       9</span>              : class RepositoryException extends CustomException {</span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           2 :   RepositoryException(String message) : super(message);</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           4 :   RepositoryException(String message) : super(message);</span></span>
 <span id="L11"><span class="lineNum">      11</span>              : }</span>
 <span id="L12"><span class="lineNum">      12</span>              : </span>
 <span id="L13"><span class="lineNum">      13</span>              : class ProviderException extends CustomException {</span>

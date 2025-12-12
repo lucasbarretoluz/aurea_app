@@ -31,18 +31,14 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntryLo">7.8&nbsp;%</td>
             <td class="headerCovTableEntry">51</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-12-12 11:39:45</td>
+            <td class="headerValue">2025-12-12 11:44:42</td>
             <td></td>
-            <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">-</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
           </tr>
                   <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -64,12 +60,12 @@
 <span id="L2"><span class="lineNum">       2</span>              : </span>
 <span id="L3"><span class="lineNum">       3</span>              : class BadRequestException extends DioException {</span>
 <span id="L4"><span class="lineNum">       4</span>              :   final DioException error;</span>
-<span id="L5"><span class="lineNum">       5</span> <span class="tlaUNC">           0 :   BadRequestException(this.error) : super(requestOptions: error.requestOptions);</span></span>
+<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">           3 :   BadRequestException(this.error) : super(requestOptions: error.requestOptions);</span></span>
 <span id="L6"><span class="lineNum">       6</span>              : </span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaUNC">           0 :   @override</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           1 :   @override</span></span>
 <span id="L8"><span class="lineNum">       8</span>              :   String toString() {</span>
-<span id="L9"><span class="lineNum">       9</span> <span class="tlaUNC">           0 :     if (error.response != null &amp;&amp;</span></span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaUNC">           0 :         (error.response!.data['error'] as String).isNotEmpty) {</span></span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC">           2 :     if (error.response != null &amp;&amp;</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           4 :         (error.response!.data['error'] as String).isNotEmpty) {</span></span>
 <span id="L11"><span class="lineNum">      11</span> <span class="tlaUNC">           0 :       return error.response!.data['error'];</span></span>
 <span id="L12"><span class="lineNum">      12</span>              :     }</span>
 <span id="L13"><span class="lineNum">      13</span>              :     return 'Requisição inválida';</span>
