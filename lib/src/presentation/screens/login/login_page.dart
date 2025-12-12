@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:aurea_app/src/data/provider/auth_provider.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_label.dart';
@@ -68,34 +67,6 @@ class _LoginPageViewState extends State<LoginPageView>
     }
   }
 
-  Future<void> _testHealthCheck() async {
-    final authProvider = AuthProvider();
-    try {
-      final response = await authProvider.healthCheck();
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Health check OK!\nStatus: ${response.statusCode}\nData: ${response.data}',
-            ),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Health check failed: $e'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
-          ),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
@@ -145,27 +116,30 @@ class _LoginPageViewState extends State<LoginPageView>
                   borderRadius: BorderRadius.circular(25),
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
-                          return SlideTransition(
-                            position:
-                                Tween<Offset>(
-                                  begin: _showLoginForm
-                                      ? const Offset(1.0, 0.0)
-                                      : const Offset(-1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(
-                                  CurvedAnimation(
-                                    parent: animation,
-                                    curve: Curves.easeInOut,
-                                  ),
-                                ),
-                            child: child,
-                          );
-                        },
-                    child: _showLoginForm
-                        ? _buildLoginForm(key: const ValueKey('login'))
-                        : _buildMenu(key: const ValueKey('menu')),
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                    ) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin:
+                              _showLoginForm
+                                  ? const Offset(1.0, 0.0)
+                                  : const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                        child: child,
+                      );
+                    },
+                    child:
+                        _showLoginForm
+                            ? _buildLoginForm(key: const ValueKey('login'))
+                            : _buildMenu(key: const ValueKey('menu')),
                   ),
                 ),
               ),
@@ -319,7 +293,7 @@ class _LoginPageViewState extends State<LoginPageView>
                       );
                     },
                   ),
-                
+
                   SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
