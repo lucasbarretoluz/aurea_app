@@ -14,24 +14,32 @@ class ClinicCardsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 0.75,
-        ),
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: itemCount,
         itemBuilder: (context, index) {
           if (index == itemCount - 1) {
-            return const AddCard();
+            return Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: AddCard(
+                width: 200,
+                height: 300,
+              ),
+            );
           }
-          return ClinicCard(
-            title: 'Demonstração',
-            subtitle: 'Paciente ativo da pasta',
-            category: category,
+          return Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: SizedBox(
+              width: 200,
+              child: ClinicCard(
+                title: 'Demonstração',
+                subtitle: 'Paciente ativo da pasta',
+                category: category,
+              ),
+            ),
           );
         },
       ),

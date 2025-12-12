@@ -58,11 +58,9 @@ class _HomePageViewState extends State<HomePageView> {
                 });
               },
             ),
-            Expanded(
-              child: HomePageContent(
-                selectedTabIndex: _selectedTabIndex,
-                tabs: tabs,
-              ),
+            HomePageContent(
+              selectedTabIndex: _selectedTabIndex,
+              tabs: tabs,
             ),
           ],
         );
