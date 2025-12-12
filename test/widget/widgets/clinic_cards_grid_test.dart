@@ -107,6 +107,92 @@ void main() {
       final listView = tester.widget<ListView>(find.byType(ListView));
       expect(listView.scrollDirection, Axis.horizontal);
     });
+
+    testWidgets('should display correct number of items including add card', (WidgetTester tester) async {
+      final patients = [
+        PatientModel(
+          patientId: 1,
+          clinicId: 1,
+          name: 'Patient 1',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        PatientModel(
+          patientId: 2,
+          clinicId: 1,
+          name: 'Patient 2',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+      ];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ClinicCardsGrid(
+              patients: patients,
+              category: 'Clínica A',
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Patient 1'), findsOneWidget);
+      expect(find.text('Patient 2'), findsOneWidget);
+      expect(find.byIcon(Icons.add), findsOneWidget);
+    });
+
+    testWidgets('should use patient description when available', (WidgetTester tester) async {
+      final patients = [
+        PatientModel(
+          patientId: 1,
+          clinicId: 1,
+          name: 'John Doe',
+          description: 'Descrição customizada',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+      ];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ClinicCardsGrid(
+              patients: patients,
+              category: 'Clínica A',
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Descrição customizada'), findsOneWidget);
+    });
+
+    testWidgets('should use default subtitle when description is null', (WidgetTester tester) async {
+      final patients = [
+        PatientModel(
+          patientId: 1,
+          clinicId: 1,
+          name: 'John Doe',
+          description: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+      ];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ClinicCardsGrid(
+              patients: patients,
+              category: 'Clínica A',
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Paciente ativo da pasta'), findsOneWidget);
+    });
   });
 }
 

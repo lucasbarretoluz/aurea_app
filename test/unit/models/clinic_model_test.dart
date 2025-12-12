@@ -98,6 +98,38 @@ void main() {
       expect(clinic.name, '');
       expect(clinic.patients, isEmpty);
     });
+
+    test('should handle null patients array in JSON', () {
+      final json = {
+        'clinicId': 1,
+        'userId': 100,
+        'name': 'Clínica A',
+        'createdAt': '2024-01-01T00:00:00Z',
+        'updatedAt': '2024-01-02T00:00:00Z',
+        'patients': null,
+      };
+
+      final clinic = ClinicModel.fromJson(json);
+
+      expect(clinic.clinicId, 1);
+      expect(clinic.patients, isEmpty);
+    });
+
+    test('should convert to JSON with empty patients list', () {
+      final clinic = ClinicModel(
+        clinicId: 1,
+        userId: 100,
+        name: 'Clínica A',
+        createdAt: DateTime.parse('2024-01-01T00:00:00Z'),
+        updatedAt: DateTime.parse('2024-01-02T00:00:00Z'),
+        patients: const [],
+      );
+
+      final json = clinic.toJson();
+
+      expect(json['patients'], isA<List>());
+      expect((json['patients'] as List).isEmpty, true);
+    });
   });
 }
 

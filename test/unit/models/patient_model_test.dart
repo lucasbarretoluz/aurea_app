@@ -77,6 +77,40 @@ void main() {
       expect(patient.clinicId, 0);
       expect(patient.name, '');
     });
+
+    test('should handle null profilePhotoUrl in toJson', () {
+      final patient = PatientModel(
+        patientId: 1,
+        clinicId: 10,
+        name: 'John Doe',
+        profilePhotoUrl: null,
+        description: null,
+        createdAt: DateTime.parse('2024-01-01T00:00:00Z'),
+        updatedAt: DateTime.parse('2024-01-02T00:00:00Z'),
+      );
+
+      final json = patient.toJson();
+
+      expect(json['profilePhotoUrl'], isNull);
+      expect(json['description'], isNull);
+    });
+
+    test('should handle empty string profilePhotoUrl', () {
+      final json = {
+        'patientId': 1,
+        'clinicId': 10,
+        'name': 'John Doe',
+        'profilePhotoUrl': '',
+        'description': '',
+        'createdAt': '2024-01-01T00:00:00Z',
+        'updatedAt': '2024-01-02T00:00:00Z',
+      };
+
+      final patient = PatientModel.fromJson(json);
+
+      expect(patient.profilePhotoUrl, '');
+      expect(patient.description, '');
+    });
   });
 }
 

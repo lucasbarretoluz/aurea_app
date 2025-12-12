@@ -1,6 +1,4 @@
-import 'package:aurea_app/src/data/models/auth_token/auth_token.dart';
 import 'package:aurea_app/src/data/models/exceptions/exceptions.dart';
-import 'package:aurea_app/src/data/models/profile_user/profile_user_model.dart';
 import 'package:aurea_app/src/data/repository/auth_repository.dart';
 import 'package:aurea_app/src/data/repository/firebase_auth_repository.dart';
 import 'package:aurea_app/src/data/repository/profile_user_repository.dart';
