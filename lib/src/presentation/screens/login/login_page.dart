@@ -319,20 +319,7 @@ class _LoginPageViewState extends State<LoginPageView>
                       );
                     },
                   ),
-                  if (kDebugMode) ...[
-                    SizedBox(height: 10),
-                    TextButton(
-                      onPressed: _testHealthCheck,
-                      child: Text(
-                        'Test Health Check',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
-                          fontSize: 12,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ),
-                  ],
+                
                   SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
