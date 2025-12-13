@@ -218,13 +218,9 @@ class _MockResponseInterceptorHandler extends ResponseInterceptorHandler {
 
 class _MockErrorInterceptorHandler extends ErrorInterceptorHandler {
   final void Function(DioException error)? onNext;
-  final void Function(Response response)? onResolve;
-  final void Function(DioException error)? onReject;
 
   _MockErrorInterceptorHandler({
     this.onNext,
-    this.onResolve,
-    this.onReject,
   });
 
   @override
@@ -234,11 +230,11 @@ class _MockErrorInterceptorHandler extends ErrorInterceptorHandler {
 
   @override
   void resolve(Response response, [bool callFollowingResponseInterceptor = true]) {
-    onResolve?.call(response);
+    // No-op for testing
   }
 
   @override
   void reject(DioException error, [bool callFollowingErrorInterceptor = true]) {
-    onReject?.call(error);
+    // No-op for testing
   }
 }
