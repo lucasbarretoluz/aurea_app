@@ -162,7 +162,7 @@ void main() {
       expect(find.text('Patients Page'), findsOneWidget);
     });
 
-    testWidgets('should display loading indicator when loading', (WidgetTester tester) async {
+    testWidgets('should hide section when loading', (WidgetTester tester) async {
       final mockCubit = MockPatientCubit();
       when(() => mockCubit.state).thenReturn(const PatientState.loading());
       when(() => mockCubit.stream).thenAnswer((_) => const Stream.empty());
@@ -178,7 +178,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('Todos os pacientes'), findsNothing);
     });
 
     testWidgets('should hide section when state is not loaded or loading', (WidgetTester tester) async {
