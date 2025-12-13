@@ -5,6 +5,7 @@ class PatientCard extends StatelessWidget {
   final String clinicName;
   final String? subtitle;
   final String? imageUrl;
+  final double widthImage;
 
   const PatientCard({
     super.key,
@@ -12,6 +13,7 @@ class PatientCard extends StatelessWidget {
     required this.clinicName,
     this.subtitle,
     this.imageUrl,
+    this.widthImage = 100,
   });
 
   @override
@@ -26,7 +28,7 @@ class PatientCard extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             child: Container(
-              width: 100,
+              width: widthImage,
               height: double.infinity,
               color: const Color(0xFF424242),
               child:

@@ -1,6 +1,7 @@
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
-import 'package:aurea_app/src/presentation/widgets/clinic/clinic_card.dart';
+import 'package:aurea_app/src/presentation/screens/home/widgets/patient_card.dart';
 import 'package:aurea_app/src/presentation/widgets/infinite_scroll/infinite_scroll_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,9 +68,7 @@ class _PatientsPageViewState extends State<PatientsPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Todos os Pacientes'),
-      ),
+      appBar: AppBar(title: const Text('Todos os Pacientes')),
       body: BlocBuilder<PatientCubit, PatientState>(
         builder: (context, state) {
           final stateString = state.toString();
@@ -83,7 +82,9 @@ class _PatientsPageViewState extends State<PatientsPageView> {
             try {
               final errorState = state as dynamic;
               return Center(
-                child: Text('Erro: ${errorState.message ?? "Erro desconhecido"}'),
+                child: Text(
+                  'Erro: ${errorState.message ?? "Erro desconhecido"}',
+                ),
               );
             } catch (_) {
               return const Center(child: Text('Erro ao carregar pacientes'));
@@ -97,7 +98,40 @@ class _PatientsPageViewState extends State<PatientsPageView> {
               final hasMore = loadedState.hasMore as bool;
 
               if (patients.isEmpty) {
-                return const Center(child: Text('Nenhum paciente encontrado'));
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.people_outline,
+                          size: 80,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'Nenhum paciente encontrado',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Não há pacientes cadastrados no momento.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               }
 
               return InfiniteScrollWidget(
@@ -108,22 +142,30 @@ class _PatientsPageViewState extends State<PatientsPageView> {
                   await context.read<PatientCubit>().loadMore();
                 },
                 wrapInScrollView: false,
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: patients.length,
-                  itemBuilder: (context, index) {
-                    final patient = patients[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: ClinicCard(
-                        title: patient.name,
-                        subtitle: patient.description ?? 'Paciente ativo da pasta',
-                        category: 'Paciente',
-                        imageUrl: patient.profilePhotoUrl,
-                      ),
-                    );
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListView.separated(
+                    itemCount: patients.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final patient = patients[index] as PatientModel;
+                      return SizedBox(
+                        height: 130,
+                        width: 100,
+                        child: PatientCard(
+                          widthImage: 130,
+                          name: patient.name,
+                          clinicName: patient.clinicName,
+                          subtitle: patient.description ?? '',
+                          imageUrl: patient.profilePhotoUrl,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                  ),
                 ),
               );
             } catch (_) {
@@ -137,4 +179,3 @@ class _PatientsPageViewState extends State<PatientsPageView> {
     );
   }
 }
-

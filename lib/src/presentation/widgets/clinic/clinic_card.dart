@@ -5,6 +5,7 @@ class ClinicCard extends StatelessWidget {
   final String subtitle;
   final String category;
   final String? imageUrl;
+  final StackFit fit;
 
   const ClinicCard({
     super.key,
@@ -12,6 +13,7 @@ class ClinicCard extends StatelessWidget {
     required this.subtitle,
     required this.category,
     this.imageUrl,
+    this.fit = StackFit.expand,
   });
 
   @override
@@ -22,7 +24,7 @@ class ClinicCard extends StatelessWidget {
         color: Colors.grey[300],
       ),
       child: Stack(
-        fit: StackFit.expand,
+        fit: fit,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
