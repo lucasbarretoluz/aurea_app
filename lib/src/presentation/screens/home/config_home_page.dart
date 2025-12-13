@@ -1,5 +1,6 @@
 import 'package:aurea_app/src/presentation/screens/home/home_page.dart';
 import 'package:aurea_app/src/presentation/widgets/app_bar/aurea_app_bar.dart';
+import 'package:aurea_app/src/presentation/widgets/help_center/help_center_drawer.dart';
 import 'package:aurea_app/src/presentation/widgets/navbar/main_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +24,14 @@ class ConfigHomePageView extends StatefulWidget {
 class _ConfigHomePageViewState extends State<ConfigHomePageView> {
   static const String selectedRoute = "/home";
 
+  void _openHelpCenter() {
+    showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      builder: (context) => const HelpCenterDrawer(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +46,7 @@ class _ConfigHomePageViewState extends State<ConfigHomePageView> {
               case 0:
                 break;
               case 1:
-                context.push('/support');
+                _openHelpCenter();
                 break;
               case 2:
                 context.push('/profile');
