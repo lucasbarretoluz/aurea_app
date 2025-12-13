@@ -173,7 +173,8 @@ void main() {
 
       test('should accept Dio instance as parameter', () {
         final testDio = Dio(BaseOptions(baseUrl: 'https://api.example.com'));
-        expect(() => interceptor.getNewToken(testDio), returnsNormally);
+        final future = interceptor.getNewToken(testDio);
+        expect(future, isA<Future<AuthToken?>>());
       });
     });
   });
