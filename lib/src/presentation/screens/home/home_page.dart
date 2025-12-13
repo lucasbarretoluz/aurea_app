@@ -175,7 +175,7 @@ class AllPatientsSection extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.go('/patients');
+                          context.push('/patients');
                         },
                         child: const Text('Ver todos'),
                       ),
