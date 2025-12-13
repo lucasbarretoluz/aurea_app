@@ -1,4 +1,9 @@
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
+import 'package:aurea_app/src/presentation/screens/help/dental_proportions_page.dart';
+import 'package:aurea_app/src/presentation/screens/help/lines_and_references_page.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographing_with_cellphone_page.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol_page.dart';
+import 'package:aurea_app/src/presentation/screens/help/semi_professional_camera_settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
@@ -81,6 +86,26 @@ class AppRouter {
         GoRoute(
           path: '/patients',
           builder: (context, state) => const PatientsPage(),
+        ),
+        GoRoute(
+          path: '/help/photographic-protocol',
+          builder: (context, state) => const PhotographicProtocolPage(),
+        ),
+        GoRoute(
+          path: '/help/semi-professional-camera-settings',
+          builder: (context, state) => const SemiProfessionalCameraSettingsPage(),
+        ),
+        GoRoute(
+          path: '/help/photographing-with-cellphone',
+          builder: (context, state) => const PhotographingWithCellphonePage(),
+        ),
+        GoRoute(
+          path: '/help/lines-and-references',
+          builder: (context, state) => const LinesAndReferencesPage(),
+        ),
+        GoRoute(
+          path: '/help/dental-proportions',
+          builder: (context, state) => const DentalProportionsPage(),
         ),
       ],
     );

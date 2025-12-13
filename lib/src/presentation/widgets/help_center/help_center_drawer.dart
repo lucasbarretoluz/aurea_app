@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HelpCenterDrawer extends StatefulWidget {
   const HelpCenterDrawer({super.key});
@@ -48,6 +49,15 @@ class _HelpCenterDrawerState extends State<HelpCenterDrawer>
     _controller.reverse().then((_) {
       if (mounted) {
         Navigator.of(context).pop();
+      }
+    });
+  }
+
+  void _navigateToRoute(String route) {
+    _controller.reverse().then((_) {
+      if (mounted) {
+        Navigator.of(context).pop();
+        context.push(route);
       }
     });
   }
@@ -140,23 +150,23 @@ class _HelpCenterDrawerState extends State<HelpCenterDrawer>
                                   ),
                                   _HelpCenterItem(
                                     title: 'Protocolo fotográfico',
-                                    onTap: _close,
+                                    onTap: () => _navigateToRoute('/help/photographic-protocol'),
                                   ),
                                   _HelpCenterItem(
                                     title: 'Configurações de câmera semiprofissional',
-                                    onTap: _close,
+                                    onTap: () => _navigateToRoute('/help/semi-professional-camera-settings'),
                                   ),
                                   _HelpCenterItem(
                                     title: 'Fotografando com o celular',
-                                    onTap: _close,
+                                    onTap: () => _navigateToRoute('/help/photographing-with-cellphone'),
                                   ),
                                   _HelpCenterItem(
                                     title: 'Linhas e referências',
-                                    onTap: _close,
+                                    onTap: () => _navigateToRoute('/help/lines-and-references'),
                                   ),
                                   _HelpCenterItem(
                                     title: 'Proporções dentárias',
-                                    onTap: _close,
+                                    onTap: () => _navigateToRoute('/help/dental-proportions'),
                                   ),
                                 ],
                               ),
