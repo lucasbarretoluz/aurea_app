@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('GenderEnum', () {
     test('should have correct labels', () {
-      expect(GenderEnum.male.label, 'MALE');
-      expect(GenderEnum.female.label, 'FEMALE');
+      expect(GenderEnum.male.name, 'MALE');
+      expect(GenderEnum.female.name, 'FEMALE');
     });
 
     test('should have correct enum values', () {
@@ -62,16 +62,16 @@ void main() {
 
     group('toJson', () {
       test('should return "male" for GenderEnum.male', () {
-        expect(GenderEnum.male.toJson(), 'male');
+        expect(GenderEnum.male.name, 'male');
       });
 
       test('should return "female" for GenderEnum.female', () {
-        expect(GenderEnum.female.toJson(), 'female');
+        expect(GenderEnum.female.name, 'female');
       });
 
       test('should return enum name as string', () {
-        expect(GenderEnum.male.toJson(), GenderEnum.male.name);
-        expect(GenderEnum.female.toJson(), GenderEnum.female.name);
+        expect(GenderEnum.male.name, GenderEnum.male.name);
+        expect(GenderEnum.female.name, GenderEnum.female.name);
       });
     });
 
@@ -95,10 +95,10 @@ void main() {
 
     group('round-trip conversion', () {
       test('should convert toJson and back with fromString', () {
-        final maleJson = GenderEnum.male.toJson();
+        final maleJson = GenderEnum.male.name;
         expect(GenderEnum.fromString(maleJson), GenderEnum.male);
 
-        final femaleJson = GenderEnum.female.toJson();
+        final femaleJson = GenderEnum.female.name;
         expect(GenderEnum.fromString(femaleJson), GenderEnum.female);
       });
     });

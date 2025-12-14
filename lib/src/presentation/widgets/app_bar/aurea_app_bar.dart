@@ -28,7 +28,7 @@ class AureaAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
           child: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.push('/notification'),
             icon: const Icon(Icons.notifications_none_rounded),
           ),
         ),
