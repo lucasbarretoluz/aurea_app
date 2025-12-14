@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PatientModel {
 
- int get patientId; int get clinicId; String get name; String get clinicName; String? get profilePhotoUrl; String? get description; DateTime get createdAt; DateTime get updatedAt;
+ int get patientId; int get clinicId; String get name; String get clinicName; String? get profilePhotoUrl; String? get description; GenderEnum? get gender; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of PatientModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $PatientModelCopyWith<PatientModel> get copyWith => _$PatientModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PatientModel&&(identical(other.patientId, patientId) || other.patientId == patientId)&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clinicName, clinicName) || other.clinicName == clinicName)&&(identical(other.profilePhotoUrl, profilePhotoUrl) || other.profilePhotoUrl == profilePhotoUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PatientModel&&(identical(other.patientId, patientId) || other.patientId == patientId)&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clinicName, clinicName) || other.clinicName == clinicName)&&(identical(other.profilePhotoUrl, profilePhotoUrl) || other.profilePhotoUrl == profilePhotoUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,patientId,clinicId,name,clinicName,profilePhotoUrl,description,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,patientId,clinicId,name,clinicName,profilePhotoUrl,description,gender,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'PatientModel(patientId: $patientId, clinicId: $clinicId, name: $name, clinicName: $clinicName, profilePhotoUrl: $profilePhotoUrl, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'PatientModel(patientId: $patientId, clinicId: $clinicId, name: $name, clinicName: $clinicName, profilePhotoUrl: $profilePhotoUrl, description: $description, gender: $gender, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $PatientModelCopyWith<$Res>  {
   factory $PatientModelCopyWith(PatientModel value, $Res Function(PatientModel) _then) = _$PatientModelCopyWithImpl;
 @useResult
 $Res call({
- int patientId, int clinicId, String name, String clinicName, String? profilePhotoUrl, String? description, DateTime createdAt, DateTime updatedAt
+ int patientId, int clinicId, String name, String clinicName, String? profilePhotoUrl, String? description, GenderEnum? gender, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$PatientModelCopyWithImpl<$Res>
 
 /// Create a copy of PatientModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? patientId = null,Object? clinicId = null,Object? name = null,Object? clinicName = null,Object? profilePhotoUrl = freezed,Object? description = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? patientId = null,Object? clinicId = null,Object? name = null,Object? clinicName = null,Object? profilePhotoUrl = freezed,Object? description = freezed,Object? gender = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 patientId: null == patientId ? _self.patientId : patientId // ignore: cast_nullable_to_non_nullable
 as int,clinicId: null == clinicId ? _self.clinicId : clinicId // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nu
 as String,clinicName: null == clinicName ? _self.clinicName : clinicName // ignore: cast_nullable_to_non_nullable
 as String,profilePhotoUrl: freezed == profilePhotoUrl ? _self.profilePhotoUrl : profilePhotoUrl // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as GenderEnum?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -87,7 +88,7 @@ as DateTime,
 @JsonSerializable()
 
 class _PatientModel implements PatientModel {
-  const _PatientModel({this.patientId = 0, this.clinicId = 0, this.name = '', this.clinicName = '', this.profilePhotoUrl, this.description, required this.createdAt, required this.updatedAt});
+  const _PatientModel({this.patientId = 0, this.clinicId = 0, this.name = '', this.clinicName = '', this.profilePhotoUrl, this.description, this.gender, required this.createdAt, required this.updatedAt});
   factory _PatientModel.fromJson(Map<String, dynamic> json) => _$PatientModelFromJson(json);
 
 @override@JsonKey() final  int patientId;
@@ -96,6 +97,7 @@ class _PatientModel implements PatientModel {
 @override@JsonKey() final  String clinicName;
 @override final  String? profilePhotoUrl;
 @override final  String? description;
+@override final  GenderEnum? gender;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 
@@ -112,16 +114,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PatientModel&&(identical(other.patientId, patientId) || other.patientId == patientId)&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clinicName, clinicName) || other.clinicName == clinicName)&&(identical(other.profilePhotoUrl, profilePhotoUrl) || other.profilePhotoUrl == profilePhotoUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PatientModel&&(identical(other.patientId, patientId) || other.patientId == patientId)&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clinicName, clinicName) || other.clinicName == clinicName)&&(identical(other.profilePhotoUrl, profilePhotoUrl) || other.profilePhotoUrl == profilePhotoUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,patientId,clinicId,name,clinicName,profilePhotoUrl,description,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,patientId,clinicId,name,clinicName,profilePhotoUrl,description,gender,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'PatientModel(patientId: $patientId, clinicId: $clinicId, name: $name, clinicName: $clinicName, profilePhotoUrl: $profilePhotoUrl, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'PatientModel(patientId: $patientId, clinicId: $clinicId, name: $name, clinicName: $clinicName, profilePhotoUrl: $profilePhotoUrl, description: $description, gender: $gender, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -132,7 +134,7 @@ abstract mixin class _$PatientModelCopyWith<$Res> implements $PatientModelCopyWi
   factory _$PatientModelCopyWith(_PatientModel value, $Res Function(_PatientModel) _then) = __$PatientModelCopyWithImpl;
 @override @useResult
 $Res call({
- int patientId, int clinicId, String name, String clinicName, String? profilePhotoUrl, String? description, DateTime createdAt, DateTime updatedAt
+ int patientId, int clinicId, String name, String clinicName, String? profilePhotoUrl, String? description, GenderEnum? gender, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -149,7 +151,7 @@ class __$PatientModelCopyWithImpl<$Res>
 
 /// Create a copy of PatientModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? patientId = null,Object? clinicId = null,Object? name = null,Object? clinicName = null,Object? profilePhotoUrl = freezed,Object? description = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? patientId = null,Object? clinicId = null,Object? name = null,Object? clinicName = null,Object? profilePhotoUrl = freezed,Object? description = freezed,Object? gender = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_PatientModel(
 patientId: null == patientId ? _self.patientId : patientId // ignore: cast_nullable_to_non_nullable
 as int,clinicId: null == clinicId ? _self.clinicId : clinicId // ignore: cast_nullable_to_non_nullable
@@ -157,7 +159,8 @@ as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nu
 as String,clinicName: null == clinicName ? _self.clinicName : clinicName // ignore: cast_nullable_to_non_nullable
 as String,profilePhotoUrl: freezed == profilePhotoUrl ? _self.profilePhotoUrl : profilePhotoUrl // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as GenderEnum?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

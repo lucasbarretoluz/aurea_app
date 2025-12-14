@@ -1,7 +1,9 @@
+import 'package:aurea_app/src/core/enums/gender_enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'patient_model.freezed.dart';
 part 'patient_model.g.dart';
+
 
 @freezed
 abstract class PatientModel with _$PatientModel {
@@ -12,6 +14,7 @@ abstract class PatientModel with _$PatientModel {
     @Default('') String clinicName,
     String? profilePhotoUrl,
     String? description,
+    GenderEnum? gender,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _PatientModel;
