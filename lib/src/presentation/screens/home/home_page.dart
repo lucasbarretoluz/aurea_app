@@ -24,7 +24,20 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final patientCubit = context.read<PatientCubit>();
       final stateString = patientCubit.state.toString();
+      
       if (stateString.startsWith('PatientState.initial')) {
+        patientCubit.loadPatients(page: 1, limit: 5);
+      } else if (stateString.startsWith('PatientState.loaded')) {
+        try {
+          final loadedState = patientCubit.state as dynamic;
+          final limit = loadedState.limit as int;
+          if (limit < 5) {
+            patientCubit.loadPatients(page: 1, limit: 5);
+          }
+        } catch (_) {
+          patientCubit.loadPatients(page: 1, limit: 5);
+        }
+      } else if (stateString.startsWith('PatientState.error')) {
         patientCubit.loadPatients(page: 1, limit: 5);
       }
     });
@@ -144,8 +157,38 @@ class HomePageContent extends StatelessWidget {
   }
 }
 
-class AllPatientsSection extends StatelessWidget {
+class AllPatientsSection extends StatefulWidget {
   const AllPatientsSection({super.key});
+
+  @override
+  State<AllPatientsSection> createState() => _AllPatientsSectionState();
+}
+
+class _AllPatientsSectionState extends State<AllPatientsSection> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final patientCubit = context.read<PatientCubit>();
+      final stateString = patientCubit.state.toString();
+      
+      if (stateString.startsWith('PatientState.initial')) {
+        patientCubit.loadPatients(page: 1, limit: 5);
+      } else if (stateString.startsWith('PatientState.loaded')) {
+        try {
+          final loadedState = patientCubit.state as dynamic;
+          final limit = loadedState.limit as int;
+          if (limit < 5) {
+            patientCubit.loadPatients(page: 1, limit: 5);
+          }
+        } catch (_) {
+          patientCubit.loadPatients(page: 1, limit: 5);
+        }
+      } else if (stateString.startsWith('PatientState.error')) {
+        patientCubit.loadPatients(page: 1, limit: 5);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
