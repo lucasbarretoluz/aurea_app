@@ -1,3 +1,4 @@
+import 'package:aurea_app/src/core/enums/gender_enum.dart';
 import 'package:flutter/material.dart';
 
 class ClinicCard extends StatelessWidget {
@@ -5,6 +6,7 @@ class ClinicCard extends StatelessWidget {
   final String subtitle;
   final String category;
   final String? imageUrl;
+  final GenderEnum? gender;
   final StackFit fit;
 
   const ClinicCard({
@@ -13,6 +15,7 @@ class ClinicCard extends StatelessWidget {
     required this.subtitle,
     required this.category,
     this.imageUrl,
+    this.gender,
     this.fit = StackFit.expand,
   });
 
@@ -30,33 +33,7 @@ class ClinicCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Container(
               color: Colors.grey[400],
-              child: imageUrl != null && imageUrl!.isNotEmpty
-                  ? Image.network(
-                      imageUrl!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/smile_woman.jpg',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.grey[400],
-                              child: const Icon(Icons.person, size: 80, color: Colors.white70),
-                            );
-                          },
-                        );
-                      },
-                    )
-                  : Image.asset(
-                      'assets/images/smile_woman.jpg',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[400],
-                          child: const Icon(Icons.person, size: 80, color: Colors.white70),
-                        );
-                      },
-                    ),
+              child: _buildImage(),
             ),
           ),
           Positioned(
@@ -104,6 +81,48 @@ class ClinicCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  String _getDefaultImage() {
+    if (gender == GenderEnum.female) {
+      return 'assets/images/demo-woman.png';
+    } else if (gender == GenderEnum.male) {
+      return 'assets/images/demo-man.png';
+    }
+    // Fallback padrão
+    return 'assets/images/smile_woman.jpg';
+  }
+
+  Widget _buildImage() {
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return Image.network(
+        imageUrl!,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            _getDefaultImage(),
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Colors.grey[400],
+                child: const Icon(Icons.person, size: 80, color: Colors.white70),
+              );
+            },
+          );
+        },
+      );
+    }
+
+    return Image.asset(
+      _getDefaultImage(),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          color: Colors.grey[400],
+          child: const Icon(Icons.person, size: 80, color: Colors.white70),
+        );
+      },
     );
   }
 }

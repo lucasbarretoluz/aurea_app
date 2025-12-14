@@ -27,12 +27,13 @@ Map<String, dynamic> _$PatientModelToJson(_PatientModel instance) =>
       'clinicName': instance.clinicName,
       'profilePhotoUrl': instance.profilePhotoUrl,
       'description': instance.description,
-      'gender': instance.gender,
+      'gender': _$GenderEnumEnumMap[instance.gender],
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
 
 const _$GenderEnumEnumMap = {
-  GenderEnum.male: 'male',
-  GenderEnum.female: 'female',
+  GenderEnum.male: 'MALE',
+  GenderEnum.female: 'FEMALE',
+  GenderEnum.unknown: 'OTHER',
 };

@@ -159,6 +159,7 @@ class _PatientsPageViewState extends State<PatientsPageView> {
                           clinicName: patient.clinicName,
                           subtitle: patient.description ?? '',
                           imageUrl: patient.profilePhotoUrl,
+                          gender: patient.gender,
                         ),
                       );
                     },

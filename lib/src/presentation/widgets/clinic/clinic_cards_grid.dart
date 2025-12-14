@@ -44,6 +44,7 @@ class ClinicCardsGrid extends StatelessWidget {
                 subtitle: patient.description ?? 'Paciente ativo da pasta',
                 category: category,
                 imageUrl: patient.profilePhotoUrl,
+                gender: patient.gender,
               ),
             ),
           );

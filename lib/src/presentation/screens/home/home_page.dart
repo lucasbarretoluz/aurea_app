@@ -198,6 +198,7 @@ class AllPatientsSection extends StatelessWidget {
                                 clinicName: patient.clinicName,
                                 subtitle: patient.description,
                                 imageUrl: patient.profilePhotoUrl,
+                                gender: patient.gender,
                               ),
                             ),
                           );
