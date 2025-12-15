@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:aurea_app/src/presentation/screens/help/widgets/help_page_scaffold.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
+import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatefulWidget {
@@ -166,55 +167,18 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Container(
+                child: ShadowGradientContainer(
                   height: 230,
-                  decoration: BoxDecoration(
-                    color: colorGradient,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorGradient.withOpacity(0.12),
-                        offset: const Offset(40, 20),
-                        blurRadius: 10,
-                        spreadRadius: 1,
-                      ),
-                      BoxShadow(
-                        color: colorGradient.withOpacity(0.9),
-                        offset: const Offset(15, -15),
-                        blurRadius: 20,
-                        spreadRadius: 1,
-                      ),
-                      BoxShadow(
-                        color: colorGradient.withOpacity(0.9),
-                        offset: const Offset(-15, -15),
-                        blurRadius: 20,
-                        spreadRadius: 1,
+                  colorGradient: colorGradient,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      NavigationButtons(
+                        currentPage: 0,
+                        onPrevious: () {},
+                        onNext: () {},
                       ),
                     ],
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          colorGradient.withOpacity(0.9),
-                          colorGradient.withOpacity(0.3),
-                          const Color(0xFFE0E0E0).withOpacity(0.5),
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        NavigationButtons(
-                          currentPage: 0,
-                          onPrevious: () {},
-                          onNext: () {},
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),
