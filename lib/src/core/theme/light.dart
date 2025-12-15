@@ -23,7 +23,7 @@ ThemeData lightTheme() {
     surface: Color(0xffFFFBFF),
     onSurface: Color(0xff2D1619),
     surfaceContainerHighest: Color(0xffF5E3E6),
-    onSurfaceVariant: Color(0xff524245),
+    onSurfaceVariant: Color(0xff323131),
     inverseSurface: Color(0xff472B2E),
     onInverseSurface: Color(0xffFFEDEE),
     inversePrimary: Color(0xffFFB0CB),

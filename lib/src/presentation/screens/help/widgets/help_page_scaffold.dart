@@ -12,6 +12,7 @@ class HelpPageScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
       body: Stack(
         children: [
           Positioned.fill(
@@ -25,7 +26,9 @@ class HelpPageScaffold extends StatelessWidget {
           Positioned(
             top: statusBarHeight,
             left: 10,
-            child: const BackButton(),
+            child: const BackButton(
+              color: Color(0xffaea79d),
+            ),
           ),
         ],
       ),
