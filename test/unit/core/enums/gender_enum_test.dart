@@ -64,6 +64,42 @@ void main() {
       });
     });
 
+    group('fromJson', () {
+      test('should return GenderEnum.male for "MALE"', () {
+        expect(GenderEnum.fromJson('MALE'), GenderEnum.male);
+      });
+
+      test('should return GenderEnum.female for "FEMALE"', () {
+        expect(GenderEnum.fromJson('FEMALE'), GenderEnum.female);
+      });
+
+      test('should return GenderEnum.unknown for "OTHER"', () {
+        expect(GenderEnum.fromJson('OTHER'), GenderEnum.unknown);
+      });
+
+      test('should return GenderEnum.unknown for invalid value', () {
+        expect(GenderEnum.fromJson('invalid'), GenderEnum.unknown);
+      });
+
+      test('should return GenderEnum.unknown for empty string', () {
+        expect(GenderEnum.fromJson(''), GenderEnum.unknown);
+      });
+    });
+
+    group('toStringName', () {
+      test('should return "Entrada" for GenderEnum.male', () {
+        expect(GenderEnum.male.toStringName, 'Entrada');
+      });
+
+      test('should return "FEMALE" for GenderEnum.female', () {
+        expect(GenderEnum.female.toStringName, 'FEMALE');
+      });
+
+      test('should return "unknown" for GenderEnum.unknown', () {
+        expect(GenderEnum.unknown.toStringName, 'unknown');
+      });
+    });
+
     group('enum properties', () {
       test('should have name property', () {
         expect(GenderEnum.male.name, 'male');
