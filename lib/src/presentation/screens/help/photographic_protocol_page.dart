@@ -1,3 +1,4 @@
+import 'package:aurea_app/src/presentation/screens/help/widgets/help_page_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatelessWidget {
@@ -5,14 +6,12 @@ class PhotographicProtocolPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Protocolo fotográfico'),
-      ),
-      body: const Center(
-        child: Text('Protocolo fotográfico'),
-      ),
+    return HelpPageScaffold(
+      children: [
+        Center(
+          child: Text('Conteúdo da Coluna'),
+        ),
+      ],
     );
   }
 }
-
