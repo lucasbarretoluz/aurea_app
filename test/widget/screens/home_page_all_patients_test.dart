@@ -166,6 +166,8 @@ void main() {
       final mockCubit = MockPatientCubit();
       when(() => mockCubit.state).thenReturn(const PatientState.loading());
       when(() => mockCubit.stream).thenAnswer((_) => const Stream.empty());
+      when(() => mockCubit.loadPatients(page: any(named: 'page'), limit: any(named: 'limit'), loadMore: any(named: 'loadMore')))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(
         MaterialApp(
@@ -177,6 +179,8 @@ void main() {
           ),
         ),
       );
+
+      await tester.pumpAndSettle();
 
       expect(find.text('Todos os pacientes'), findsNothing);
     });
@@ -185,6 +189,8 @@ void main() {
       final mockCubit = MockPatientCubit();
       when(() => mockCubit.state).thenReturn(const PatientState.initial());
       when(() => mockCubit.stream).thenAnswer((_) => const Stream.empty());
+      when(() => mockCubit.loadPatients(page: any(named: 'page'), limit: any(named: 'limit'), loadMore: any(named: 'loadMore')))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(
         MaterialApp(
@@ -196,6 +202,8 @@ void main() {
           ),
         ),
       );
+
+      await tester.pumpAndSettle();
 
       expect(find.text('Todos os pacientes'), findsNothing);
     });
