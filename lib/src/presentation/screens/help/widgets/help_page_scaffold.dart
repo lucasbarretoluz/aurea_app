@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class HelpPageScaffold extends StatelessWidget {
-  final List<Widget> children;
+  final Widget child;
 
   const HelpPageScaffold({
     super.key,
-    required this.children,
+    required this.child,
   });
 
   @override
@@ -16,12 +16,7 @@ class HelpPageScaffold extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Column(
-              children: [
-                SizedBox(height: statusBarHeight),
-                ...children,
-              ],
-            ),
+            child: child,
           ),
           Positioned(
             top: statusBarHeight,
