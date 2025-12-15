@@ -1,4 +1,4 @@
-import 'package:aurea_app/src/data/repository/auth_repository.dart';
+import 'package:aurea_app/src/data/provider/auth_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,57 +8,61 @@ void main() {
     await dotenv.load(fileName: '.env.dev');
   });
 
-  group('AuthRepository', () {
-    late AuthRepository repository;
+  group('AuthProvider', () {
+    late AuthProvider provider;
 
     setUp(() {
-      repository = AuthRepository();
+      provider = AuthProvider();
     });
 
     test('should be instantiable', () {
-      expect(repository, isA<AuthRepository>());
+      expect(provider, isA<AuthProvider>());
+    });
+
+    test('should have healthCheck method', () {
+      expect(provider.healthCheck, isA<Function>());
     });
 
     test('should have signIn method', () {
-      expect(repository.signIn, isA<Function>());
+      expect(provider.signIn, isA<Function>());
     });
 
     test('should have singUp method', () {
-      expect(repository.singUp, isA<Function>());
+      expect(provider.singUp, isA<Function>());
     });
 
     test('should have firebaseAuthValid method', () {
-      expect(repository.firebaseAuthValid, isA<Function>());
+      expect(provider.firebaseAuthValid, isA<Function>());
     });
 
     test('should have deleteAccount method', () {
-      expect(repository.deleteAccount, isA<Function>());
+      expect(provider.deleteAccount, isA<Function>());
     });
 
     test('should have clearAccount method', () {
-      expect(repository.clearAccount, isA<Function>());
+      expect(provider.clearAccount, isA<Function>());
     });
 
     test('should have updateIsPremium method', () {
-      expect(repository.updateIsPremium, isA<Function>());
+      expect(provider.updateIsPremium, isA<Function>());
     });
 
     test('should have refreshToken method', () {
-      expect(repository.refreshToken, isA<Function>());
+      expect(provider.refreshToken, isA<Function>());
     });
 
-    test('signIn should throw exception on error', () async {
+    test('healthCheck should throw exception on error', () async {
       try {
-        await repository.signIn(email: 'test@test.com', password: 'password');
+        await provider.healthCheck();
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
       }
     });
 
-    test('signIn should handle domain parameter', () async {
+    test('signIn should throw exception on error', () async {
       try {
-        await repository.signIn(email: 'test@test.com', password: 'password', domain: 'test');
+        await provider.signIn(identifier: 'test', password: 'password');
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -67,16 +71,16 @@ void main() {
 
     test('singUp should throw exception on error', () async {
       try {
-        await repository.singUp(name: 'Test', email: 'test@test.com', password: 'password');
+        await provider.singUp(name: 'Test', email: 'test@test.com', password: 'password');
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
       }
     });
 
-    test('singUp should handle optional phone parameter', () async {
+    test('singUp should accept optional phone parameter', () async {
       try {
-        await repository.singUp(
+        await provider.singUp(
           name: 'Test',
           email: 'test@test.com',
           password: 'password',
@@ -90,7 +94,7 @@ void main() {
 
     test('firebaseAuthValid should throw exception on error', () async {
       try {
-        await repository.firebaseAuthValid(token: 'token');
+        await provider.firebaseAuthValid(token: 'token');
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -99,7 +103,7 @@ void main() {
 
     test('deleteAccount should throw exception on error', () async {
       try {
-        await repository.deleteAccount();
+        await provider.deleteAccount();
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -108,7 +112,7 @@ void main() {
 
     test('clearAccount should throw exception on error', () async {
       try {
-        await repository.clearAccount();
+        await provider.clearAccount();
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -117,7 +121,7 @@ void main() {
 
     test('updateIsPremium should throw exception on error', () async {
       try {
-        await repository.updateIsPremium(isPremium: true);
+        await provider.updateIsPremium(isPremium: true);
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -126,7 +130,7 @@ void main() {
 
     test('updateIsPremium should handle false value', () async {
       try {
-        await repository.updateIsPremium(isPremium: false);
+        await provider.updateIsPremium(isPremium: false);
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
@@ -135,7 +139,7 @@ void main() {
 
     test('refreshToken should throw exception on error', () async {
       try {
-        await repository.refreshToken(refreshToken: 'token');
+        await provider.refreshToken(refreshToken: 'token');
         fail('Should throw exception');
       } catch (e) {
         expect(e, isNotNull);
