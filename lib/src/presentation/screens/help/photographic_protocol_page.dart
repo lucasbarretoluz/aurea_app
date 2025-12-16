@@ -4,6 +4,11 @@ import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_pro
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_3.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_4.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_5.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_6.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_7.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_8.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_9.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_10.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatefulWidget {
@@ -42,7 +47,7 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
   }
 
   void _goToNextPage() {
-    if (_currentPage < 4) {
+    if (_currentPage < 9) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -81,6 +86,36 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
             colorGradient: colorGradient,
           ),
           PhotographicProtocolPage5(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage6(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage7(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage8(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage9(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage10(
             currentPage: _currentPage,
             onPrevious: _goToPreviousPage,
             onNext: _goToNextPage,
