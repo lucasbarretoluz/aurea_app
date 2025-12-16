@@ -9,6 +9,8 @@ import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_pro
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_8.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_9.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_10.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_11.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_12.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatefulWidget {
@@ -47,7 +49,7 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
   }
 
   void _goToNextPage() {
-    if (_currentPage < 9) {
+    if (_currentPage < 11) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -116,6 +118,18 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
             colorGradient: colorGradient,
           ),
           PhotographicProtocolPage10(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage11(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage12(
             currentPage: _currentPage,
             onPrevious: _goToPreviousPage,
             onNext: _goToNextPage,
