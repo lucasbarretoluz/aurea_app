@@ -3,13 +3,13 @@ import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.da
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
-class PhotographicProtocolPage7 extends StatelessWidget {
+class PhotographicProtocolPage9 extends StatelessWidget {
   final int currentPage;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
 
-  const PhotographicProtocolPage7({
+  const PhotographicProtocolPage9({
     super.key,
     required this.currentPage,
     required this.onPrevious,
@@ -26,16 +26,18 @@ class PhotographicProtocolPage7 extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 90,
+          bottom: 100,
           child: PhotographicFrameView(
-            imageAsset: 'assets/images/mannequin_retractor_front.jpg',
-            imageScale: 1.15,
+            imageAsset: 'assets/images/mouth_front.png',
+            imageScale: 0.9,
             customPaintWidth: 600,
             customPaintHeight: 700,
             gradientTop: 310,
             gradientLeft: 19,
             gradientRight: 19,
             gradientHeight: 200,
+            scanFrameMarginTop: 150.0,
+            scanFrameMarginBottom: 230.0,
           ),
         ),
         Positioned(
@@ -43,32 +45,35 @@ class PhotographicProtocolPage7 extends StatelessWidget {
           left: 0,
           right: 0,
           child: ShadowGradientContainer(
-            height: 230,
+            borderRadius: null,
+            disableShadow: true,
+            height: 250,
             colorGradient: colorGradient,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(height: 20),
                 Column(
                   children: [
                     const Text(
-                      'Fotografia com Afastador',
+                      'Fotografia do Sorriso',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontFamily: 'Montserrat',
-                        letterSpacing: 3.3,
+                        letterSpacing: 3.5,
                       ),
                     ),
                     const SizedBox(height: 5),
                     Container(
                       height: 2.5,
-                      width: 360,
+                      width: 330,
                       color: Colors.black,
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Paciente de frente com ',
+                      'Paciente de frente ',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -76,7 +81,7 @@ class PhotographicProtocolPage7 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'afastador',
+                      'sorrindo',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,

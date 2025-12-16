@@ -5,8 +5,9 @@ class ShadowGradientContainer extends StatelessWidget {
   final Color? colorGradient;
   final double? height;
   final double? width;
-  final double borderRadius;
+  final double? borderRadius;
   final double innerBorderRadius;
+  final bool disableShadow;
 
   const ShadowGradientContainer({
     super.key,
@@ -16,6 +17,7 @@ class ShadowGradientContainer extends StatelessWidget {
     this.width,
     this.borderRadius = 20,
     this.innerBorderRadius = 10,
+    this.disableShadow = false,
   });
 
   @override
@@ -28,8 +30,8 @@ class ShadowGradientContainer extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         color: defaultColorGradient,
-        borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: [
+        borderRadius: borderRadius != null ? BorderRadius.circular(borderRadius!) : null,
+        boxShadow: disableShadow ? null : [
           BoxShadow(
             color: defaultColorGradient.withOpacity(0.12),
             offset: const Offset(40, 20),

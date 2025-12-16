@@ -50,20 +50,21 @@ class PhotographicProtocolPage8 extends StatelessWidget {
               children: [
                 Column(
                   children: [
+                    const SizedBox(height: 20),
                     const Text(
-                      'Fotografia Frontal',
+                      'Fotografia com Afastador',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontFamily: 'Montserrat',
-                        letterSpacing: 3.5,
+                        letterSpacing: 3.3,
                       ),
                     ),
                     const SizedBox(height: 5),
                     Container(
                       height: 2.5,
-                      width: 280,
+                      width: 360,
                       color: Colors.black,
                       margin: const EdgeInsets.only(bottom: 16),
                     ),

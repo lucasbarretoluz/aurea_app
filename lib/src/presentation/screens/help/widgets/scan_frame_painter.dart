@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ScanFramePainter extends CustomPainter {
+  final double? marginHorizontal;
+  final double? marginTop;
+  final double? marginBottom;
+
+  const ScanFramePainter({
+    this.marginHorizontal,
+    this.marginTop,
+    this.marginBottom,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -11,16 +21,16 @@ class ScanFramePainter extends CustomPainter {
 
     final cornerLength = 80.0;
     final cornerRadius = 15.0;
-    final marginHorizontal = 20.0;
-    final marginTop = 100.0;
-    final marginBottom = 220.0;
+    final horizontal = marginHorizontal ?? 20.0;
+    final top = marginTop ?? 100.0;
+    final bottom = marginBottom ?? 220.0;
 
-    final topLeft = Offset(marginHorizontal, marginTop);
-    final topRight = Offset(size.width - marginHorizontal, marginTop);
-    final bottomLeft = Offset(marginHorizontal, size.height - marginBottom);
+    final topLeft = Offset(horizontal, top);
+    final topRight = Offset(size.width - horizontal, top);
+    final bottomLeft = Offset(horizontal, size.height - bottom);
     final bottomRight = Offset(
-      size.width - marginHorizontal,
-      size.height - marginBottom,
+      size.width - horizontal,
+      size.height - bottom,
     );
 
     final path = Path();

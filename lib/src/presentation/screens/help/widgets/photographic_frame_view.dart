@@ -10,6 +10,9 @@ class PhotographicFrameView extends StatelessWidget {
   final double? gradientLeft;
   final double? gradientRight;
   final double? gradientHeight;
+  final double? scanFrameMarginHorizontal;
+  final double? scanFrameMarginTop;
+  final double? scanFrameMarginBottom;
 
   const PhotographicFrameView({
     super.key,
@@ -21,6 +24,9 @@ class PhotographicFrameView extends StatelessWidget {
     this.gradientLeft = 19,
     this.gradientRight = 19,
     this.gradientHeight = 200,
+    this.scanFrameMarginHorizontal,
+    this.scanFrameMarginTop,
+    this.scanFrameMarginBottom,
   });
 
   @override
@@ -62,7 +68,11 @@ class PhotographicFrameView extends StatelessWidget {
         if (customPaintWidth != null && customPaintHeight != null)
           CustomPaint(
             size: Size(customPaintWidth!, customPaintHeight!),
-            painter: ScanFramePainter(),
+            painter: ScanFramePainter(
+              marginHorizontal: scanFrameMarginHorizontal,
+              marginTop: scanFrameMarginTop,
+              marginBottom: scanFrameMarginBottom,
+            ),
           ),
       ],
     );
