@@ -31,7 +31,7 @@ class PhotographicProtocolPage1 extends StatelessWidget {
           child: Transform.scale(
             scale: 1.25,
             child: Image.asset(
-              'assets/images/mannequin_front.png',
+              'assets/images/mannequin_male_front.png',
               fit: BoxFit.contain,
             ),
           ),
@@ -146,9 +146,7 @@ class PhotographicProtocolPage1 extends StatelessWidget {
                             text: 'enquadramento',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          TextSpan(
-                            text: ' em todas as etapas do tratamento.',
-                          ),
+                          TextSpan(text: ' em todas as etapas do tratamento.'),
                         ],
                       ),
                     ),
@@ -166,20 +164,20 @@ class PhotographicProtocolPage1 extends StatelessWidget {
           child: ShadowGradientContainer(
             height: 230,
             colorGradient: colorGradient,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                NavigationButtons(
-                  currentPage: currentPage,
-                  onPrevious: onPrevious,
-                  onNext: onNext,
-                ),
-              ],
-            ),
+            child: SizedBox(),
+          ),
+        ),
+        Positioned(
+          bottom: 50,
+          left: 0,
+          right: 0,
+          child: NavigationButtons(
+            currentPage: currentPage,
+            onPrevious: onPrevious,
+            onNext: onNext,
           ),
         ),
       ],
     );
   }
 }
-

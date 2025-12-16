@@ -38,13 +38,13 @@ class ShadowGradientContainer extends StatelessWidget {
           ),
           BoxShadow(
             color: defaultColorGradient.withOpacity(0.9),
-            offset: const Offset(15, -15),
+            offset: const Offset(15, -5),
             blurRadius: 20,
             spreadRadius: 1,
           ),
           BoxShadow(
             color: defaultColorGradient.withOpacity(0.9),
-            offset: const Offset(-15, -15),
+            offset: const Offset(-15, -5),
             blurRadius: 20,
             spreadRadius: 1,
           ),
