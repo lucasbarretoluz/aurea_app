@@ -68,7 +68,7 @@ class PhotographicProtocolPage5 extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Paciente de frente em ',
+                      'Paciente em um ângulo ',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -76,7 +76,7 @@ class PhotographicProtocolPage5 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'posição personalizada',
+                      'de 45º e em repouso',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
