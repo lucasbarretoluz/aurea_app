@@ -37,14 +37,26 @@ class PhotographicProtocolPage2 extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 150,
-                left: 150,
-                right: 150,
+                top: 310,
+                left: 19,
+                right: 19,
                 child: Container(
-                  height: 80,
+                  height: 200,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE0E0E0).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        const Color(0xFFE0E0E0).withOpacity(0.0),
+                        const Color(0xFFE0E0E0).withOpacity(0.1),
+                        const Color(0xFFE0E0E0).withOpacity(0.3),
+                        const Color(0xFFE0E0E0).withOpacity(0.5),
+                      ],
+                    ),
                   ),
                 ),
               ),
