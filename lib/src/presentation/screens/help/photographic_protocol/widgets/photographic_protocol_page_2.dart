@@ -1,16 +1,16 @@
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_frame_view.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_frame_view.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
-class PhotographicProtocolPage12 extends StatelessWidget {
+class PhotographicProtocolPage2 extends StatelessWidget {
   final int currentPage;
   final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
 
-  const PhotographicProtocolPage12({
+  const PhotographicProtocolPage2({
     super.key,
     required this.currentPage,
     required this.totalPages,
@@ -28,18 +28,16 @@ class PhotographicProtocolPage12 extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 100,
+          bottom: 90,
           child: PhotographicFrameView(
-            imageAsset: 'assets/images/mouth_full_side.png',
-            imageScale: 0.9,
+            imageAsset: 'assets/images/mannequin_female_front.png',
+            imageScale: 1.25,
             customPaintWidth: 600,
             customPaintHeight: 700,
             gradientTop: 310,
             gradientLeft: 19,
             gradientRight: 19,
             gradientHeight: 200,
-            scanFrameMarginTop: 150.0,
-            scanFrameMarginBottom: 230.0,
           ),
         ),
         Positioned(
@@ -47,18 +45,15 @@ class PhotographicProtocolPage12 extends StatelessWidget {
           left: 0,
           right: 0,
           child: ShadowGradientContainer(
-            borderRadius: null,
-            disableShadow: true,
-            height: 250,
+            height: 230,
             colorGradient: colorGradient,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 Column(
                   children: [
                     const Text(
-                      'Fotografia do Sorriso',
+                      'Fotografia Frontal',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -70,12 +65,12 @@ class PhotographicProtocolPage12 extends StatelessWidget {
                     const SizedBox(height: 5),
                     Container(
                       height: 2.5,
-                      width: 330,
+                      width: 280,
                       color: Colors.black,
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Paciente com afastador ',
+                      'Paciente de frente em ',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -83,7 +78,7 @@ class PhotographicProtocolPage12 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'em um ângulo de 45º',
+                      'repouso',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,

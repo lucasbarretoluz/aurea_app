@@ -1,16 +1,16 @@
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_frame_view.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_frame_view.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
-class PhotographicProtocolPage2 extends StatelessWidget {
+class PhotographicProtocolPage7 extends StatelessWidget {
   final int currentPage;
   final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
 
-  const PhotographicProtocolPage2({
+  const PhotographicProtocolPage7({
     super.key,
     required this.currentPage,
     required this.totalPages,
@@ -30,8 +30,8 @@ class PhotographicProtocolPage2 extends StatelessWidget {
           right: 0,
           bottom: 90,
           child: PhotographicFrameView(
-            imageAsset: 'assets/images/mannequin_female_front.png',
-            imageScale: 1.25,
+            imageAsset: 'assets/images/mannequin_retractor_front.jpg',
+            imageScale: 1.15,
             customPaintWidth: 600,
             customPaintHeight: 700,
             gradientTop: 310,
@@ -53,24 +53,24 @@ class PhotographicProtocolPage2 extends StatelessWidget {
                 Column(
                   children: [
                     const Text(
-                      'Fotografia Frontal',
+                      'Fotografia com Afastador',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontFamily: 'Montserrat',
-                        letterSpacing: 3.5,
+                        letterSpacing: 3.3,
                       ),
                     ),
                     const SizedBox(height: 5),
                     Container(
                       height: 2.5,
-                      width: 280,
+                      width: 360,
                       color: Colors.black,
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Paciente de frente em ',
+                      'Paciente de frente com ',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -78,7 +78,7 @@ class PhotographicProtocolPage2 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'repouso',
+                      'afastador',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -106,3 +106,4 @@ class PhotographicProtocolPage2 extends StatelessWidget {
     );
   }
 }
+

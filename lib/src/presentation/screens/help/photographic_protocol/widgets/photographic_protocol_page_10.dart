@@ -1,16 +1,16 @@
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_frame_view.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_frame_view.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
-class PhotographicProtocolPage11 extends StatelessWidget {
+class PhotographicProtocolPage10 extends StatelessWidget {
   final int currentPage;
   final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
 
-  const PhotographicProtocolPage11({
+  const PhotographicProtocolPage10({
     super.key,
     required this.currentPage,
     required this.totalPages,
@@ -30,8 +30,8 @@ class PhotographicProtocolPage11 extends StatelessWidget {
           right: 0,
           bottom: 100,
           child: PhotographicFrameView(
-            imageAsset: 'assets/images/mouth_full_front.png',
-            imageScale: 1,
+            imageAsset: 'assets/images/mouth_side.png',
+            imageScale: 0.9,
             customPaintWidth: 600,
             customPaintHeight: 700,
             gradientTop: 310,
@@ -75,7 +75,7 @@ class PhotographicProtocolPage11 extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Paciente com afastador de',
+                      'Paciente sorrindo em um',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -83,7 +83,7 @@ class PhotographicProtocolPage11 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'frente',
+                      'ângulo de 45º',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,

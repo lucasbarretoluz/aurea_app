@@ -1,4 +1,4 @@
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_frame_view.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_frame_view.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';

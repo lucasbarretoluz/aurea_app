@@ -1,18 +1,18 @@
 import 'package:aurea_app/src/presentation/screens/help/widgets/help_page_scaffold.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_1.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_2.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_3.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_4.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_5.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_6.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_7.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_8.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_9.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_10.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_11.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_12.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_13.dart';
-import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_14.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_1.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_2.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_3.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_4.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_5.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_6.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_7.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_8.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_9.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_10.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_11.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_12.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_13.dart';
+import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/widgets/photographic_protocol_page_14.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatefulWidget {
