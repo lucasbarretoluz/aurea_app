@@ -11,6 +11,9 @@ import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_pro
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_10.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_11.dart';
 import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_12.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_13.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_14.dart';
+import 'package:aurea_app/src/presentation/screens/help/widgets/photographic_protocol_page_15.dart';
 import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage extends StatefulWidget {
@@ -49,7 +52,7 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
   }
 
   void _goToNextPage() {
-    if (_currentPage < 11) {
+    if (_currentPage < 14) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -130,6 +133,24 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
             colorGradient: colorGradient,
           ),
           PhotographicProtocolPage12(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage13(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage14(
+            currentPage: _currentPage,
+            onPrevious: _goToPreviousPage,
+            onNext: _goToNextPage,
+            colorGradient: colorGradient,
+          ),
+          PhotographicProtocolPage15(
             currentPage: _currentPage,
             onPrevious: _goToPreviousPage,
             onNext: _goToNextPage,
