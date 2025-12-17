@@ -34,7 +34,6 @@ class PhotographicProtocolPage14 extends StatelessWidget {
                   child: RichText(
                     text: const TextSpan(
                       style: TextStyle(
-                        fontSize: 18,
                         fontFamily: 'Montserrat',
                         color: Colors.white,
                       ),
@@ -45,7 +44,7 @@ class PhotographicProtocolPage14 extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 22,
+                            fontSize: 16,
                           ),
                         ),
                         TextSpan(text: ' do plano\noclusal resultará\nem um '),
@@ -54,7 +53,7 @@ class PhotographicProtocolPage14 extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 22,
+                            fontSize: 16,
                           ),
                         ),
                         TextSpan(text: ' na\nfotografia.'),

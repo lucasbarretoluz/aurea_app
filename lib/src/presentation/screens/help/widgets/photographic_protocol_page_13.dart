@@ -35,7 +35,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                   Text(
                     'Importante!',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
                       color: Colors.white,
@@ -53,7 +53,6 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                     child: RichText(
                       text: const TextSpan(
                         style: TextStyle(
-                          fontSize: 18,
                           fontFamily: 'Montserrat',
                           color: Colors.white,
                         ),
@@ -66,7 +65,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                         ],
