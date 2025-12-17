@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class NavigationButtons extends StatelessWidget {
   final int currentPage;
+  final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorText;
@@ -11,6 +12,7 @@ class NavigationButtons extends StatelessWidget {
   const NavigationButtons({
     super.key,
     required this.currentPage,
+    required this.totalPages,
     required this.onPrevious,
     required this.onNext,
     this.colorText = Colors.black,
@@ -38,8 +40,8 @@ class NavigationButtons extends StatelessWidget {
           const SizedBox(width: 16),
         ],
         _NavigationButton(
-          text: 'próximo',
-          icon: Icons.chevron_right,
+          text: currentPage == totalPages - 1 ? 'concluir' : 'próximo',
+          icon: currentPage == totalPages - 1 ? Icons.check : Icons.chevron_right,
           onPressed: onNext,
           isLeft: false,
           colorText: colorText,

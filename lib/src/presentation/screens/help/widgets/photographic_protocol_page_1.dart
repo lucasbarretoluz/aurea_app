@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class PhotographicProtocolPage1 extends StatelessWidget {
   final int currentPage;
+  final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
@@ -13,6 +14,7 @@ class PhotographicProtocolPage1 extends StatelessWidget {
   const PhotographicProtocolPage1({
     super.key,
     required this.currentPage,
+    required this.totalPages,
     required this.onPrevious,
     required this.onNext,
     required this.colorGradient,
@@ -173,6 +175,7 @@ class PhotographicProtocolPage1 extends StatelessWidget {
           right: 0,
           child: NavigationButtons(
             currentPage: currentPage,
+            totalPages: totalPages,
             onPrevious: onPrevious,
             onNext: onNext,
           ),
