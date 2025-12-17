@@ -57,6 +57,8 @@ class _PhotographicProtocolPageState extends State<PhotographicProtocolPage> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+    } else {
+      Navigator.of(context).pop();
     }
   }
 
