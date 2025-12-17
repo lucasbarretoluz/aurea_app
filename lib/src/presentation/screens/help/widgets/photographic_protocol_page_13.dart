@@ -26,54 +26,56 @@ class PhotographicProtocolPage13 extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 25),
-                  child: RichText(
-                    text: const TextSpan(
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        color: Colors.white,
-                      ),
-                      children: [
-                        TextSpan(text: 'Posicionar a\ncâmera '),
-                        TextSpan(
-                          text: 'muito\nacima',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                        ),
-                        TextSpan(text: ' do plano\noclusal resultará\nem um '),
-                        TextSpan(
-                          text: 'sorriso\nexagerado',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                        ),
-                        TextSpan(text: ' na\nfotografia.'),
-                      ],
+            Padding(
+              padding: const EdgeInsets.only(left: 25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Importante!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.white,
                     ),
                   ),
-                ),
-                Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.white, width: 4),
+                  Container(
+                    height: 4,
+                    width: 160,
+                    color: Color(0xFFB4DCE5),
+                    margin: const EdgeInsets.only(bottom: 16),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset('assets/images/smile.png'),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: 200,
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                          color: Colors.white,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Fotografe o sorriso do paciente em um ',
+                          ),
+                          TextSpan(
+                            text: 'ângulo de 12º do plano oclusal.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(width: double.infinity),
+                ],
+              ),
             ),
             const SizedBox(height: 30),
             Row(
@@ -155,30 +157,59 @@ class _SideArrowPainter extends CustomPainter {
         Paint()
           ..color = Colors.white
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 3.0
+          ..strokeWidth = 2.5
           ..strokeCap = StrokeCap.round;
 
     final redPaint =
         Paint()
-          ..color = const Color(0xFFE53935)
+          ..color = Color(0xFFB4DCE5)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 5.0
+          ..strokeWidth = 3.5
           ..strokeCap = StrokeCap.round;
 
     final end = Offset(size.width * 0.9, size.height * 0.62);
-    final horizontalStart = Offset(size.width * 0.05, end.dy);
-    canvas.drawLine(horizontalStart, end, whitePaint);
+    const whiteLineYOffset = 14.0;
+    final horizontalStart = Offset(
+      size.width * 0.09,
+      end.dy + whiteLineYOffset,
+    );
+    final horizontalEnd = Offset(end.dx, end.dy + whiteLineYOffset);
+    canvas.drawLine(horizontalStart, horizontalEnd, whitePaint);
 
-    final arrowStart = Offset(size.width * 0.1, size.height * 0.15);
+    const arrowAngle = 14 * math.pi / 180;
+    final arrowUnit = Offset(math.cos(arrowAngle), math.sin(arrowAngle));
+    final arrowStartX = size.width * 0.08;
+    final arrowLength = (end.dx - arrowStartX) / arrowUnit.dx;
+    final arrowStart = end - arrowUnit * arrowLength;
     canvas.drawLine(arrowStart, end, redPaint);
+
+    final angleText = '12°';
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: angleText,
+        style: TextStyle(
+          color: redPaint.color,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat',
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final textOffset = Offset(
+      (horizontalStart.dx + arrowStart.dx) / 2 - textPainter.width / 2 + 10,
+      (horizontalStart.dy + arrowStart.dy) / 2 - textPainter.height / 2,
+    );
+    textPainter.paint(canvas, textOffset);
 
     final direction = (end - arrowStart);
     final length = direction.distance;
     if (length == 0) return;
 
     final unit = direction / length;
-    const headLength = 16.0;
-    const headAngle = 0.6;
+    const headLength = 13.0;
+    const headAngle = 0.4;
 
     final left = Offset(
       unit.dx * math.cos(headAngle) - unit.dy * math.sin(headAngle),
