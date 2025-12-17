@@ -30,7 +30,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 25,),
+                  padding: const EdgeInsets.only(right: 25),
                   child: RichText(
                     text: const TextSpan(
                       style: TextStyle(
@@ -67,7 +67,6 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.white, width: 4),
-                    
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -92,10 +91,9 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
           ],
         ),
-
         Positioned(
           bottom: 0,
           left: 0,
@@ -103,7 +101,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
           child: ShadowGradientContainer(
             borderRadius: null,
             disableShadow: true,
-            height: 250,
+            height: 200,
             colorGradient: colorGradient,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -112,24 +110,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                 Column(
                   children: [
                     const Text(
-                      'Fotografia do Sorriso',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontFamily: 'Montserrat',
-                        letterSpacing: 3.5,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      height: 2.5,
-                      width: 330,
-                      color: Colors.black,
-                      margin: const EdgeInsets.only(bottom: 16),
-                    ),
-                    const Text(
-                      'Detalhe do sorriso',
+                      'Posição da câmera em ',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -137,7 +118,7 @@ class PhotographicProtocolPage13 extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'em close',
+                      'relação ao paciente',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
