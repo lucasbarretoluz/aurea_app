@@ -79,7 +79,7 @@ class _NavigationButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: colorBackground,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: isLeft ? Radius.zero : Radius.circular(20),
