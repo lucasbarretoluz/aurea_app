@@ -15,50 +15,45 @@ class _SemiProfessionalCameraSettingsPage3State
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(35.0, 45.0, 50.0, 0.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: const Text(
-                'Veja abaixo nossas sugestões de configuração de câmera semiprofissional:',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  height: 1.5,
-                ),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: const Text(
+            'Veja abaixo nossas sugestões de configuração de câmera semiprofissional:',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              height: 1.5,
             ),
-            const SizedBox(height: 35),
-            _buildExpandableOption(
-              title: 'Tenho uma câmera semiprofissional e um flash/estúdio',
-              isExpanded: _isFirstExpanded,
-              onTap: () {
-                setState(() {
-                  _isFirstExpanded = !_isFirstExpanded;
-                });
-              },
-              child: _buildFirstExpandedContent(),
-            ),
-            const SizedBox(height: 30),
-            _buildExpandableOption(
-              title: 'Tenho uma câmera semiprofissional, mas ',
-              boldText: 'não tenho',
-              titleSuffix: ' flash/estúdio',
-              isExpanded: _isSecondExpanded,
-              onTap: () {
-                setState(() {
-                  _isSecondExpanded = !_isSecondExpanded;
-                });
-              },
-              child: _buildSecondExpandedContent(),
-            ),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 35),
+        _buildExpandableOption(
+          title: 'Tenho uma câmera semiprofissional e um flash/estúdio',
+          isExpanded: _isFirstExpanded,
+          onTap: () {
+            setState(() {
+              _isFirstExpanded = !_isFirstExpanded;
+            });
+          },
+          child: _buildFirstExpandedContent(),
+        ),
+        const SizedBox(height: 30),
+        _buildExpandableOption(
+          title: 'Tenho uma câmera semiprofissional, mas ',
+          boldText: 'não tenho',
+          titleSuffix: ' flash/estúdio',
+          isExpanded: _isSecondExpanded,
+          onTap: () {
+            setState(() {
+              _isSecondExpanded = !_isSecondExpanded;
+            });
+          },
+          child: _buildSecondExpandedContent(),
+        ),
+      ],
     );
   }
 
