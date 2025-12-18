@@ -59,6 +59,7 @@ class _SemiProfessionalCameraSettingsPageState
   @override
   Widget build(BuildContext context) {
     return HelpPageScaffold(
+      title: 'Configurações de câmera semiprofissional',
       child: Stack(
         children: [
           Positioned.fill(
