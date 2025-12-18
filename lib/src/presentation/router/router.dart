@@ -1,9 +1,9 @@
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/screens/help/dental_proportions_page.dart';
-import 'package:aurea_app/src/presentation/screens/help/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_phone/photographing_with_cellphone_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/photographic_protocol_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
+import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
