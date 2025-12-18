@@ -3,8 +3,6 @@ import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/se
 import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/semi_professional_camera_settings_page_2.dart';
 import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/semi_professional_camera_settings_page_3.dart';
 import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/semi_professional_camera_settings_page_4.dart';
-import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/semi_professional_camera_settings_page_5.dart';
-import 'package:aurea_app/src/presentation/screens/help/config_camera/widgets/semi_professional_camera_settings_page_6.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -21,7 +19,7 @@ class _SemiProfessionalCameraSettingsPageState
     extends State<SemiProfessionalCameraSettingsPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  static const int _totalPages = 6;
+  static const int _totalPages = 4;
 
   @override
   void initState() {
@@ -97,8 +95,6 @@ class _SemiProfessionalCameraSettingsPageState
                         const SemiProfessionalCameraSettingsPage2(),
                         const SemiProfessionalCameraSettingsPage3(),
                         const SemiProfessionalCameraSettingsPage4(),
-                        const SemiProfessionalCameraSettingsPage5(),
-                        const SemiProfessionalCameraSettingsPage6(),
                       ],
                     ),
                   ),
