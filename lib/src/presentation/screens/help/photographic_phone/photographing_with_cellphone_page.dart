@@ -19,7 +19,7 @@ class _PhotographingWithCellphonePageState
   @override
   Widget build(BuildContext context) {
     return HelpPageScaffold(
-      title: 'Configurações de câmera semiprofissional',
+      title: 'Fotografando com o \ncelular',
       child: SizedBox.expand(
         child: Stack(
           children: [
