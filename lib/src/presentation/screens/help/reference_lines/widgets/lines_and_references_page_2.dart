@@ -2,14 +2,14 @@ import 'package:aurea_app/src/presentation/widgets/buttons/navigation_buttons.da
 import 'package:aurea_app/src/presentation/widgets/containers/shadow_gradient_container.dart';
 import 'package:flutter/material.dart';
 
-class LinesAndReferencesPage1 extends StatelessWidget {
+class LinesAndReferencesPage2 extends StatelessWidget {
   final int currentPage;
   final int totalPages;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final Color colorGradient;
 
-  const LinesAndReferencesPage1({
+  const LinesAndReferencesPage2({
     super.key,
     required this.currentPage,
     required this.totalPages,
@@ -21,6 +21,7 @@ class LinesAndReferencesPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return Stack(
       alignment: Alignment.center,
@@ -43,13 +44,21 @@ class LinesAndReferencesPage1 extends StatelessWidget {
           bottom: screenHeight * 0.12,
           left: 0,
           right: 0,
+          child: Center(child: Container(width: 2, color: Colors.white)),
+        ),
+        Positioned(
+          top: screenHeight * 0.405,
+          left: 0,
+          right: 0,
           child: Center(
             child: Container(
-              width: 2,
+              height: 2,
+              width: screenWidth * 0.8,
               color: Colors.white,
             ),
           ),
         ),
+       
         Positioned(
           bottom: 0,
           left: 0,
@@ -65,7 +74,7 @@ class LinesAndReferencesPage1 extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     const Text(
-                      'Linha Média',
+                      'Linha Bipupilar',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -82,15 +91,8 @@ class LinesAndReferencesPage1 extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
                     const Text(
-                      'Linha vertical passando bem no ',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Montserrat',
-                      ),
-                    ),
-                    const Text(
-                      'meio da face do paciente',
+                      'Linha horizontal transversal à linha \n média passando pelas pupilas do \npaciente ',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
