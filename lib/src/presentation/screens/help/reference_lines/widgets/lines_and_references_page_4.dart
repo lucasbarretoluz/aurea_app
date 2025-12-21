@@ -32,7 +32,7 @@ class LinesAndReferencesPage4 extends StatelessWidget {
           right: 0,
           bottom: 0,
           child: Transform.scale(
-            scale: 1.2,
+            scale: 1.0,
             child: Image.asset(
               'assets/images/mouth_front.png',
               fit: BoxFit.contain,
@@ -47,7 +47,7 @@ class LinesAndReferencesPage4 extends StatelessWidget {
           child: Center(child: Container(width: 2, color: Colors.white)),
         ),
         Positioned(
-          top: screenHeight * 0.435,
+          top: screenHeight * 0.445,
           left: 0,
           right: 0,
           child: Center(
