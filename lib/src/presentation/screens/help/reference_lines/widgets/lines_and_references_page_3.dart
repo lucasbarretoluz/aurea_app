@@ -20,9 +20,6 @@ class LinesAndReferencesPage3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -30,34 +27,16 @@ class LinesAndReferencesPage3 extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: 100,
           child: Transform.scale(
             scale: 1.0,
             child: Image.asset(
-              'assets/images/mouth_front.png',
+              'assets/images/smile_bottom_line.png',
               fit: BoxFit.contain,
             ),
           ),
         ),
-        Positioned(
-          top: screenHeight * 0.15,
-          bottom: screenHeight * 0.12,
-          left: 0,
-          right: 0,
-          child: Center(child: Container(width: 2, color: Colors.white)),
-        ),
-        Positioned(
-          top: screenHeight * 0.517,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Container(
-              height: 2,
-              width: screenWidth * 0.8,
-              color: Colors.white,
-            ),
-          ),
-        ),
+     
 
         Positioned(
           bottom: 0,
