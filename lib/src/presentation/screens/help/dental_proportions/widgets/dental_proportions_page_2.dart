@@ -63,7 +63,7 @@ class DentalProportionsPage2 extends StatelessWidget {
                     const SizedBox(height: 5),
                     Container(
                       height: 2.5,
-                      width: 220,
+                      width: 290,
                       color: Colors.black,
                       margin: const EdgeInsets.only(bottom: 16),
                     ),
