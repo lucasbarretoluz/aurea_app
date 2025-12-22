@@ -20,9 +20,6 @@ class LinesAndReferencesPage5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -30,45 +27,15 @@ class LinesAndReferencesPage5 extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: 100,
           child: Transform.scale(
             scale: 1.0,
             child: Image.asset(
-              'assets/images/mouth_front.png',
+              'assets/images/smile_curved_line.png',
               fit: BoxFit.contain,
             ),
           ),
         ),
-        Positioned(
-          top: screenHeight * 0.15,
-          bottom: screenHeight * 0.32,
-          left: 0,
-          right: 0,
-          child: Center(child: Container(width: 2, color: Colors.white)),
-        ),
-        Positioned(
-          top: screenHeight * 0.445,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Container(
-              height: 2,
-              width: screenWidth * 0.8,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          top: screenHeight * 0.41,
-          left: 0,
-          right: 0,
-          height: screenHeight * 0.15,
-          child: CustomPaint(
-            painter: _CurvedLinePainter(),
-            size: Size(screenWidth, screenHeight * 0.15),
-          ),
-        ),
-
         Positioned(
           bottom: 0,
           left: 0,
@@ -129,34 +96,4 @@ class LinesAndReferencesPage5 extends StatelessWidget {
       ],
     );
   }
-}
-
-class _CurvedLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    final path = Path();
-    final centerX = size.width / 2;
-    final centerY = size.height / 2;
-    final width = size.width * 0.99;
-    final height = size.height * 0.5;
-
-    path.moveTo(centerX - width / 2, centerY);
-    
-    path.quadraticBezierTo(
-      centerX,
-      centerY + height,
-      centerX + width / 2,
-      centerY,
-    );
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
