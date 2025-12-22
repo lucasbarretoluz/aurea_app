@@ -4,11 +4,6 @@ import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_3.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_4.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_5.dart';
-import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_6.dart';
-import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_7.dart';
-import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_8.dart';
-import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_9.dart';
-import 'package:aurea_app/src/presentation/screens/help/reference_lines/widgets/lines_and_references_page_10.dart';
 import 'package:flutter/material.dart';
 
 class LinesAndReferencesPage extends StatefulWidget {
@@ -22,7 +17,7 @@ class _LinesAndReferencesPageState extends State<LinesAndReferencesPage> {
  final PageController _pageController = PageController();
   int _currentPage = 0;
   final colorGradient = const Color.fromARGB(255, 221, 220, 220);
-  static const int _totalPages = 10;
+  static const int _totalPages = 5;
 
   @override
   void initState() {
@@ -93,41 +88,6 @@ class _LinesAndReferencesPageState extends State<LinesAndReferencesPage> {
             colorGradient: colorGradient,
           ),
           LinesAndReferencesPage5(
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            onPrevious: _goToPreviousPage,
-            onNext: _goToNextPage,
-            colorGradient: colorGradient,
-          ),
-          LinesAndReferencesPage6(
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            onPrevious: _goToPreviousPage,
-            onNext: _goToNextPage,
-            colorGradient: colorGradient,
-          ),
-          LinesAndReferencesPage7(
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            onPrevious: _goToPreviousPage,
-            onNext: _goToNextPage,
-            colorGradient: colorGradient,
-          ),
-          LinesAndReferencesPage8(
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            onPrevious: _goToPreviousPage,
-            onNext: _goToNextPage,
-            colorGradient: colorGradient,
-          ),
-          LinesAndReferencesPage9(
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            onPrevious: _goToPreviousPage,
-            onNext: _goToNextPage,
-            colorGradient: colorGradient,
-          ),
-          LinesAndReferencesPage10(
             currentPage: _currentPage,
             totalPages: _totalPages,
             onPrevious: _goToPreviousPage,
