@@ -132,3 +132,14 @@ class ServiceUnavailableException extends DioException {
     return 'Serviço temporariamente indisponível. Por favor, tente novamente mais tarde.';
   }
 }
+
+class BadCertificateException extends DioException {
+  final DioException error;
+  BadCertificateException(this.error)
+      : super(requestOptions: error.requestOptions);
+
+  @override
+  String toString() {
+    return 'Erro de certificado SSL. Verifique se o certificado do servidor é válido.';
+  }
+}

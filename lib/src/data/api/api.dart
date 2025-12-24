@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'interceptors/app_interceptors_exceptions.dart';
@@ -30,6 +34,18 @@ class Api {
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
     dio.options.sendTimeout = const Duration(seconds: 60);
+
+    if (kDebugMode) {
+      (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        client.autoUncompress = true;
+        client.userAgent = 'aurea-app-flutter';
+        client.connectionTimeout = const Duration(seconds: 60);
+        client.idleTimeout = const Duration(seconds: 60);
+        return client;
+      };
+    }
 
     dio.interceptors.addAll({
       AppInterceptorsRefreshToken(dio),

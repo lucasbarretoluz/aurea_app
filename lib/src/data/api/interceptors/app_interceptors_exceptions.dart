@@ -53,7 +53,7 @@ class AppInterceptorsExceptions extends Interceptor {
         customException = NoInternetConnectionException(err);
         return handler.reject(customException);
       case DioExceptionType.badCertificate:
-        customException = InternalServerErrorException(err);
+        customException = BadCertificateException(err);
         return handler.reject(customException);
       case DioExceptionType.connectionError:
         customException = NoInternetConnectionException(err);
