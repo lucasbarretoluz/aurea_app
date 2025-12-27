@@ -218,7 +218,7 @@ class _AllPatientsSectionState extends State<AllPatientsSection> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.push('/patients');
+                          context.push('/all-patients');
                         },
                         child: const Text('Ver todos'),
                       ),

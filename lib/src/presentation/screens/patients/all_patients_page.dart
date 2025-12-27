@@ -6,14 +6,14 @@ import 'package:aurea_app/src/presentation/widgets/infinite_scroll/infinite_scro
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PatientsPage extends StatefulWidget {
-  const PatientsPage({super.key});
+class AllPatientsPage extends StatefulWidget {
+  const AllPatientsPage({super.key});
 
   @override
-  State<PatientsPage> createState() => _PatientsPageState();
+  State<AllPatientsPage> createState() => _AllPatientsPageState();
 }
 
-class _PatientsPageState extends State<PatientsPage> {
+class _AllPatientsPageState extends State<AllPatientsPage> {
   @override
   void initState() {
     super.initState();
@@ -39,18 +39,18 @@ class _PatientsPageState extends State<PatientsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const PatientsPageView();
+    return const AllPatientsPageView();
   }
 }
 
-class PatientsPageView extends StatefulWidget {
-  const PatientsPageView({super.key});
+class AllPatientsPageView extends StatefulWidget {
+  const AllPatientsPageView({super.key});
 
   @override
-  State<PatientsPageView> createState() => _PatientsPageViewState();
+  State<AllPatientsPageView> createState() => _AllPatientsPageViewState();
 }
 
-class _PatientsPageViewState extends State<PatientsPageView> {
+class _AllPatientsPageViewState extends State<AllPatientsPageView> {
   late final ScrollController _scrollController;
 
   @override

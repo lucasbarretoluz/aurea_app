@@ -1,6 +1,6 @@
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
-import 'package:aurea_app/src/presentation/screens/patients/patients_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients/all_patients_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,13 +25,13 @@ void main() {
         MaterialApp(
           home: BlocProvider<PatientCubit>.value(
             value: mockCubit,
-            child: const PatientsPageView(),
+            child: const AllPatientsPageView(),
           ),
         ),
       );
 
       await tester.pump();
-      expect(find.byType(PatientsPageView), findsOneWidget);
+      expect(find.byType(AllPatientsPageView), findsOneWidget);
       expect(find.text('Todos os Pacientes'), findsOneWidget);
     });
 
@@ -44,7 +44,7 @@ void main() {
         MaterialApp(
           home: BlocProvider<PatientCubit>.value(
             value: mockCubit,
-            child: const PatientsPageView(),
+            child: const AllPatientsPageView(),
           ),
         ),
       );
@@ -63,7 +63,7 @@ void main() {
         MaterialApp(
           home: BlocProvider<PatientCubit>.value(
             value: mockCubit,
-            child: const PatientsPageView(),
+            child: const AllPatientsPageView(),
           ),
         ),
       );
@@ -88,7 +88,7 @@ void main() {
         MaterialApp(
           home: BlocProvider<PatientCubit>.value(
             value: mockCubit,
-            child: const PatientsPageView(),
+            child: const AllPatientsPageView(),
           ),
         ),
       );

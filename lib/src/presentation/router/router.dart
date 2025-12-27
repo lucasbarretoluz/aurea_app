@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import '../screens/home/config_home_page.dart';
 import '../screens/login/login_page.dart';
-import '../screens/patients/patients_page.dart';
+import '../screens/patients/all_patients_page.dart';
 import '../screens/splash/splash_page.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -89,8 +89,8 @@ class AppRouter {
           builder: (context, state) => const SettingsPage(),
         ),
         GoRoute(
-          path: '/patients',
-          builder: (context, state) => const PatientsPage(),
+          path: '/all-patients',
+          builder: (context, state) => const AllPatientsPage(),
         ),
         GoRoute(
           path: '/help/photographic-protocol',
