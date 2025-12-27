@@ -1,22 +1,15 @@
 import 'package:aurea_app/src/core/enums/gender_enum.dart';
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class PatientCard extends StatelessWidget {
-  final String name;
-  final String clinicName;
-  final String? subtitle;
-  final String? imageUrl;
-  final GenderEnum? gender;
+  final PatientModel patient;
   final double widthImage;
 
   const PatientCard({
     super.key,
-    required this.name,
-    required this.clinicName,
-    this.subtitle,
-    this.imageUrl,
-    this.gender,
+  required this.patient,
     this.widthImage = 100,
   });
 
@@ -48,7 +41,7 @@ class PatientCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      name,
+                      patient.name,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -60,15 +53,15 @@ class PatientCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      clinicName,
+                      patient.clinicName,
                       style: const TextStyle(fontSize: 14, color: Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (subtitle != null) ...[
+                    if (patient.description != null) ...[
                       const SizedBox(height: 4),
                       Text(
-                        subtitle!,
+                        patient.description!,
                         style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
@@ -83,9 +76,9 @@ class PatientCard extends StatelessWidget {
   }
 
   String _getDefaultImage() {
-    if (gender == GenderEnum.female) {
+    if (patient.gender == GenderEnum.female) {
       return 'assets/images/demo-woman.png';
-    } else if (gender == GenderEnum.male) {
+    } else if (patient.gender == GenderEnum.male) {
       return 'assets/images/demo-man.png';
     }
     // Fallback padrão
@@ -93,9 +86,9 @@ class PatientCard extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
+    if (patient.profilePhotoUrl != null && patient.profilePhotoUrl!.isNotEmpty) {
       return Image.network(
-        imageUrl!,
+        patient.profilePhotoUrl!,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
           return Image.asset(

@@ -155,11 +155,7 @@ class _AllPatientsPageViewState extends State<AllPatientsPageView> {
                         width: 100,
                         child: PatientCard(
                           widthImage: 130,
-                          name: patient.name,
-                          clinicName: patient.clinicName,
-                          subtitle: patient.description ?? '',
-                          imageUrl: patient.profilePhotoUrl,
-                          gender: patient.gender,
+                          patient: patient,
                         ),
                       );
                     },

@@ -237,11 +237,7 @@ class _AllPatientsSectionState extends State<AllPatientsSection> {
                             child: SizedBox(
                               width: 240,
                               child: PatientCard(
-                                name: patient.name,
-                                clinicName: patient.clinicName,
-                                subtitle: patient.description,
-                                imageUrl: patient.profilePhotoUrl,
-                                gender: patient.gender,
+                                patient: patient,
                               ),
                             ),
                           );
