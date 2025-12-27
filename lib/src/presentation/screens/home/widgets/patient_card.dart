@@ -7,16 +7,13 @@ class PatientCard extends StatelessWidget {
   final PatientModel patient;
   final double widthImage;
 
-  const PatientCard({
-    super.key,
-  required this.patient,
-    this.widthImage = 100,
-  });
+  const PatientCard({super.key, required this.patient, this.widthImage = 100});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/handle-patients'),
+      onTap:
+          () => context.push('/handle-patients', extra: {'patient': patient}),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -48,7 +45,7 @@ class PatientCard extends StatelessWidget {
                         color: Colors.black,
                       ),
                       overflow: TextOverflow.ellipsis,
-      
+
                       maxLines: 1,
                     ),
                     const SizedBox(height: 10),
@@ -86,7 +83,8 @@ class PatientCard extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    if (patient.profilePhotoUrl != null && patient.profilePhotoUrl!.isNotEmpty) {
+    if (patient.profilePhotoUrl != null &&
+        patient.profilePhotoUrl!.isNotEmpty) {
       return Image.network(
         patient.profilePhotoUrl!,
         fit: BoxFit.cover,
@@ -115,11 +113,7 @@ class PatientCard extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) {
         return Container(
           color: const Color(0xFF424242),
-          child: const Icon(
-            Icons.person,
-            size: 50,
-            color: Colors.white70,
-          ),
+          child: const Icon(Icons.person, size: 50, color: Colors.white70),
         );
       },
     );

@@ -40,11 +40,7 @@ class ClinicCardsGrid extends StatelessWidget {
             child: SizedBox(
               width: 200,
               child: ClinicCard(
-                title: patient.name,
-                subtitle: patient.description ?? 'Paciente ativo da pasta',
-                category: category,
-                imageUrl: patient.profilePhotoUrl,
-                gender: patient.gender,
+                patient: patient,
               ),
             ),
           );

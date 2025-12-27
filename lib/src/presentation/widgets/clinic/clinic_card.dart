@@ -1,29 +1,22 @@
 import 'package:aurea_app/src/core/enums/gender_enum.dart';
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ClinicCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String category;
-  final String? imageUrl;
-  final GenderEnum? gender;
+  final PatientModel patient;
   final StackFit fit;
 
   const ClinicCard({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.category,
-    this.imageUrl,
-    this.gender,
+    required this.patient,
     this.fit = StackFit.expand,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/handle-patients'),
+      onTap: () => context.push('/handle-patients', extra: {'patient': patient}),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -55,7 +48,7 @@ class ClinicCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      title,
+                      patient.name,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -63,16 +56,18 @@ class ClinicCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
+                    if (patient.description != null) ...[
                     Text(
-                      subtitle,
+                      patient.description ?? '',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
                       ),
                     ),
                     const SizedBox(height: 2),
+                    ],
                     Text(
-                      category,
+                      patient.clinicName,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -89,9 +84,9 @@ class ClinicCard extends StatelessWidget {
   }
 
   String _getDefaultImage() {
-    if (gender == GenderEnum.female) {
+    if (patient.gender == GenderEnum.female) {
       return 'assets/images/demo-woman.png';
-    } else if (gender == GenderEnum.male) {
+    } else if (patient.gender == GenderEnum.male) {
       return 'assets/images/demo-man.png';
     }
     // Fallback padrão
@@ -99,9 +94,9 @@ class ClinicCard extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
+    if (patient.profilePhotoUrl != null && patient.profilePhotoUrl!.isNotEmpty) {
       return Image.network(
-        imageUrl!,
+        patient.profilePhotoUrl!,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
           return Image.asset(

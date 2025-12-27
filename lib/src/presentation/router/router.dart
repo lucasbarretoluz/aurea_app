@@ -1,3 +1,4 @@
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/presentation/screens/help/dental_proportions/dental_proportions_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_phone/photographing_with_cellphone_page.dart';
@@ -99,7 +100,8 @@ class AppRouter {
         ),
         GoRoute(
           path: '/help/semi-professional-camera-settings',
-          builder: (context, state) => const SemiProfessionalCameraSettingsPage(),
+          builder:
+              (context, state) => const SemiProfessionalCameraSettingsPage(),
         ),
         GoRoute(
           path: '/help/photographing-with-cellphone',
@@ -115,7 +117,11 @@ class AppRouter {
         ),
         GoRoute(
           path: '/handle-patients',
-          builder: (context, state) => const HandlePatientsPage(),
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>;
+            final patient = extra['patient'] as PatientModel;
+            return HandlePatientsPage(patient: patient);
+          },
         ),
       ],
     );
