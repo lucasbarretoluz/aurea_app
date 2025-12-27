@@ -63,11 +63,11 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'João da Silva',
+                    widget.patient.name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Paciente ativo da pasta',
+                    'Paciente ativo da pasta ${widget.patient.clinicName}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(width: double.infinity),
