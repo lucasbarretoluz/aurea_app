@@ -5,6 +5,7 @@ import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/ph
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients/handle_patients_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
@@ -111,6 +112,10 @@ class AppRouter {
         GoRoute(
           path: '/help/dental-proportions',
           builder: (context, state) => const DentalProportionsPage(),
+        ),
+        GoRoute(
+          path: '/handle-patients',
+          builder: (context, state) => const HandlePatientsPage(),
         ),
       ],
     );

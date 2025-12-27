@@ -1,5 +1,6 @@
 import 'package:aurea_app/src/core/enums/gender_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PatientCard extends StatelessWidget {
   final String name;
@@ -21,59 +22,62 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: const Color(0xFFE0E0E0),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            child: Container(
-              width: widthImage,
-              height: double.infinity,
-              color: const Color(0xFF424242),
-              child: _buildImage(),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 5, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    clinicName,
-                    style: const TextStyle(fontSize: 14, color: Colors.black),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle!,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                    ),
-                  ],
-                ],
+    return GestureDetector(
+      onTap: () => context.push('/handle-patients'),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: const Color(0xFFE0E0E0),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              child: Container(
+                width: widthImage,
+                height: double.infinity,
+                color: const Color(0xFF424242),
+                child: _buildImage(),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 5, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+      
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      clinicName,
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle!,
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
