@@ -89,8 +89,7 @@ class ClinicCard extends StatelessWidget {
     } else if (patient.gender == GenderEnum.male) {
       return 'assets/images/demo-man.png';
     }
-    // Fallback padrão
-    return 'assets/images/smile_woman.jpg';
+    return 'assets/images/demo-woman.png';
   }
 
   Widget _buildImage() {
