@@ -7,6 +7,7 @@ import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_profe
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
 import 'package:aurea_app/src/presentation/screens/patients/handle_patients_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients/new_patient_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
@@ -122,6 +123,12 @@ class AppRouter {
             final patient = extra['patient'] as PatientModel;
             return HandlePatientsPage(patient: patient);
           },
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/new-patient',
+              builder: (context, state) => const NewPatientPage(),
+            ),
+          ],
         ),
       ],
     );

@@ -160,7 +160,7 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                     titleBold: 'Projeto',
                     subtitle: 'Clique para iniciar um novo',
                     description: 'planejamento do sorriso',
-                    onPressed: () {},
+                    onPressed: () => context.push('/handle-patients/new-patient'),
                   ),
                 ],
               ),
