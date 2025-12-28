@@ -1,4 +1,5 @@
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
+import 'package:aurea_app/src/presentation/widgets/buttons/card_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -58,7 +59,7 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,6 +72,14 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(width: double.infinity),
+                  const SizedBox(height: 30),
+                  CardButton(
+                    title: 'Novo ',
+                    titleBold: 'Projeto',
+                    subtitle: 'Clique para iniciar um novo',
+                    description: 'planejamento do sorriso',
+                    onPressed: () {},
+                  ),
                 ],
               ),
             ),
