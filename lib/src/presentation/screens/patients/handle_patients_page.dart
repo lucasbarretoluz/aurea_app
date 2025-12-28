@@ -22,6 +22,88 @@ class HandlePatientsView extends StatefulWidget {
 }
 
 class _HandlePatientsViewState extends State<HandlePatientsView> {
+  Widget _buildProfileImage() {
+    final hasPhoto =
+        widget.patient.profilePhotoUrl != null &&
+        widget.patient.profilePhotoUrl!.isNotEmpty;
+
+    if (hasPhoto) {
+      return Image.network(
+        widget.patient.profilePhotoUrl!,
+        fit: BoxFit.fitHeight,
+        height: 530,
+        errorBuilder: (context, error, stackTrace) {
+          return _buildEmptyState();
+        },
+      );
+    }
+
+    return _buildEmptyState();
+  }
+
+  Widget _buildEmptyState() {
+    return Container(
+      height: 530,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(50),
+          bottomRight: Radius.circular(50),
+        ),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.add_photo_alternate_rounded,
+                  size: 64,
+                  color: Colors.grey[400],
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'Cadastrar fotos do paciente',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[800],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Adicione fotos do paciente para começar a planejar o sorriso do paciente',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey[600],
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,22 +120,22 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                     bottomLeft: Radius.circular(50),
                     bottomRight: Radius.circular(50),
                   ),
-                  child: Image.asset(
-                    'assets/images/demo-man.png',
-                    fit: BoxFit.fitHeight,
-                    height: 530,
-                  ),
+                  child: _buildProfileImage(),
                 ),
                 Positioned(
                   top: 10,
                   left: 10,
                   child: IconButton(
                     onPressed: () => context.pop(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
                       size: 35,
+                      color:
+                          (widget.patient.profilePhotoUrl != null &&
+                                  widget.patient.profilePhotoUrl!.isNotEmpty)
+                              ? Colors.white
+                              : Colors.grey[700],
                     ),
-                    color: Colors.white,
                   ),
                 ),
               ],
