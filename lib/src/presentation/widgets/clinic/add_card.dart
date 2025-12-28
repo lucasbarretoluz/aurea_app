@@ -22,9 +22,9 @@ class AddCard extends StatelessWidget {
           children: [
             Positioned.fill(
               child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Image.asset(
-                  'assets/images/smile_woman.jpg',
+                  'assets/images/demo-woman.png',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
@@ -34,18 +34,19 @@ class AddCard extends StatelessWidget {
                 ),
               ),
             ),
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
             Center(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black.withOpacity(0.3),
-                ),
-                child: const Icon(
-                  Icons.add,
-                  size: 48,
-                  color: Colors.white,
-                ),
+              child: const Icon(
+                Icons.add,
+                size: 65,
+                color: Colors.white,
               ),
             ),
           ],
