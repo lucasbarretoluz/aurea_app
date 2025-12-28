@@ -1,3 +1,5 @@
+import 'package:aurea_app/src/core/enums/gender_enum.dart';
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,9 +11,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo da pasta',
-              category: 'Clínica A',
+             patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -27,10 +35,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
-              imageUrl: 'https://example.com/photo.jpg',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -44,9 +57,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -60,9 +79,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -84,10 +109,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
-              imageUrl: 'https://invalid-url.com/image.jpg',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -104,10 +134,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
-              imageUrl: '',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
@@ -121,9 +156,15 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ClinicCard(
-              title: 'John Doe',
-              subtitle: 'Paciente ativo',
-              category: 'Clínica A',
+              patient: PatientModel(
+              name: 'John Doe',
+              clinicName: 'Clínica A',
+              profilePhotoUrl: 'https://example.com/photo.jpg',
+              gender: GenderEnum.male,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              description: 'Paciente ativo da pasta',
+             ),
             ),
           ),
         ),
