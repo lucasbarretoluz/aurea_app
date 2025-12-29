@@ -126,7 +126,14 @@ class AppRouter {
           routes: <RouteBase>[
             GoRoute(
               path: '/new-patient',
-              builder: (context, state) => const NewPatientPage(),
+              builder: (context, state) {
+                PatientModel? patient;
+                if (state.extra != null) {
+                  final extra = state.extra as Map<String, dynamic>;
+                  patient = extra['patient'] as PatientModel?;
+                }
+                return NewPatientPage(patient: patient);
+              },
             ),
           ],
         ),
