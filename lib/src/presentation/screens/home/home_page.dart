@@ -90,7 +90,6 @@ class _HomePageViewState extends State<HomePageView> {
                 });
               },
             ),
-            //nao coloque um expanded aqui!
             HomePageContent(
               selectedTabIndex: _selectedTabIndex,
               clinics: clinics,
