@@ -29,12 +29,9 @@ class _PatientInfoHeaderState extends State<PatientInfoHeader> {
 
     nameController.addListener(() {
       widget.onNameChanged(nameController.text);
-      setState(() {});
     });
 
-    focusNode.addListener(() {
-      setState(() {});
-    });
+    focusNode.addListener(() {});
   }
 
   @override
@@ -56,6 +53,7 @@ class _PatientInfoHeaderState extends State<PatientInfoHeader> {
               enabled: widget.isActiveChangeName,
               controller: nameController,
               focusNode: focusNode,
+              autofocus: true,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                 hintText: 'Nome do paciente',
@@ -73,12 +71,6 @@ class _PatientInfoHeaderState extends State<PatientInfoHeader> {
                 disabledBorder: InputBorder.none,
               ),
             ),
-              Container(
-                width: 240,
-                height: 1,
-                color: (nameController.text.isEmpty && !focusNode.hasFocus) ? Colors.grey[400] : Colors.transparent,
-                margin: const EdgeInsets.only(top: 4),
-              ),
           ],
         ),
         const SizedBox(height: 5),
