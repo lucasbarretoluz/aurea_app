@@ -49,37 +49,37 @@ class _PatientInfoHeaderState extends State<PatientInfoHeader> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          enabled: widget.isActiveChangeName,
-          controller: nameController,
-          focusNode: focusNode,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          decoration: InputDecoration(
-            hintText: 'Nome do paciente',
-            hintStyle: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[400],
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              enabled: widget.isActiveChangeName,
+              controller: nameController,
+              focusNode: focusNode,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                hintText: 'Nome do paciente',
+                hintStyle: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+                contentPadding: EdgeInsets.zero,
+                isDense: true,
+                isCollapsed: true,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+              ),
             ),
-            contentPadding: const EdgeInsets.only(bottom: 4),
-            isDense: true,
-            border: nameController.text.isEmpty && !focusNode.hasFocus
-                ? UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!),
-                  )
-                : InputBorder.none,
-            enabledBorder: nameController.text.isEmpty && !focusNode.hasFocus
-                ? UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!),
-                  )
-                : InputBorder.none,
-            focusedBorder: InputBorder.none,
-            disabledBorder: nameController.text.isEmpty && !focusNode.hasFocus
-                ? UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!),
-                  )
-                : InputBorder.none,
-          ),
+              Container(
+                width: 240,
+                height: 1,
+                color: (nameController.text.isEmpty && !focusNode.hasFocus) ? Colors.grey[400] : Colors.transparent,
+                margin: const EdgeInsets.only(top: 4),
+              ),
+          ],
         ),
         const SizedBox(height: 5),
         Text(
