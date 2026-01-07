@@ -30,6 +30,7 @@ class ClinicCardsGrid extends StatelessWidget {
               child: AddCard(
                 width: 200,
                 height: 300,
+                clinicName: category,
               ),
             );
           }

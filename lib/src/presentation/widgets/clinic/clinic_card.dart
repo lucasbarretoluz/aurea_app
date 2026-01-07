@@ -16,7 +16,7 @@ class ClinicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/handle-patients', extra: {'patient': patient}),
+      onTap: () => context.push('/handle-patient', extra: {'patient': patient}),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

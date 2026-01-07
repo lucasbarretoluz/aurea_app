@@ -1,55 +1,79 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 
 class AddCard extends StatelessWidget {
   final double width;
   final double height;
+  final String? clinicName;
 
   const AddCard({
     super.key,
     required this.width,
     required this.height,
+    this.clinicName,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Image.asset(
-                  'assets/images/demo-woman.png',
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.grey[400],
-                    );
-                  },
+    return GestureDetector(
+      onTap: () {
+        String? nameToPass = clinicName;
+        if (nameToPass == null) {
+          final clinicState = context.read<ClinicCubit>().state;
+          if (clinicState.toString().startsWith('ClinicState.loaded')) {
+            try {
+              final loadedState = clinicState as dynamic;
+              final clinics = loadedState.clinics as List;
+              if (clinics.isNotEmpty) {
+                final selectedClinic = clinics[0];
+                nameToPass = selectedClinic.name as String?;
+              }
+            } catch (_) {}
+          }
+        }
+        context.push('/new-patient', extra: {'clinicName': nameToPass});
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Image.asset(
+                    'assets/images/demo-woman.png',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[400],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                child: Container(
-                  color: Colors.transparent,
+              Positioned.fill(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
                 ),
               ),
-            ),
-            Center(
-              child: const Icon(
-                Icons.add,
-                size: 65,
-                color: Colors.white,
+              Center(
+                child: const Icon(
+                  Icons.add,
+                  size: 65,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
