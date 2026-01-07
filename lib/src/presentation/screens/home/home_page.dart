@@ -149,7 +149,8 @@ class HomePageContent extends StatelessWidget {
 
         return ClinicCardsGrid(
           patients: selectedClinic.patients,
-          category: selectedClinic.name,
+          clinicName: selectedClinic.name,
+          clinicId: selectedClinic.clinicId,
         );
       },
     );

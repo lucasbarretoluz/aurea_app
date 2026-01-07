@@ -1,40 +1,29 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 
 class AddCard extends StatelessWidget {
   final double width;
   final double height;
-  final String? clinicName;
+  final String clinicName;
+  final int clinicId;
 
   const AddCard({
     super.key,
     required this.width,
     required this.height,
-    this.clinicName,
+    required this.clinicName,
+    required this.clinicId,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        String? nameToPass = clinicName;
-        if (nameToPass == null) {
-          final clinicState = context.read<ClinicCubit>().state;
-          if (clinicState.toString().startsWith('ClinicState.loaded')) {
-            try {
-              final loadedState = clinicState as dynamic;
-              final clinics = loadedState.clinics as List;
-              if (clinics.isNotEmpty) {
-                final selectedClinic = clinics[0];
-                nameToPass = selectedClinic.name as String?;
-              }
-            } catch (_) {}
-          }
-        }
-        context.push('/new-patient', extra: {'clinicName': nameToPass});
+        context.push(
+          '/new-patient',
+          extra: {'clinicName': clinicName, 'clinicId': clinicId},
+        );
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -50,9 +39,7 @@ class AddCard extends StatelessWidget {
                     'assets/images/demo-woman.png',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey[400],
-                      );
+                      return Container(color: Colors.grey[400]);
                     },
                   ),
                 ),
@@ -60,17 +47,11 @@ class AddCard extends StatelessWidget {
               Positioned.fill(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
+                  child: Container(color: Colors.transparent),
                 ),
               ),
               Center(
-                child: const Icon(
-                  Icons.add,
-                  size: 65,
-                  color: Colors.white,
-                ),
+                child: const Icon(Icons.add, size: 65, color: Colors.white),
               ),
             ],
           ),
@@ -79,4 +60,3 @@ class AddCard extends StatelessWidget {
     );
   }
 }
-

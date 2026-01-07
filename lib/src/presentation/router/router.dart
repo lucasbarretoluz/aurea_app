@@ -121,7 +121,8 @@ class AppRouter {
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>;
             final clinicName = extra['clinicName'] as String? ?? '';
-            return NewPatientPage(clinicName: clinicName);
+            final clinicId = extra['clinicId'] as int? ?? 0;
+            return NewPatientPage(clinicId: clinicId, clinicName: clinicName);
           },
         ),
         GoRoute(

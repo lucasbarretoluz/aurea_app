@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 
 class ClinicCardsGrid extends StatelessWidget {
   final List<PatientModel> patients;
-  final String category;
+  final String clinicName;
+  final int clinicId;
 
   const ClinicCardsGrid({
     super.key,
     required this.patients,
-    required this.category,
+    required this.clinicName,
+    required this.clinicId,
   });
 
   @override
@@ -30,7 +32,9 @@ class ClinicCardsGrid extends StatelessWidget {
               child: AddCard(
                 width: 200,
                 height: 300,
-                clinicName: category,
+                clinicName: clinicName,
+                clinicId: clinicId,
+
               ),
             );
           }
