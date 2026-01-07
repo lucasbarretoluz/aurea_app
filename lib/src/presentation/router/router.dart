@@ -6,7 +6,7 @@ import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/ph
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
-import 'package:aurea_app/src/presentation/screens/patients/handle_patients_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients/handle_patient_page.dart';
 import 'package:aurea_app/src/presentation/screens/patients/new_patient_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
@@ -117,25 +117,25 @@ class AppRouter {
           builder: (context, state) => const DentalProportionsPage(),
         ),
         GoRoute(
-          path: '/handle-patients',
+          path: '/new-patient',
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>;
-            final patient = extra['patient'] as PatientModel;
-            return HandlePatientsPage(patient: patient);
+            final clinicName = extra['clinicName'] as String? ?? '';
+            return NewPatientPage(clinicName: clinicName);
           },
-          routes: <RouteBase>[
-            GoRoute(
-              path: '/new-patient',
-              builder: (context, state) {
-                PatientModel? patient;
-                if (state.extra != null) {
-                  final extra = state.extra as Map<String, dynamic>;
-                  patient = extra['patient'] as PatientModel?;
-                }
-                return NewPatientPage(patient: patient);
-              },
-            ),
-          ],
+        ),
+        GoRoute(
+          path: '/handle-patient',
+          builder: (context, state) {
+            PatientModel? patient;
+            String? clinicName;
+            if (state.extra != null) {
+              final extra = state.extra as Map<String, dynamic>;
+              patient = extra['patient'] as PatientModel?;
+              clinicName = extra['clinicName'] as String?;
+            }
+            return HandlePatientsPage(patient: patient, clinicName: clinicName);
+          },
         ),
       ],
     );
