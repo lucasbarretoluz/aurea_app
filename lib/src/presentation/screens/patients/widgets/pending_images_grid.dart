@@ -9,6 +9,7 @@ class PendingImagesGrid extends StatelessWidget {
   final VoidCallback onAddPhoto;
   final Function(int) onImageTap;
   final Function(int) onImageRemove;
+  final Function(int) onImageCrop;
 
   const PendingImagesGrid({
     super.key,
@@ -17,6 +18,7 @@ class PendingImagesGrid extends StatelessWidget {
     required this.onAddPhoto,
     required this.onImageTap,
     required this.onImageRemove,
+    required this.onImageCrop,
   });
 
   @override
@@ -40,6 +42,7 @@ class PendingImagesGrid extends StatelessWidget {
             isSelected: selectedIndex == index,
             onTap: () => onImageTap(index),
             onRemove: () => onImageRemove(index),
+            onCrop: () => onImageCrop(index),
           );
         },
       ),
