@@ -25,6 +25,7 @@ class TextFieldWithLabel extends StatefulWidget {
   final Color? colorLabel;
   final TextStyle? styleLabel;
   final Color? iconColor;
+  final bool hideBorder;
 
   const TextFieldWithLabel({
     super.key,
@@ -51,6 +52,7 @@ class TextFieldWithLabel extends StatefulWidget {
     this.colorLabel,
     this.styleLabel,
     this.iconColor,
+    this.hideBorder = false,
   }) : assert(!obscureText || suffixIcon == null,
             'suffixIcon is only used when obscureText is false');
 
@@ -72,7 +74,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               Text(widget.label!,
                   style: widget.styleLabel ??
                       TextStyle(
-                        color: widget.colorLabel?.withOpacity(0.7) ?? Colors.white.withOpacity(0.7),
+                        color: widget.colorLabel ?? Colors.white.withOpacity(0.7),
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         fontFamily: 'Montserrat',
@@ -122,30 +124,46 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               color: widget.colorLabel?.withOpacity(0.5) ?? Theme.of(context).colorScheme.outline,
               fontWeight: FontWeight.w400,
             ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: widget.colorLabel ?? Colors.white,
-                width: 1,
-              ),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: widget.colorLabel ?? Colors.white,
-                width: 1,
-              ),
-            ),
-            errorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.error,
-                width: 1,
-              ),
-            ),
-            focusedErrorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.error,
-                width: 1,
-              ),
-            ),
+            enabledBorder: widget.hideBorder
+                ? InputBorder.none
+                : UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.colorLabel ?? Colors.white,
+                      width: 1,
+                    ),
+                  ),
+            focusedBorder: widget.hideBorder
+                ? InputBorder.none
+                : UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.colorLabel ?? Colors.white,
+                      width: 1,
+                    ),
+                  ),
+            errorBorder: widget.hideBorder
+                ? InputBorder.none
+                : UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.error,
+                      width: 1,
+                    ),
+                  ),
+            focusedErrorBorder: widget.hideBorder
+                ? InputBorder.none
+                : UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.error,
+                      width: 1,
+                    ),
+                  ),
+            disabledBorder: widget.hideBorder
+                ? InputBorder.none
+                : UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.colorLabel ?? Colors.white,
+                      width: 1,
+                    ),
+                  ),
             errorStyle: widget.hideErrorText
                 ? const TextStyle(height: 0)
                 : TextStyle(

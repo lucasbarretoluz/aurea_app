@@ -1,3 +1,4 @@
+import 'package:aurea_app/src/presentation/widgets/form_fields/text_field_with_label.dart';
 import 'package:flutter/material.dart';
 
 class PatientInfoHeader extends StatefulWidget {
@@ -43,42 +44,60 @@ class _PatientInfoHeaderState extends State<PatientInfoHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              enabled: widget.isActiveChangeName,
-              controller: nameController,
-              focusNode: focusNode,
-              autofocus: true,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                hintText: 'Nome do paciente',
-                hintStyle: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                contentPadding: EdgeInsets.zero,
-                isDense: true,
-                isCollapsed: true,
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
+                child: Icon(
+                  Icons.folder_outlined,
+                  size: 20,
+                  color: Colors.grey[700],
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 5),
-        Text(
-          'Paciente ativo da pasta ${widget.clinicName}',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-      ],
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Paciente ativo da pasta ${widget.clinicName}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          TextFieldWithLabel(
+            colorLabel: Colors.black,
+            hint: 'Digite o nome do paciente',
+            controller: nameController,
+            focusNode: focusNode,
+            enabled: widget.isActiveChangeName,
+            hideBorder: true,
+          ),
+        ],
+      ),
     );
   }
 }
