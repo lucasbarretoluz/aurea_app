@@ -45,7 +45,7 @@ class HandlePatientsView extends StatefulWidget {
 
 class _HandlePatientsViewState extends State<HandlePatientsView> {
   final List<File> _pendingImages = [];
-  int? _selectedPendingImageIndex;
+  int? _coverImageIndex;
   final TextEditingController _nameController = TextEditingController();
 
   @override
@@ -93,21 +93,25 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                   } else {
                     photoContent = PendingImagesGrid(
                       images: _pendingImages,
-                      selectedIndex: _selectedPendingImageIndex,
+                      coverIndex: _coverImageIndex,
                       onAddPhoto: _pickImage,
                       onImageTap: (index) {
                         setState(() {
-                          _selectedPendingImageIndex = index;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else {
+                            _coverImageIndex = index;
+                          }
                         });
                       },
                       onImageRemove: (index) {
                         setState(() {
                           _pendingImages.removeAt(index);
-                          if (_selectedPendingImageIndex == index) {
-                            _selectedPendingImageIndex = null;
-                          } else if (_selectedPendingImageIndex != null &&
-                              _selectedPendingImageIndex! > index) {
-                            _selectedPendingImageIndex = _selectedPendingImageIndex! - 1;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else if (_coverImageIndex != null &&
+                              _coverImageIndex! > index) {
+                            _coverImageIndex = _coverImageIndex! - 1;
                           }
                         });
                       },
@@ -123,21 +127,25 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                   } else if (_pendingImages.isNotEmpty) {
                     photoContent = PendingImagesGrid(
                       images: _pendingImages,
-                      selectedIndex: _selectedPendingImageIndex,
+                      coverIndex: _coverImageIndex,
                       onAddPhoto: _pickImage,
                       onImageTap: (index) {
                         setState(() {
-                          _selectedPendingImageIndex = index;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else {
+                            _coverImageIndex = index;
+                          }
                         });
                       },
                       onImageRemove: (index) {
                         setState(() {
                           _pendingImages.removeAt(index);
-                          if (_selectedPendingImageIndex == index) {
-                            _selectedPendingImageIndex = null;
-                          } else if (_selectedPendingImageIndex != null &&
-                              _selectedPendingImageIndex! > index) {
-                            _selectedPendingImageIndex = _selectedPendingImageIndex! - 1;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else if (_coverImageIndex != null &&
+                              _coverImageIndex! > index) {
+                            _coverImageIndex = _coverImageIndex! - 1;
                           }
                         });
                       },
@@ -153,21 +161,25 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
                   if (_pendingImages.isNotEmpty) {
                     photoContent = PendingImagesGrid(
                       images: _pendingImages,
-                      selectedIndex: _selectedPendingImageIndex,
+                      coverIndex: _coverImageIndex,
                       onAddPhoto: _pickImage,
                       onImageTap: (index) {
                         setState(() {
-                          _selectedPendingImageIndex = index;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else {
+                            _coverImageIndex = index;
+                          }
                         });
                       },
                       onImageRemove: (index) {
                         setState(() {
                           _pendingImages.removeAt(index);
-                          if (_selectedPendingImageIndex == index) {
-                            _selectedPendingImageIndex = null;
-                          } else if (_selectedPendingImageIndex != null &&
-                              _selectedPendingImageIndex! > index) {
-                            _selectedPendingImageIndex = _selectedPendingImageIndex! - 1;
+                          if (_coverImageIndex == index) {
+                            _coverImageIndex = null;
+                          } else if (_coverImageIndex != null &&
+                              _coverImageIndex! > index) {
+                            _coverImageIndex = _coverImageIndex! - 1;
                           }
                         });
                       },
@@ -262,7 +274,9 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
     if (imageFile != null) {
       setState(() {
         _pendingImages.add(imageFile);
-        _selectedPendingImageIndex = _pendingImages.length - 1;
+        if (_coverImageIndex == null && _pendingImages.length == 1) {
+          _coverImageIndex = 0;
+        }
       });
     }
   }
@@ -298,7 +312,7 @@ class _HandlePatientsViewState extends State<HandlePatientsView> {
     if (result.shouldClearPendingImages()) {
       setState(() {
         _pendingImages.clear();
-        _selectedPendingImageIndex = null;
+        _coverImageIndex = null;
       });
     }
   }

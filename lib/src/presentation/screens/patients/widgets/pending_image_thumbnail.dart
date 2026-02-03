@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PendingImageThumbnail extends StatelessWidget {
   final File imageFile;
-  final bool isSelected;
+  final bool isCover;
   final VoidCallback onTap;
   final VoidCallback onRemove;
   final VoidCallback onCrop;
@@ -11,7 +11,7 @@ class PendingImageThumbnail extends StatelessWidget {
   const PendingImageThumbnail({
     super.key,
     required this.imageFile,
-    required this.isSelected,
+    this.isCover = false,
     required this.onTap,
     required this.onRemove,
     required this.onCrop,
@@ -32,33 +32,53 @@ class PendingImageThumbnail extends StatelessWidget {
               height: double.infinity,
             ),
           ),
-          if (isSelected)
+          if (isCover)
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.black,
+                    color: Colors.amber,
                     width: 3,
                   ),
                 ),
               ),
             ),
-          if (isSelected)
+          if (isCover)
             Positioned(
               bottom: 8,
               right: 8,
               child: Container(
-                width: 24,
-                height: 24,
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                child: const Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 16,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 2),
+                    Text(
+                      'Capa',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

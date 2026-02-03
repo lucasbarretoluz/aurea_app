@@ -44,7 +44,7 @@ class NewPatientView extends StatefulWidget {
 
 class _NewPatientViewState extends State<NewPatientView> {
   final List<File> _pendingImages = [];
-  int? _selectedPendingImageIndex;
+  int? _coverImageIndex;
   String _patientName = '';
 
   Future<void> _pickImage() async {
@@ -62,7 +62,9 @@ class _NewPatientViewState extends State<NewPatientView> {
     if (imageFile != null) {
       setState(() {
         _pendingImages.add(imageFile);
-        _selectedPendingImageIndex = _pendingImages.length - 1;
+        if (_coverImageIndex == null && _pendingImages.length == 1) {
+          _coverImageIndex = 0;
+        }
       });
     }
   }
@@ -174,22 +176,25 @@ class _NewPatientViewState extends State<NewPatientView> {
                           hasPendingImages
                               ? PendingImagesGrid(
                                 images: _pendingImages,
-                                selectedIndex: _selectedPendingImageIndex,
+                                coverIndex: _coverImageIndex,
                                 onAddPhoto: _pickImage,
                                 onImageTap: (index) {
                                   setState(() {
-                                    _selectedPendingImageIndex = index;
+                                    if (_coverImageIndex == index) {
+                                      _coverImageIndex = null;
+                                    } else {
+                                      _coverImageIndex = index;
+                                    }
                                   });
                                 },
                                 onImageRemove: (index) {
                                   setState(() {
                                     _pendingImages.removeAt(index);
-                                    if (_selectedPendingImageIndex == index) {
-                                      _selectedPendingImageIndex = null;
-                                    } else if (_selectedPendingImageIndex != null &&
-                                        _selectedPendingImageIndex! > index) {
-                                      _selectedPendingImageIndex =
-                                          _selectedPendingImageIndex! - 1;
+                                    if (_coverImageIndex == index) {
+                                      _coverImageIndex = null;
+                                    } else if (_coverImageIndex != null &&
+                                        _coverImageIndex! > index) {
+                                      _coverImageIndex = _coverImageIndex! - 1;
                                     }
                                   });
                                 },

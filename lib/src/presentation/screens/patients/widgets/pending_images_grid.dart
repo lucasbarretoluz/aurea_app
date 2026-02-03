@@ -5,7 +5,7 @@ import 'package:aurea_app/src/presentation/screens/patients/widgets/pending_imag
 
 class PendingImagesGrid extends StatelessWidget {
   final List<File> images;
-  final int? selectedIndex;
+  final int? coverIndex;
   final VoidCallback onAddPhoto;
   final Function(int) onImageTap;
   final Function(int) onImageRemove;
@@ -14,7 +14,7 @@ class PendingImagesGrid extends StatelessWidget {
   const PendingImagesGrid({
     super.key,
     required this.images,
-    this.selectedIndex,
+    this.coverIndex,
     required this.onAddPhoto,
     required this.onImageTap,
     required this.onImageRemove,
@@ -39,7 +39,7 @@ class PendingImagesGrid extends StatelessWidget {
           }
           return PendingImageThumbnail(
             imageFile: images[index],
-            isSelected: selectedIndex == index,
+            isCover: coverIndex == index,
             onTap: () => onImageTap(index),
             onRemove: () => onImageRemove(index),
             onCrop: () => onImageCrop(index),
