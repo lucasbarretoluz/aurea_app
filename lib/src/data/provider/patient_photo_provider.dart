@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import '../api/api.dart';
 import '../models/exceptions/exceptions.dart';
 
@@ -43,7 +42,6 @@ class PatientPhotoProvider {
     required String namePatient,
     required List<File> imageFiles,
   }) async {
-    debugPrint('[DEBUG] Provider.uploadMultiplePatientPhotos INICIADO');
     try {
       final formData = FormData();
       
@@ -63,6 +61,7 @@ class PatientPhotoProvider {
 
       formData.fields.add(MapEntry('namePatient', namePatient));
       formData.fields.add(MapEntry('clinicId', clinicId.toString()));
+      
       var response = await _api.dio.post(
         '/patients/photos/multiple',
         data: formData,
@@ -72,11 +71,11 @@ class PatientPhotoProvider {
           },
         ),
       );
+
       return response;
-    } on DioException {
+    } on DioException catch (_) {
       rethrow;
     } catch (e) {
-      debugPrint('[DEBUG] Provider - ERRO: $e');
       throw ProviderException(e.toString());
     }
   }
