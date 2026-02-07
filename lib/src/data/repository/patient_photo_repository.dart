@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import '../models/exceptions/exceptions.dart';
 import '../models/patient/patient_photo_model.dart';
 import '../provider/patient_photo_provider.dart';
@@ -38,29 +37,24 @@ class PatientPhotoRepository {
     required int clinicId,
     required String namePatient,
     required List<File> imageFiles,
+    int? coverImageIndex,
   }) async {
    try {
-      debugPrint('[DEBUG] Repository - Chamando provider.uploadMultiplePatientPhotos');
       final response = await _provider.uploadMultiplePatientPhotos(
         clinicId: clinicId,
         namePatient: namePatient,
         imageFiles: imageFiles,
+        coverImageIndex: coverImageIndex,
       );
-      debugPrint('[DEBUG] Repository - Response recebido. StatusCode: ${response.statusCode}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        debugPrint('[DEBUG] Repository - Upload bem-sucedido!');
         return response.data is Map<String, dynamic>
             ? response.data as Map<String, dynamic>
             : {'success': true, 'data': response.data};
       }
 
-      debugPrint('[DEBUG] Repository - StatusCode inválido: ${response.statusCode}');
       throw RepositoryException('Erro ao fazer upload das fotos');
     } on DioException catch (e) {
-      debugPrint('[DEBUG] Repository - DioException: $e');
-      debugPrint('[DEBUG] Repository - StatusCode: ${e.response?.statusCode}');
-      debugPrint('[DEBUG] Repository - Response data: ${e.response?.data}');
       
       String errorMessage = 'Erro ao fazer upload das fotos';
       
@@ -80,7 +74,6 @@ class PatientPhotoRepository {
       
       throw RepositoryException(errorMessage);
     } catch (e) {
-      debugPrint('[DEBUG] Repository - Exception: $e');
       throw RepositoryException('Erro ao fazer upload das fotos: $e');
     }
   }

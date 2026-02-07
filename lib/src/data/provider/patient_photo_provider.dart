@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import '../api/api.dart';
@@ -41,13 +42,18 @@ class PatientPhotoProvider {
     required int clinicId,
     required String namePatient,
     required List<File> imageFiles,
+    int? coverImageIndex,
   }) async {
     try {
       final formData = FormData();
+      final List<int> photoTypes = [];
       
       for (var i = 0; i < imageFiles.length; i++) {
         final file = imageFiles[i];
         final fileName = file.path.split('/').last;
+        final isCover = i == coverImageIndex;
+        final photoType = isCover ? 1 : 0;
+        
         formData.files.add(
           MapEntry(
             'photos',
@@ -57,10 +63,13 @@ class PatientPhotoProvider {
             ),
           ),
         );
+        
+        photoTypes.add(photoType);
       }
 
       formData.fields.add(MapEntry('namePatient', namePatient));
       formData.fields.add(MapEntry('clinicId', clinicId.toString()));
+      formData.fields.add(MapEntry('profilePhotoIndex', jsonEncode(photoTypes)));
       
       var response = await _api.dio.post(
         '/patients/photos/multiple',
@@ -71,7 +80,7 @@ class PatientPhotoProvider {
           },
         ),
       );
-
+      
       return response;
     } on DioException catch (_) {
       rethrow;

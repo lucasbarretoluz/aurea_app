@@ -121,6 +121,7 @@ class _NewPatientViewState extends State<NewPatientView> {
       clinicId: widget.clinicId,
       namePatient: _patientName.trim(),
       imageFiles: _pendingImages,
+      coverImageIndex: _coverImageIndex,
     );
   }
 

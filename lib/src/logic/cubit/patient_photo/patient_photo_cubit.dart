@@ -46,6 +46,7 @@ class PatientPhotoCubit extends Cubit<PatientPhotoState> {
     required int clinicId,
     required String namePatient,
     required List<File> imageFiles,
+    int? coverImageIndex,
   }) async {
     emit(const PatientPhotoState.uploading());
     try {
@@ -53,6 +54,7 @@ class PatientPhotoCubit extends Cubit<PatientPhotoState> {
         clinicId: clinicId,
         namePatient: namePatient,
         imageFiles: imageFiles,
+        coverImageIndex: coverImageIndex,
       );
       
       if (result.containsKey('patientId') && result['patientId'] != null) {
