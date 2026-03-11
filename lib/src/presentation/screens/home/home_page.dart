@@ -4,6 +4,7 @@ import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/presentation/screens/home/widgets/all_patients_section.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_cards_grid.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_tab_bar.dart';
+import 'package:aurea_app/src/presentation/widgets/shimmer/shimmer_rectangle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,7 +67,12 @@ class _HomePageViewState extends State<HomePageView> {
         final List<String> tabs = [];
         List<ClinicModel> clinics = [];
 
-        if (clinicState.toString().startsWith('ClinicState.loaded')) {
+        if (clinicState.toString().startsWith('ClinicState.initial') ||
+            clinicState.toString().startsWith('ClinicState.loading')) {
+          return CircularProgressIndicator();
+        }
+
+        else if (clinicState.toString().startsWith('ClinicState.loaded')) {
           try {
             final loadedState = clinicState as dynamic;
             if (loadedState.clinics != null) {
@@ -87,49 +93,56 @@ class _HomePageViewState extends State<HomePageView> {
                 });
               },
             ),
-            BlocBuilder<ClinicCubit, ClinicState>(
-              builder: (context, state) {
-                final stateString = state.toString();
-
-                if (stateString.startsWith('ClinicState.initial') ||
-                    stateString.startsWith('ClinicState.loading')) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                if (stateString.startsWith('ClinicState.error')) {
-                  try {
-                    final errorState = state as dynamic;
-                    return Center(
-                      child: Text(
-                        'Erro: ${errorState.message ?? "Erro desconhecido"}',
-                      ),
+            SizedBox(
+              height: 300,
+              child: BlocBuilder<ClinicCubit, ClinicState>(
+                builder: (context, state) {
+                  final stateString = state.toString();
+                
+                  if (stateString.startsWith('ClinicState.initial') ||
+                      stateString.startsWith('ClinicState.loading')) {
+                    return ShimmerRectangle(
+                      width: double.infinity,
+                      height: 300,
+                      borderRadius: 12,
                     );
-                  } catch (_) {
-                    return const Center(child: Text('Erro ao carregar dados'));
                   }
-                }
-
-                if (clinics.isEmpty) {
-                  return const Center(
-                    child: Text('Nenhuma clínica encontrada'),
+              
+                  if (stateString.startsWith('ClinicState.error')) {
+                    try {
+                      final errorState = state as dynamic;
+                      return Center(
+                        child: Text(
+                          'Erro: ${errorState.message ?? "Erro desconhecido"}',
+                        ),
+                      );
+                    } catch (_) {
+                      return const Center(child: Text('Erro ao carregar dados'));
+                    }
+                  }
+              
+                  if (clinics.isEmpty) {
+                    return const Center(
+                      child: Text('Nenhuma clínica encontrada'),
+                    );
+                  }
+              
+                  final selectedClinic =
+                      _selectedTabIndex < clinics.length
+                          ? clinics[_selectedTabIndex]
+                          : null;
+              
+                  if (selectedClinic == null) {
+                    return const Center(child: Text('Clínica não encontrada'));
+                  }
+              
+                  return ClinicCardsGrid(
+                    patients: selectedClinic.patients,
+                    clinicName: selectedClinic.name,
+                    clinicId: selectedClinic.clinicId,
                   );
-                }
-
-                final selectedClinic =
-                    _selectedTabIndex < clinics.length
-                        ? clinics[_selectedTabIndex]
-                        : null;
-
-                if (selectedClinic == null) {
-                  return const Center(child: Text('Clínica não encontrada'));
-                }
-
-                return ClinicCardsGrid(
-                  patients: selectedClinic.patients,
-                  clinicName: selectedClinic.name,
-                  clinicId: selectedClinic.clinicId,
-                );
-              },
+                },
+              ),
             ),
             const AllPatientsSection(),
           ],
