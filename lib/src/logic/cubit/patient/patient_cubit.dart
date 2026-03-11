@@ -74,7 +74,7 @@ class PatientCubit extends Cubit<PatientState> {
           );
         }
       } catch (_) {
-        // Ignora erro ao carregar mais
+        
       }
     }
   }
