@@ -6,7 +6,8 @@ import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/ph
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
-import 'package:aurea_app/src/presentation/screens/patients/new_or_edit_patient_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/new_or_edit_patient_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients_handle/patients_handle_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
@@ -17,7 +18,7 @@ import 'package:go_router/go_router.dart';
 
 import '../screens/home/config_home_page.dart';
 import '../screens/login/login_page.dart';
-import '../screens/patients/all_patients_page.dart';
+import '../screens/patients_add/all_patients_page.dart';
 import '../screens/splash/splash_page.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -123,6 +124,20 @@ class AppRouter {
             final clinicId = extra['clinicId'] as int? ?? 0;
             final patient = extra['patient'] as PatientModel?;
             return NewOrEditPatientPage(
+              clinicId: clinicId,
+              clinicName: clinicName,
+              patient: patient,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/patients-handle',
+          builder: (context, state){
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            final clinicName = extra['clinicName'] as String? ?? '';
+            final clinicId = extra['clinicId'] as int? ?? 0;
+            final patient = extra['patient'] as PatientModel?;
+            return PatientsHandlePage(
               clinicId: clinicId,
               clinicName: clinicName,
               patient: patient,

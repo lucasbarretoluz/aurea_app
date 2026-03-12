@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:aurea_app/src/logic/cubit/patient_photo/patient_photo_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -77,52 +76,6 @@ class PatientPhotoUploadHelper {
     }
 
     return await cropImage(context, pickedFile);
-  }
-
-  static UploadResult uploadPendingImages({
-    required BuildContext context,
-    required List<File> pendingImages,
-    required bool isNewPatient,
-    String? patientName,
-    int? patientId,
-    required PatientPhotoCubit photoCubit,
-  }) {
-    if (pendingImages.isEmpty) {
-      return UploadResult.empty();
-    }
-
-    if (isNewPatient) {
-      if (patientName == null || patientName.trim().isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Por favor, digite o nome do paciente'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        return UploadResult.validationFailed();
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Funcionalidade de criar paciente será implementada em breve'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return UploadResult.notImplemented();
-    }
-
-    if (patientId == null || patientId == 0) {
-      return UploadResult.invalidPatient();
-    }
-
-    for (final imageFile in pendingImages) {
-      photoCubit.uploadPhoto(
-        patientId: patientId,
-        imageFile: imageFile,
-      );
-    }
-
-    return UploadResult.success();
   }
 }
 

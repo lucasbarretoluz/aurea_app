@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/back_button.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/back_button.dart';
 
 //TODO: DELETE THIS FILE
 class PhotoContentWrapper extends StatelessWidget {

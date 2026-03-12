@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/add_photo_card.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/pending_image_thumbnail.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/add_photo_card.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/pending_image_thumbnail.dart';
 
 class PendingImagesGrid extends StatelessWidget {
   final List<File> images;

@@ -1,6 +1,6 @@
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
-import 'package:aurea_app/src/presentation/screens/patients/all_patients_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/all_patients_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

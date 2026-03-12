@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/patient_photo/patient_photo_cubit.dart';
-import 'package:aurea_app/src/presentation/screens/patients/helpers/patient_photo_upload_helper.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/empty_photos_view.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/patient_info_header.dart';
-import 'package:aurea_app/src/presentation/screens/patients/widgets/pending_images_grid.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/helpers/patient_photo_upload_helper.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/empty_photos_view.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/patient_info_header.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/widgets/pending_images_grid.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:aurea_app/src/presentation/widgets/toast/custom_toast.dart';
 import 'package:flutter/material.dart';
