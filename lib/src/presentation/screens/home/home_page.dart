@@ -69,10 +69,11 @@ class _HomePageViewState extends State<HomePageView> {
 
         if (clinicState.toString().startsWith('ClinicState.initial') ||
             clinicState.toString().startsWith('ClinicState.loading')) {
-          return CircularProgressIndicator();
-        }
-
-        else if (clinicState.toString().startsWith('ClinicState.loaded')) {
+          return ShimmerRectangle(
+            height: double.infinity,
+            width: double.infinity,
+          );
+        } else if (clinicState.toString().startsWith('ClinicState.loaded')) {
           try {
             final loadedState = clinicState as dynamic;
             if (loadedState.clinics != null) {
@@ -98,7 +99,7 @@ class _HomePageViewState extends State<HomePageView> {
               child: BlocBuilder<ClinicCubit, ClinicState>(
                 builder: (context, state) {
                   final stateString = state.toString();
-                
+
                   if (stateString.startsWith('ClinicState.initial') ||
                       stateString.startsWith('ClinicState.loading')) {
                     return ShimmerRectangle(
@@ -107,7 +108,7 @@ class _HomePageViewState extends State<HomePageView> {
                       borderRadius: 12,
                     );
                   }
-              
+
                   if (stateString.startsWith('ClinicState.error')) {
                     try {
                       final errorState = state as dynamic;
@@ -117,25 +118,27 @@ class _HomePageViewState extends State<HomePageView> {
                         ),
                       );
                     } catch (_) {
-                      return const Center(child: Text('Erro ao carregar dados'));
+                      return const Center(
+                        child: Text('Erro ao carregar dados'),
+                      );
                     }
                   }
-              
+
                   if (clinics.isEmpty) {
                     return const Center(
                       child: Text('Nenhuma clínica encontrada'),
                     );
                   }
-              
+
                   final selectedClinic =
                       _selectedTabIndex < clinics.length
                           ? clinics[_selectedTabIndex]
                           : null;
-              
+
                   if (selectedClinic == null) {
                     return const Center(child: Text('Clínica não encontrada'));
                   }
-              
+
                   return ClinicCardsGrid(
                     patients: selectedClinic.patients,
                     clinicName: selectedClinic.name,
@@ -151,4 +154,3 @@ class _HomePageViewState extends State<HomePageView> {
     );
   }
 }
-
