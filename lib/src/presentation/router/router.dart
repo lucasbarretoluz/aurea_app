@@ -6,8 +6,7 @@ import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/ph
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/reference_lines/lines_and_references_page.dart';
 import 'package:aurea_app/src/presentation/screens/notification/notification_page.dart';
-import 'package:aurea_app/src/presentation/screens/patients/handle_patient_page.dart';
-import 'package:aurea_app/src/presentation/screens/patients/new_patient_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients/new_or_edit_patient_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
@@ -117,25 +116,17 @@ class AppRouter {
           builder: (context, state) => const DentalProportionsPage(),
         ),
         GoRoute(
-          path: '/new-patient',
+          path: '/new-or-edit-patient',
           builder: (context, state) {
-            final extra = state.extra as Map<String, dynamic>;
+            final extra = state.extra as Map<String, dynamic>? ?? {};
             final clinicName = extra['clinicName'] as String? ?? '';
             final clinicId = extra['clinicId'] as int? ?? 0;
-            return NewPatientPage(clinicId: clinicId, clinicName: clinicName);
-          },
-        ),
-        GoRoute(
-          path: '/handle-patient',
-          builder: (context, state) {
-            PatientModel? patient;
-            String? clinicName;
-            if (state.extra != null) {
-              final extra = state.extra as Map<String, dynamic>;
-              patient = extra['patient'] as PatientModel?;
-              clinicName = extra['clinicName'] as String?;
-            }
-            return HandlePatientsPage(patient: patient, clinicName: clinicName);
+            final patient = extra['patient'] as PatientModel?;
+            return NewOrEditPatientPage(
+              clinicId: clinicId,
+              clinicName: clinicName,
+              patient: patient,
+            );
           },
         ),
       ],

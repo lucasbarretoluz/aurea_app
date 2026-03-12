@@ -16,7 +16,15 @@ class ClinicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/handle-patient', extra: {'patient': patient}),
+      onTap:
+          () => context.push(
+            '/patient',
+            extra: {
+              'patient': patient,
+              'clinicId': patient.clinicId,
+              'clinicName': patient.clinicName,
+            },
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -27,10 +35,7 @@ class ClinicCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Container(
-                color: Colors.grey[400],
-                child: _buildImage(),
-              ),
+              child: Container(color: Colors.grey[400], child: _buildImage()),
             ),
             Positioned(
               bottom: 0,
@@ -57,21 +62,15 @@ class ClinicCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     if (patient.description != null) ...[
-                    Text(
-                      patient.description ?? '',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
+                      Text(
+                        patient.description ?? '',
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
-                    ),
-                    const SizedBox(height: 2),
+                      const SizedBox(height: 2),
                     ],
                     Text(
                       patient.clinicName,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -93,7 +92,8 @@ class ClinicCard extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    if (patient.profilePhotoUrl != null && patient.profilePhotoUrl!.isNotEmpty) {
+    if (patient.profilePhotoUrl != null &&
+        patient.profilePhotoUrl!.isNotEmpty) {
       return Image.network(
         patient.profilePhotoUrl!,
         fit: BoxFit.cover,
@@ -104,7 +104,11 @@ class ClinicCard extends StatelessWidget {
             errorBuilder: (context, error, stackTrace) {
               return Container(
                 color: Colors.grey[400],
-                child: const Icon(Icons.person, size: 80, color: Colors.white70),
+                child: const Icon(
+                  Icons.person,
+                  size: 80,
+                  color: Colors.white70,
+                ),
               );
             },
           );
@@ -124,4 +128,3 @@ class ClinicCard extends StatelessWidget {
     );
   }
 }
-

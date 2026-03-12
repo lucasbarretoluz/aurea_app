@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/patient_photo/patient_photo_cubit.dart';
 import 'package:aurea_app/src/presentation/screens/patients/helpers/patient_photo_upload_helper.dart';
 import 'package:aurea_app/src/presentation/screens/patients/widgets/empty_photos_view.dart';
@@ -11,41 +12,55 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 
-class NewPatientPage extends StatelessWidget {
+class NewOrEditPatientPage extends StatelessWidget {
   final int clinicId;
   final String clinicName;
-  const NewPatientPage({
+  final PatientModel? patient;
+  const NewOrEditPatientPage({
     super.key,
     required this.clinicId,
     required this.clinicName,
+    this.patient,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PatientPhotoCubit(),
-      child: NewPatientView(clinicId: clinicId, clinicName: clinicName),
+      child: NewOrEditPatientView(
+        clinicId: clinicId,
+        clinicName: clinicName,
+        patient: patient,
+      ),
     );
   }
 }
 
-class NewPatientView extends StatefulWidget {
+class NewOrEditPatientView extends StatefulWidget {
   final int clinicId;
   final String clinicName;
-  const NewPatientView({
+  final PatientModel? patient;
+  const NewOrEditPatientView({
     super.key,
     required this.clinicId,
     required this.clinicName,
+    this.patient,
   });
 
   @override
-  State<NewPatientView> createState() => _NewPatientViewState();
+  State<NewOrEditPatientView> createState() => _NewOrEditPatientViewState();
 }
 
-class _NewPatientViewState extends State<NewPatientView> {
+class _NewOrEditPatientViewState extends State<NewOrEditPatientView> {
   final List<File> _pendingImages = [];
   int? _coverImageIndex;
-  String _patientName = '';
+  late String _patientName;
+
+  @override
+  void initState() {
+    super.initState();
+    _patientName = widget.patient?.name ?? '';
+  }
 
   Future<void> _pickImage() async {
     if (_pendingImages.length >= 10) {
@@ -131,7 +146,7 @@ class _NewPatientViewState extends State<NewPatientView> {
     final colorBackground = const Color(0xFFE8E8E8);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de paciente'),
+        title: Text(widget.patient != null ? 'Editar paciente' : 'Cadastro de paciente'),
         centerTitle: true,
         backgroundColor: colorBackground,
         elevation: 0,
@@ -168,6 +183,7 @@ class _NewPatientViewState extends State<NewPatientView> {
                             child: PatientInfoHeader(
                               clinicName: widget.clinicName,
                               isActiveChangeName: true,
+                              name: widget.patient?.name,
                               onNameChanged: (name) {
                                 _patientName = name;
                               },
@@ -234,7 +250,7 @@ class _NewPatientViewState extends State<NewPatientView> {
                             borderRadius: 12,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            text: 'Criar paciente',
+                            text: widget.patient != null ? 'Salvar alterações' : 'Criar paciente',
                             isLoading: state is Uploading,
                             onPressed: _createPatient,
                           );

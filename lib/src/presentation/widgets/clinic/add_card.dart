@@ -21,7 +21,7 @@ class AddCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(
-          '/new-patient',
+          '/patient',
           extra: {'clinicName': clinicName, 'clinicId': clinicId},
         );
       },
