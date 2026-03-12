@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class EmptyPhotosView extends StatelessWidget {
+class EmptyAddPhotosView extends StatelessWidget {
   final VoidCallback onAddPhoto;
   final bool isUploading;
 
-  const EmptyPhotosView({
+  const EmptyAddPhotosView({
     super.key,
     required this.onAddPhoto,
     required this.isUploading,
