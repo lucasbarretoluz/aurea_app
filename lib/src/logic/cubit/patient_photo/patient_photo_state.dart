@@ -8,6 +8,12 @@ class PatientPhotoState with _$PatientPhotoState {
   const factory PatientPhotoState.loaded({
     required List<String> urls,
   }) = Loaded;
+  const factory PatientPhotoState.uploadSuccess({
+    required int patientId,
+    required int clinicId,
+    required String patientName,
+    required List<String> photoUrls,
+  }) = UploadSuccess;
   const factory PatientPhotoState.error({
     required String message,
   }) = Error;

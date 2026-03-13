@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:aurea_app/src/core/enums/gender_enum.dart';
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
+import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient_photo/patient_photo_cubit.dart';
 import 'package:aurea_app/src/presentation/screens/patients_add/helpers/patient_photo_upload_helper.dart';
 import 'package:aurea_app/src/presentation/screens/patients_add/widgets/empty_add_photos_view.dart';
@@ -235,7 +237,31 @@ class _NewOrEditPatientViewState extends State<NewOrEditPatientView> {
                               description: state.message,
                               type: ToastificationType.error,
                             );
-                          } else if (state is Loaded) {
+                          } else if (state is UploadSuccess) {
+                            final patient = PatientModel(
+                              patientId: state.patientId,
+                              clinicId: state.clinicId,
+                              name: state.patientName,
+                              clinicName: widget.clinicName,
+                              profilePhotoUrl: state.photoUrls.isNotEmpty 
+                                  ? state.photoUrls.first 
+                                  : null,
+                              gender: GenderEnum.unknown,
+                              createdAt: DateTime.now(),
+                              updatedAt: DateTime.now(),
+                            );
+
+                            try {
+                              final clinicCubit = context.read<ClinicCubit>();
+                              clinicCubit.addPatientToClinic(
+                                clinicId: state.clinicId,
+                                patient: patient,
+                              );
+                            } catch (e) {
+                              // ClinicCubit não está disponível neste contexto
+                              // Isso não deve acontecer se o cubit foi passado corretamente
+                            }
+
                             showToast(
                               context: context,
                               title: 'Sucesso',

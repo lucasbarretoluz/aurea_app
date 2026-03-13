@@ -1,6 +1,8 @@
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
+import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:aurea_app/src/presentation/screens/help/dental_proportions/dental_proportions_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_phone/photographing_with_cellphone_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/photographic_protocol_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/config_camera/semi_professional_camera_settings_page.dart';
@@ -123,11 +125,22 @@ class AppRouter {
             final clinicName = extra['clinicName'] as String? ?? '';
             final clinicId = extra['clinicId'] as int? ?? 0;
             final patient = extra['patient'] as PatientModel?;
-            return NewOrEditPatientPage(
+            final clinicCubit = extra['clinicCubit'] as ClinicCubit?;
+            
+            Widget page = NewOrEditPatientPage(
               clinicId: clinicId,
               clinicName: clinicName,
               patient: patient,
             );
+            
+            if (clinicCubit != null) {
+              return BlocProvider<ClinicCubit>.value(
+                value: clinicCubit,
+                child: page,
+              );
+            }
+            
+            return page;
           },
         ),
         GoRoute(

@@ -213,6 +213,84 @@ as List<String>,
 /// @nodoc
 
 
+class UploadSuccess implements PatientPhotoState {
+  const UploadSuccess({required this.patientId, required this.clinicId, required this.patientName, required final  List<String> photoUrls}): _photoUrls = photoUrls;
+  
+
+ final  int patientId;
+ final  int clinicId;
+ final  String patientName;
+ final  List<String> _photoUrls;
+ List<String> get photoUrls {
+  if (_photoUrls is EqualUnmodifiableListView) return _photoUrls;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_photoUrls);
+}
+
+
+/// Create a copy of PatientPhotoState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UploadSuccessCopyWith<UploadSuccess> get copyWith => _$UploadSuccessCopyWithImpl<UploadSuccess>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UploadSuccess&&(identical(other.patientId, patientId) || other.patientId == patientId)&&(identical(other.clinicId, clinicId) || other.clinicId == clinicId)&&(identical(other.patientName, patientName) || other.patientName == patientName)&&const DeepCollectionEquality().equals(other._photoUrls, _photoUrls));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,patientId,clinicId,patientName,const DeepCollectionEquality().hash(_photoUrls));
+
+@override
+String toString() {
+  return 'PatientPhotoState.uploadSuccess(patientId: $patientId, clinicId: $clinicId, patientName: $patientName, photoUrls: $photoUrls)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UploadSuccessCopyWith<$Res> implements $PatientPhotoStateCopyWith<$Res> {
+  factory $UploadSuccessCopyWith(UploadSuccess value, $Res Function(UploadSuccess) _then) = _$UploadSuccessCopyWithImpl;
+@useResult
+$Res call({
+ int patientId, int clinicId, String patientName, List<String> photoUrls
+});
+
+
+
+
+}
+/// @nodoc
+class _$UploadSuccessCopyWithImpl<$Res>
+    implements $UploadSuccessCopyWith<$Res> {
+  _$UploadSuccessCopyWithImpl(this._self, this._then);
+
+  final UploadSuccess _self;
+  final $Res Function(UploadSuccess) _then;
+
+/// Create a copy of PatientPhotoState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? patientId = null,Object? clinicId = null,Object? patientName = null,Object? photoUrls = null,}) {
+  return _then(UploadSuccess(
+patientId: null == patientId ? _self.patientId : patientId // ignore: cast_nullable_to_non_nullable
+as int,clinicId: null == clinicId ? _self.clinicId : clinicId // ignore: cast_nullable_to_non_nullable
+as int,patientName: null == patientName ? _self.patientName : patientName // ignore: cast_nullable_to_non_nullable
+as String,photoUrls: null == photoUrls ? _self._photoUrls : photoUrls // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class Error implements PatientPhotoState {
   const Error({required this.message});
   

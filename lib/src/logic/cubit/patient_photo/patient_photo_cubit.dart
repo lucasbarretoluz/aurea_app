@@ -59,7 +59,20 @@ class PatientPhotoCubit extends Cubit<PatientPhotoState> {
       
       if (result.containsKey('patientId') && result['patientId'] != null) {
         final patientId = result['patientId'] as int;
-        await loadPhotos(patientId);
+        final patientName = result['name'] as String? ?? namePatient;
+        final photos = result['photos'] as List<dynamic>? ?? [];
+        
+        final photoUrls = photos
+            .map((photo) => (photo as Map<String, dynamic>)['url'] as String)
+            .whereType<String>()
+            .toList();
+        
+        emit(PatientPhotoState.uploadSuccess(
+          patientId: patientId,
+          clinicId: clinicId,
+          patientName: patientName,
+          photoUrls: photoUrls,
+        ));
       } else {
         emit(const PatientPhotoState.loaded(urls: []));
       }

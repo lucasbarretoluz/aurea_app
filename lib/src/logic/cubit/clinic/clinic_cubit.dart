@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../data/models/clinic/clinic_model.dart';
+import '../../../data/models/patient/patient_model.dart';
 import '../../../data/models/exceptions/exceptions.dart';
 import '../../../data/repository/clinic_repository.dart';
 
@@ -33,6 +34,32 @@ class ClinicCubit extends Cubit<ClinicState> {
       emit(ClinicState.error(message: e.message));
     } catch (e) {
       emit(ClinicState.error(message: 'Erro ao carregar clínica'));
+    }
+  }
+
+  void addPatientToClinic({
+    required int clinicId,
+    required PatientModel patient,
+  }) {
+    final currentState = state;
+    final stateString = currentState.toString();
+    if (stateString.contains('loaded') && stateString.contains('clinics')) {
+      try {
+        final loadedState = currentState as dynamic;
+        final clinics = loadedState.clinics as List<ClinicModel>;
+        
+        final updatedClinics = clinics.map((clinic) {
+          if (clinic.clinicId == clinicId) {
+            final updatedPatients = [patient, ...clinic.patients];
+            return clinic.copyWith(patients: updatedPatients);
+          }
+          return clinic;
+        }).toList();
+        
+        emit(ClinicState.loaded(clinics: updatedClinics));
+      } catch (e) {
+        // Se houver erro, não faz nada para não quebrar o app
+      }
     }
   }
 }

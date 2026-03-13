@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AddCard extends StatelessWidget {
@@ -20,9 +22,14 @@ class AddCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final clinicCubit = context.read<ClinicCubit>();
         context.push(
           '/new-or-edit-patient',
-          extra: {'clinicName': clinicName, 'clinicId': clinicId},
+          extra: {
+            'clinicName': clinicName,
+            'clinicId': clinicId,
+            'clinicCubit': clinicCubit,
+          },
         );
       },
       child: ClipRRect(
