@@ -9,6 +9,7 @@ class PatientProvider {
   Future<Response<dynamic>> getPatients({
     int page = 1,
     int limit = 10,
+    int? clinicId,
   }) async {
     try {
       var response = await _api.dio.get(
@@ -16,6 +17,7 @@ class PatientProvider {
         queryParameters: {
           'page': page,
           'limit': limit,
+          'clinicId': clinicId,
         },
       );
       return response;

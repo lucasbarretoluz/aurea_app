@@ -93,7 +93,6 @@ class ViewAllPatientsCard extends StatelessWidget {
           extra: {
             'clinicName': clinicName,
             'clinicId': clinicId,
-            'patients': patients,
           },
         );
       },

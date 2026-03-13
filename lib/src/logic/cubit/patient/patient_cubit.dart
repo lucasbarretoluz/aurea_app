@@ -5,6 +5,7 @@ import 'patient_state.dart';
 
 class PatientCubit extends Cubit<PatientState> {
   final PatientRepository _repository = PatientRepository();
+  int? _currentClinicId;
 
   PatientCubit() : super(const PatientState.initial());
 
@@ -12,13 +13,20 @@ class PatientCubit extends Cubit<PatientState> {
     int page = 1,
     int limit = 10,
     bool loadMore = false,
+    int? clinicId,
   }) async {
     try {
       if (!loadMore) {
         emit(const PatientState.loading());
       }
 
-      final response = await _repository.getPatients(page: page, limit: limit);
+      _currentClinicId = clinicId;
+
+      final response = await _repository.getPatients(
+        page: page,
+        limit: limit,
+        clinicId: clinicId,
+      );
 
       if (loadMore && state.toString().startsWith('PatientState.loaded')) {
         try {
@@ -71,6 +79,7 @@ class PatientCubit extends Cubit<PatientState> {
             page: page + 1,
             limit: limit,
             loadMore: true,
+            clinicId: _currentClinicId,
           );
         }
       } catch (_) {

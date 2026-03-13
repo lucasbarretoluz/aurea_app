@@ -85,17 +85,17 @@ class _HomePageViewState extends State<HomePageView> {
         if (clinicState.toString().startsWith('ClinicState.error')) {
           try {
             final errorState = clinicState as dynamic;
-            return Center(
-              child: Text(
-                'Erro: ${errorState.message ?? "Erro desconhecido"}',
-              ),
-            );
-          } catch (_) {
-            return const Center(
-              child: Text('Erro ao carregar dados'),
-            );
-          }
-        }
+                      return Center(
+                        child: Text(
+                          'Erro: ${errorState.message ?? "Erro desconhecido"}',
+                        ),
+                      );
+                    } catch (_) {
+                      return const Center(
+                        child: Text('Erro ao carregar dados'),
+                      );
+                    }
+                  }
 
         List<ClinicModel> clinics = [];
         if (clinicState.toString().startsWith('ClinicState.loaded')) {
@@ -109,20 +109,20 @@ class _HomePageViewState extends State<HomePageView> {
 
         final List<String> tabs = clinics.map((c) => c.name).toList();
 
-        if (clinics.isEmpty) {
-          return const Center(
-            child: Text('Nenhuma clínica encontrada'),
-          );
-        }
+                  if (clinics.isEmpty) {
+                    return const Center(
+                      child: Text('Nenhuma clínica encontrada'),
+                    );
+                  }
 
-        final selectedClinic =
-            _selectedTabIndex < clinics.length
-                ? clinics[_selectedTabIndex]
-                : null;
+                  final selectedClinic =
+                      _selectedTabIndex < clinics.length
+                          ? clinics[_selectedTabIndex]
+                          : null;
 
-        if (selectedClinic == null) {
-          return const Center(child: Text('Clínica não encontrada'));
-        }
+                  if (selectedClinic == null) {
+                    return const Center(child: Text('Clínica não encontrada'));
+                  }
 
         return Column(
           children: [
@@ -138,9 +138,9 @@ class _HomePageViewState extends State<HomePageView> {
             SizedBox(
               height: 300,
               child: ClinicCardsGrid(
-                patients: selectedClinic.patients,
-                clinicName: selectedClinic.name,
-                clinicId: selectedClinic.clinicId,
+                    patients: selectedClinic.patients,
+                    clinicName: selectedClinic.name,
+                    clinicId: selectedClinic.clinicId,
               ),
             ),
             const AllPatientsSection(),

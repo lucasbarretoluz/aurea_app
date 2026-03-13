@@ -1,79 +1,65 @@
 import 'package:aurea_app/src/core/enums/gender_enum.dart';
+import 'package:aurea_app/src/core/helpers/string_capitalize_helper.dart';
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ClinicCard extends StatelessWidget {
+class ClinicPatientLargeCard extends StatelessWidget {
   final PatientModel patient;
-  final StackFit fit;
 
-  const ClinicCard({
+  const ClinicPatientLargeCard({
     super.key,
     required this.patient,
-    this.fit = StackFit.expand,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:
-          () => context.push(
-            '/patients-handle',
-            extra: {
-              'patient': patient,
-              'clinicId': patient.clinicId,
-              'clinicName': patient.clinicName,
-            },
-          ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.grey[300],
-        ),
+      onTap: () {
+        context.push(
+          '/patients-handle',
+          extra: {
+            'patient': patient,
+            'clinicId': patient.clinicId,
+            'clinicName': patient.clinicName,
+          },
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
         child: Stack(
-          fit: fit,
+          fit: StackFit.expand,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Container(color: Colors.grey[400], child: _buildImage()),
+            Container(
+              color: Colors.grey[400],
+              child: _buildImage(),
             ),
             Positioned(
-              bottom: 0,
               left: 0,
               right: 0,
+              bottom: 0,
               child: Container(
-                margin: const EdgeInsets.all(12),
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      patient.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    if (patient.description != null) ...[
-                      Text(
-                        patient.description ?? '',
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                      const SizedBox(height: 2),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withValues(alpha: 0.0),
+                      Colors.black.withValues(alpha: 0.6),
                     ],
-                    Text(
-                      patient.clinicName,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                    ),
-                  ],
+                  ),
+                ),
+                child: Text(
+                  patient.name.capitalizeFirst(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -125,3 +111,4 @@ class ClinicCard extends StatelessWidget {
     );
   }
 }
+

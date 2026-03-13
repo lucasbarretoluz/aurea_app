@@ -9,9 +9,10 @@ class PatientRepository {
   Future<PatientPaginatedResponse> getPatients({
     int page = 1,
     int limit = 10,
+    int? clinicId,
   }) async {
     try {
-      final response = await _provider.getPatients(page: page, limit: limit);
+      final response = await _provider.getPatients(page: page, limit: limit, clinicId: clinicId);
       
       if (response.statusCode == 200 && response.data != null) {
         return PatientPaginatedResponse.fromJson(

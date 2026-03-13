@@ -152,13 +152,10 @@ class AppRouter {
             final extra = state.extra as Map<String, dynamic>? ?? {};
             final clinicName = extra['clinicName'] as String? ?? '';
             final clinicId = extra['clinicId'] as int? ?? 0;
-            final patients =
-                (extra['patients'] as List<PatientModel>?) ?? <PatientModel>[];
-
+            
             return ClinicPatientsPage(
               clinicName: clinicName,
               clinicId: clinicId,
-              patients: patients,
             );
           },
         ),

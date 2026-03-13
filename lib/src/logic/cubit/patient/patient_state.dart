@@ -5,15 +5,15 @@ part 'patient_state.freezed.dart';
 
 @freezed
 abstract class PatientState with _$PatientState {
-  const factory PatientState.initial() = _Initial;
-  const factory PatientState.loading() = _Loading;
+  const factory PatientState.initial() = Initial;
+  const factory PatientState.loading() = Loading;
   const factory PatientState.loaded({
     required List<PatientModel> patients,
     required int total,
     required int page,
     required int limit,
     required bool hasMore,
-  }) = _Loaded;
-  const factory PatientState.error(String message) = _Error;
+  }) = Loaded;
+  const factory PatientState.error(String message) = Error;
 }
 

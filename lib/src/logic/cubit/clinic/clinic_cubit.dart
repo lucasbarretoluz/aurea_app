@@ -58,9 +58,9 @@ class ClinicCubit extends Cubit<ClinicState> {
         
         emit(ClinicState.loaded(clinics: updatedClinics));
       } catch (e) {
-        // Se houver erro, não faz nada para não quebrar o app
+        rethrow;
       }
     }
+    throw RepositoryException('Erro ao adicionar paciente à clínica');
   }
 }
-
