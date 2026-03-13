@@ -2,6 +2,7 @@ import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/bloc/auth/auth_bloc.dart';
 import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:aurea_app/src/presentation/screens/help/dental_proportions/dental_proportions_page.dart';
+import 'package:aurea_app/src/presentation/screens/patients_add/clinic_patients_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_phone/photographing_with_cellphone_page.dart';
 import 'package:aurea_app/src/presentation/screens/help/photographic_protocol/photographic_protocol_page.dart';
@@ -126,21 +127,39 @@ class AppRouter {
             final clinicId = extra['clinicId'] as int? ?? 0;
             final patient = extra['patient'] as PatientModel?;
             final clinicCubit = extra['clinicCubit'] as ClinicCubit?;
-            
-            Widget page = NewOrEditPatientPage(
+
+            if (clinicCubit != null) {
+              return BlocProvider<ClinicCubit>.value(
+                value: clinicCubit,
+                child: NewOrEditPatientPage(
+                  clinicId: clinicId,
+                  clinicName: clinicName,
+                  patient: patient,
+                ),
+              );
+            }
+
+            return NewOrEditPatientPage(
               clinicId: clinicId,
               clinicName: clinicName,
               patient: patient,
             );
-            
-            if (clinicCubit != null) {
-              return BlocProvider<ClinicCubit>.value(
-                value: clinicCubit,
-                child: page,
-              );
-            }
-            
-            return page;
+          },
+        ),
+        GoRoute(
+          path: '/clinic-patients',
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            final clinicName = extra['clinicName'] as String? ?? '';
+            final clinicId = extra['clinicId'] as int? ?? 0;
+            final patients =
+                (extra['patients'] as List<PatientModel>?) ?? <PatientModel>[];
+
+            return ClinicPatientsPage(
+              clinicName: clinicName,
+              clinicId: clinicId,
+              patients: patients,
+            );
           },
         ),
         GoRoute(
