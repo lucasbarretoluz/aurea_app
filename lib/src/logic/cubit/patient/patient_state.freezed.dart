@@ -110,7 +110,7 @@ String toString() {
 
 
 class Loaded implements PatientState {
-  const Loaded({required final  List<PatientModel> patients, required this.total, required this.page, required this.limit, required this.hasMore}): _patients = patients;
+  const Loaded({required final  List<PatientModel> patients, final  List<PatientModel>? filteredPatients, required this.total, required this.page, required this.limit, required this.hasMore}): _patients = patients,_filteredPatients = filteredPatients;
   
 
  final  List<PatientModel> _patients;
@@ -118,6 +118,15 @@ class Loaded implements PatientState {
   if (_patients is EqualUnmodifiableListView) return _patients;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_patients);
+}
+
+ final  List<PatientModel>? _filteredPatients;
+ List<PatientModel>? get filteredPatients {
+  final value = _filteredPatients;
+  if (value == null) return null;
+  if (_filteredPatients is EqualUnmodifiableListView) return _filteredPatients;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
 }
 
  final  int total;
@@ -135,16 +144,16 @@ $LoadedCopyWith<Loaded> get copyWith => _$LoadedCopyWithImpl<Loaded>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._patients, _patients)&&(identical(other.total, total) || other.total == total)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._patients, _patients)&&const DeepCollectionEquality().equals(other._filteredPatients, _filteredPatients)&&(identical(other.total, total) || other.total == total)&&(identical(other.page, page) || other.page == page)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_patients),total,page,limit,hasMore);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_patients),const DeepCollectionEquality().hash(_filteredPatients),total,page,limit,hasMore);
 
 @override
 String toString() {
-  return 'PatientState.loaded(patients: $patients, total: $total, page: $page, limit: $limit, hasMore: $hasMore)';
+  return 'PatientState.loaded(patients: $patients, filteredPatients: $filteredPatients, total: $total, page: $page, limit: $limit, hasMore: $hasMore)';
 }
 
 
@@ -155,7 +164,7 @@ abstract mixin class $LoadedCopyWith<$Res> implements $PatientStateCopyWith<$Res
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) = _$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<PatientModel> patients, int total, int page, int limit, bool hasMore
+ List<PatientModel> patients, List<PatientModel>? filteredPatients, int total, int page, int limit, bool hasMore
 });
 
 
@@ -172,10 +181,11 @@ class _$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of PatientState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? patients = null,Object? total = null,Object? page = null,Object? limit = null,Object? hasMore = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? patients = null,Object? filteredPatients = freezed,Object? total = null,Object? page = null,Object? limit = null,Object? hasMore = null,}) {
   return _then(Loaded(
 patients: null == patients ? _self._patients : patients // ignore: cast_nullable_to_non_nullable
-as List<PatientModel>,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
+as List<PatientModel>,filteredPatients: freezed == filteredPatients ? _self._filteredPatients : filteredPatients // ignore: cast_nullable_to_non_nullable
+as List<PatientModel>?,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable

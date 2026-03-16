@@ -10,9 +10,15 @@ class PatientRepository {
     int page = 1,
     int limit = 10,
     int? clinicId,
+    String? search,
   }) async {
     try {
-      final response = await _provider.getPatients(page: page, limit: limit, clinicId: clinicId);
+      final response = await _provider.getPatients(
+        page: page,
+        limit: limit,
+        clinicId: clinicId,
+        search: search,
+      );
       
       if (response.statusCode == 200 && response.data != null) {
         return PatientPaginatedResponse.fromJson(

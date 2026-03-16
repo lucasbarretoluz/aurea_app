@@ -10,15 +10,19 @@ class PatientProvider {
     int page = 1,
     int limit = 10,
     int? clinicId,
+    String? search,
   }) async {
     try {
+      final queryParams = <String, dynamic>{
+        'page': page,
+        'limit': limit,
+        if (clinicId != null) 'clinicId': clinicId,
+        if (search != null && search.trim().isNotEmpty) 'search': search.trim(),
+      };
+
       var response = await _api.dio.get(
         _path,
-        queryParameters: {
-          'page': page,
-          'limit': limit,
-          'clinicId': clinicId,
-        },
+        queryParameters: queryParams,
       );
       return response;
     } catch (e) {

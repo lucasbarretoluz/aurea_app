@@ -40,7 +40,6 @@ class ClinicPatientsView extends StatefulWidget {
 }
 
 class _ClinicPatientsViewState extends State<ClinicPatientsView> {
-  String _searchQuery = '';
   final ScrollController _scrollController = ScrollController();
 
   bool _isLoadingMore = false;
@@ -104,10 +103,18 @@ class _ClinicPatientsViewState extends State<ClinicPatientsView> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: SharedBar(
+              onClearSearch: (value) {
+                final patientCubit = context.read<PatientCubit>();
+                patientCubit.clearFilteredPatients();
+              },
               onSearch: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
+                final patientCubit = context.read<PatientCubit>();
+                final searchTerm = value.trim();
+                if (searchTerm.isEmpty) {
+                  patientCubit.clearFilteredPatients();
+                } else {
+                  patientCubit.searchPatients(searchTerm);
+                }
               },
             ),
           ),
@@ -118,15 +125,10 @@ class _ClinicPatientsViewState extends State<ClinicPatientsView> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is Loaded) {
                   final loadedState = state;
-                  final patients = _searchQuery.trim().isEmpty
-                      ? loadedState.patients
-                      : loadedState.patients
-                          .where(
-                            (p) => p.name
-                                .toLowerCase()
-                                .contains(_searchQuery.toLowerCase()),
-                          )
-                          .toList();
+                  final patients = loadedState.filteredPatients != null &&
+                          loadedState.filteredPatients!.isNotEmpty
+                      ? loadedState.filteredPatients!
+                      : loadedState.patients;
 
                   if (patients.isEmpty) {
                     return const ClinicPatientsEmptyState();
@@ -373,8 +375,10 @@ class _ClinicPatientsEmptyStateState extends State<ClinicPatientsEmptyState>
 
 class SharedBar extends StatefulWidget {
   final ValueChanged<String> onSearch;
+  final ValueChanged<void> onClearSearch;
 
-  const SharedBar({super.key, required this.onSearch});
+
+  const SharedBar({super.key, required this.onSearch, required this.onClearSearch});
 
   @override
   State<SharedBar> createState() => _SharedBarState();
@@ -383,6 +387,11 @@ class SharedBar extends StatefulWidget {
 class _SharedBarState extends State<SharedBar> {
   final TextEditingController _controller = TextEditingController();
 
+
+  void _onClearSearch() {
+    _controller.clear();
+    widget.onClearSearch(null);
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -401,6 +410,10 @@ class _SharedBarState extends State<SharedBar> {
             decoration: InputDecoration(
               hintText: 'Buscar paciente',
               prefixIcon: const Icon(Icons.search),
+              suffixIcon: _controller.text.isNotEmpty ? IconButton(
+                onPressed: _onClearSearch,
+                icon:  Icon(Icons.close, color: colorScheme.onSurface),
+              ) : null,
               filled: true,
               fillColor: colorScheme.surface,
               contentPadding: const EdgeInsets.symmetric(

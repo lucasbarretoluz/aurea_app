@@ -9,6 +9,7 @@ abstract class PatientState with _$PatientState {
   const factory PatientState.loading() = Loading;
   const factory PatientState.loaded({
     required List<PatientModel> patients,
+    List<PatientModel>? filteredPatients,
     required int total,
     required int page,
     required int limit,

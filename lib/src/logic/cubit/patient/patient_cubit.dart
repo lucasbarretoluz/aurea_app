@@ -6,8 +6,12 @@ import 'patient_state.dart';
 class PatientCubit extends Cubit<PatientState> {
   final PatientRepository _repository = PatientRepository();
   int? _currentClinicId;
+  String? _currentSearch;
 
   PatientCubit() : super(const PatientState.initial());
+
+  List<PatientModel> filteredPatients = [];
+  List<PatientModel> patients = [];
 
   Future<void> loadPatients({
     int page = 1,
@@ -28,38 +32,38 @@ class PatientCubit extends Cubit<PatientState> {
         clinicId: clinicId,
       );
 
-      if (loadMore && state.toString().startsWith('PatientState.loaded')) {
-        try {
-          final currentState = state as dynamic;
-          final currentPatients = (currentState.patients as List).cast<PatientModel>();
-          final updatedPatients = <PatientModel>[
-            ...currentPatients,
-            ...response.patients,
-          ];
-          emit(PatientState.loaded(
+      if (loadMore && state is Loaded) {
+        final currentState = state as Loaded;
+        final updatedPatients = <PatientModel>[
+          ...currentState.patients,
+          ...response.patients,
+        ];
+        
+        patients = updatedPatients;
+        
+        emit(
+          PatientState.loaded(
             patients: updatedPatients,
+            filteredPatients: currentState.filteredPatients,
             total: response.total,
             page: response.page,
             limit: response.limit,
             hasMore: response.page < response.totalPages,
-          ));
-        } catch (_) {
-          emit(PatientState.loaded(
-            patients: response.patients,
-            total: response.total,
-            page: response.page,
-            limit: response.limit,
-            hasMore: response.page < response.totalPages,
-          ));
-        }
+          ),
+        );
       } else {
-        emit(PatientState.loaded(
-          patients: response.patients,
-          total: response.total,
-          page: response.page,
-          limit: response.limit,
-          hasMore: response.page < response.totalPages,
-        ));
+        patients = response.patients;
+        
+        emit(
+          PatientState.loaded(
+            patients: response.patients,
+            filteredPatients: null,
+            total: response.total,
+            page: response.page,
+            limit: response.limit,
+            hasMore: response.page < response.totalPages,
+          ),
+        );
       }
     } catch (e) {
       emit(PatientState.error(e.toString()));
@@ -67,24 +71,92 @@ class PatientCubit extends Cubit<PatientState> {
   }
 
   Future<void> loadMore() async {
-    if (state.toString().startsWith('PatientState.loaded')) {
-      try {
-        final currentState = state as dynamic;
-        final hasMore = currentState.hasMore as bool;
-        final page = currentState.page as int;
-        final limit = currentState.limit as int;
-        
-        if (hasMore) {
+    if (state is Loaded) {
+      final currentState = state as Loaded;
+      
+      if (currentState.hasMore) {
+        if (currentState.filteredPatients != null &&
+            currentState.filteredPatients!.isNotEmpty) {
+          await searchPatients(_currentSearch ?? '', currentState.page + 1);
+        } else {
           await loadPatients(
-            page: page + 1,
-            limit: limit,
+            page: currentState.page + 1,
+            limit: currentState.limit,
             loadMore: true,
             clinicId: _currentClinicId,
           );
         }
-      } catch (_) {
-        
       }
+    }
+  }
+
+  Future<void> searchPatients(String search, [int? page]) async {
+    try {
+      if (state is! Loaded) return;
+      
+      final currentState = state as Loaded;
+      final isLoadMore = page != null;
+      _currentSearch = search;
+      
+      final response = await _repository.getPatients(
+        page: page ?? 1,
+        limit: currentState.limit,
+        clinicId: _currentClinicId,
+        search: search,
+      );
+
+      if (isLoadMore && currentState.filteredPatients != null) {
+        final updatedFilteredPatients = <PatientModel>[
+          ...currentState.filteredPatients!,
+          ...response.patients,
+        ];
+        filteredPatients = updatedFilteredPatients;
+        
+        emit(
+          PatientState.loaded(
+            patients: currentState.patients,
+            filteredPatients: updatedFilteredPatients,
+            total: response.total,
+            page: response.page,
+            limit: response.limit,
+            hasMore: response.page < response.totalPages,
+          ),
+        );
+      } else {
+        filteredPatients = response.patients;
+        
+        emit(
+          PatientState.loaded(
+            patients: currentState.patients,
+            filteredPatients: response.patients,
+            total: response.total,
+            page: response.page,
+            limit: response.limit,
+            hasMore: response.page < response.totalPages,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(PatientState.error(e.toString()));
+    }
+  }
+
+  Future<void> clearFilteredPatients() async {
+    if (state is Loaded) {
+      final currentState = state as Loaded;
+      filteredPatients.clear();
+      _currentSearch = null;
+      
+      emit(
+        PatientState.loaded(
+          patients: currentState.patients,
+          filteredPatients: null,
+          total: currentState.total,
+          page: currentState.page,
+          limit: currentState.limit,
+          hasMore: currentState.hasMore,
+        ),
+      );
     }
   }
 }
