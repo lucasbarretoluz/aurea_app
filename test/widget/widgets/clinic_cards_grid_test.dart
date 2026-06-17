@@ -30,7 +30,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -57,7 +58,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -73,7 +75,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: [],
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -98,7 +101,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -131,7 +135,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -159,7 +164,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -168,12 +174,13 @@ void main() {
       expect(find.text('Descrição customizada'), findsOneWidget);
     });
 
-    testWidgets('should use default subtitle when description is null', (WidgetTester tester) async {
+    testWidgets('should use clinic name when description is null', (WidgetTester tester) async {
       final patients = [
         PatientModel(
           patientId: 1,
           clinicId: 1,
           name: 'John Doe',
+          clinicName: 'Clínica A',
           description: null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
@@ -185,13 +192,14 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
       );
 
-      expect(find.text('Paciente ativo da pasta'), findsOneWidget);
+      expect(find.text('Clínica A'), findsOneWidget);
     });
   });
 }

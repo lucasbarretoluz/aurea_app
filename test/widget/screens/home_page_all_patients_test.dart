@@ -1,7 +1,7 @@
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
-import 'package:aurea_app/src/presentation/screens/home/home_page.dart';
+import 'package:aurea_app/src/presentation/screens/home/widgets/all_patients_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -142,9 +142,9 @@ void main() {
             ),
           ),
           GoRoute(
-            path: '/patients',
+            path: '/all-patients',
             builder: (context, state) => const Scaffold(
-              body: Text('Patients Page'),
+              body: Text('All Patients Page'),
             ),
           ),
         ],
@@ -159,7 +159,7 @@ void main() {
       await tester.tap(find.text('Ver todos'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Patients Page'), findsOneWidget);
+      expect(find.text('All Patients Page'), findsOneWidget);
     });
 
     testWidgets('should hide section when loading', (WidgetTester tester) async {

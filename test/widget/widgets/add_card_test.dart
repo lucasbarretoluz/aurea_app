@@ -11,6 +11,8 @@ void main() {
             body: AddCard(
               width: 200,
               height: 300,
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -28,6 +30,8 @@ void main() {
             body: AddCard(
               width: 200,
               height: 300,
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -43,6 +47,8 @@ void main() {
             body: AddCard(
               width: 200,
               height: 300,
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -59,6 +65,8 @@ void main() {
             body: AddCard(
               width: 200,
               height: 300,
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -74,6 +82,8 @@ void main() {
             body: AddCard(
               width: 200,
               height: 300,
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),

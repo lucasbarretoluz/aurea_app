@@ -23,7 +23,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -51,7 +52,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -76,7 +78,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -102,7 +105,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),
@@ -135,7 +139,8 @@ void main() {
           home: Scaffold(
             body: ClinicCardsGrid(
               patients: patients,
-              category: 'Clínica A',
+              clinicName: 'Clínica A',
+              clinicId: 1,
             ),
           ),
         ),

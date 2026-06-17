@@ -313,7 +313,7 @@ void main() {
         expect(rejectedError, isA<NoInternetConnectionException>());
       });
 
-      test('should convert badCertificate type to InternalServerErrorException', () {
+      test('should convert badCertificate type to BadCertificateException', () {
         final dioError = DioException(
           requestOptions: requestOptions,
           type: DioExceptionType.badCertificate,
@@ -331,7 +331,7 @@ void main() {
         interceptor.onError(dioError, handler);
 
         expect(rejectCalled, true);
-        expect(rejectedError, isA<InternalServerErrorException>());
+        expect(rejectedError, isA<BadCertificateException>());
       });
 
       test('should convert connectionError type to NoInternetConnectionException', () {
