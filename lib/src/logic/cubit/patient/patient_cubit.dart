@@ -159,4 +159,32 @@ class PatientCubit extends Cubit<PatientState> {
       );
     }
   }
+
+  void removePatient(int patientId) {
+    if (state is! Loaded) return;
+
+    final currentState = state as Loaded;
+    final updatedPatients =
+        currentState.patients
+            .where((patient) => patient.patientId != patientId)
+            .toList();
+    final updatedFiltered =
+        currentState.filteredPatients
+            ?.where((patient) => patient.patientId != patientId)
+            .toList();
+
+    patients = updatedPatients;
+    filteredPatients = updatedFiltered ?? [];
+
+    emit(
+      PatientState.loaded(
+        patients: updatedPatients,
+        filteredPatients: updatedFiltered,
+        total: currentState.total > 0 ? currentState.total - 1 : 0,
+        page: currentState.page,
+        limit: currentState.limit,
+        hasMore: currentState.hasMore,
+      ),
+    );
+  }
 }

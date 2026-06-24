@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../data/models/exceptions/exceptions.dart';
+import '../../../data/models/patient/patient_photo_model.dart';
 import '../../../data/repository/patient_photo_repository.dart';
 
 part 'patient_photo_state.dart';
@@ -9,14 +10,20 @@ part 'patient_photo_cubit.freezed.dart';
 
 class PatientPhotoCubit extends Cubit<PatientPhotoState> {
   final PatientPhotoRepository _repository = PatientPhotoRepository();
+  String? _profilePhotoFallback;
 
   PatientPhotoCubit() : super(const PatientPhotoState.initial());
 
-  Future<void> loadPhotos(int patientId) async {
+  Future<void> loadPhotos(int patientId, {String? profilePhotoUrl}) async {
+    if (profilePhotoUrl != null && profilePhotoUrl.isNotEmpty) {
+      _profilePhotoFallback = profilePhotoUrl;
+    }
+
     emit(const PatientPhotoState.loading());
     try {
       final photoList = await _repository.getPatientPhotos(patientId: patientId);
-      emit(PatientPhotoState.loaded(urls: photoList.urls));
+      final photos = _mergeProfilePhoto(photoList.photos);
+      emit(PatientPhotoState.loaded(photos: photos));
     } on RepositoryException catch (e) {
       emit(PatientPhotoState.error(message: e.message));
     } catch (e) {
@@ -34,12 +41,53 @@ class PatientPhotoCubit extends Cubit<PatientPhotoState> {
         patientId: patientId,
         imageFile: imageFile,
       );
-      await loadPhotos(patientId);
+      await loadPhotos(patientId, profilePhotoUrl: _profilePhotoFallback);
     } on RepositoryException catch (e) {
       emit(PatientPhotoState.error(message: e.message));
     } catch (e) {
       emit(PatientPhotoState.error(message: 'Erro ao enviar foto'));
     }
+  }
+
+  Future<void> deletePhoto({
+    required int patientId,
+    required PatientPhotoItem photo,
+  }) async {
+    emit(const PatientPhotoState.deleting());
+    try {
+      await _repository.deletePatientPhoto(
+        patientId: patientId,
+        path: photo.path,
+        url: photo.url,
+      );
+      await loadPhotos(patientId, profilePhotoUrl: _profilePhotoFallback);
+    } on RepositoryException catch (e) {
+      emit(PatientPhotoState.error(message: e.message));
+      await loadPhotos(patientId, profilePhotoUrl: _profilePhotoFallback);
+    } catch (e) {
+      emit(const PatientPhotoState.error(message: 'Erro ao excluir foto'));
+      await loadPhotos(patientId, profilePhotoUrl: _profilePhotoFallback);
+    }
+  }
+
+  List<PatientPhotoItem> _mergeProfilePhoto(List<PatientPhotoItem> photos) {
+    final fallback = _profilePhotoFallback;
+    if (fallback == null || fallback.isEmpty) {
+      return photos;
+    }
+
+    if (photos.any((photo) => photo.url == fallback)) {
+      return photos;
+    }
+
+    return [
+      PatientPhotoItem(
+        url: fallback,
+        path: PatientPhotoItem.pathFromFirebaseUrl(fallback),
+        type: 'profile',
+      ),
+      ...photos,
+    ];
   }
 
   Future<void> uploadMultiplePhotos({
@@ -74,7 +122,7 @@ class PatientPhotoCubit extends Cubit<PatientPhotoState> {
           photoUrls: photoUrls,
         ));
       } else {
-        emit(const PatientPhotoState.loaded(urls: []));
+        emit(const PatientPhotoState.loaded(photos: []));
       }
     } on RepositoryException catch (e) {
       emit(PatientPhotoState.error(message: e.message));

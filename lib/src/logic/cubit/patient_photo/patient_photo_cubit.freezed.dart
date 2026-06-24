@@ -142,14 +142,14 @@ String toString() {
 
 
 class Loaded implements PatientPhotoState {
-  const Loaded({required final  List<String> urls}): _urls = urls;
+  const Loaded({required final  List<PatientPhotoItem> photos}): _photos = photos;
   
 
- final  List<String> _urls;
- List<String> get urls {
-  if (_urls is EqualUnmodifiableListView) return _urls;
+ final  List<PatientPhotoItem> _photos;
+ List<PatientPhotoItem> get photos {
+  if (_photos is EqualUnmodifiableListView) return _photos;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_urls);
+  return EqualUnmodifiableListView(_photos);
 }
 
 
@@ -163,16 +163,16 @@ $LoadedCopyWith<Loaded> get copyWith => _$LoadedCopyWithImpl<Loaded>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._urls, _urls));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._photos, _photos));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_urls));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_photos));
 
 @override
 String toString() {
-  return 'PatientPhotoState.loaded(urls: $urls)';
+  return 'PatientPhotoState.loaded(photos: $photos)';
 }
 
 
@@ -183,7 +183,7 @@ abstract mixin class $LoadedCopyWith<$Res> implements $PatientPhotoStateCopyWith
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) = _$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<String> urls
+ List<PatientPhotoItem> photos
 });
 
 
@@ -200,15 +200,47 @@ class _$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of PatientPhotoState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? urls = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? photos = null,}) {
   return _then(Loaded(
-urls: null == urls ? _self._urls : urls // ignore: cast_nullable_to_non_nullable
-as List<String>,
+photos: null == photos ? _self._photos : photos // ignore: cast_nullable_to_non_nullable
+as List<PatientPhotoItem>,
   ));
 }
 
 
 }
+
+/// @nodoc
+
+
+class Deleting implements PatientPhotoState {
+  const Deleting();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Deleting);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'PatientPhotoState.deleting()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 

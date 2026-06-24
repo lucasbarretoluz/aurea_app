@@ -25,6 +25,24 @@ class ClinicCubit extends Cubit<ClinicState> {
     }
   }
 
+  Future<void> createClinic(String name) async {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) {
+      emit(const ClinicState.error(message: 'Informe o nome da clínica'));
+      return;
+    }
+
+    emit(const ClinicState.loading());
+    try {
+      await _repository.createClinic(name: trimmed);
+      await loadClinics();
+    } on RepositoryException catch (e) {
+      emit(ClinicState.error(message: e.message));
+    } catch (e) {
+      emit(const ClinicState.error(message: 'Erro ao criar clínica'));
+    }
+  }
+
   Future<void> loadClinicById(int clinicId) async {
     emit(const ClinicState.loading());
     try {
@@ -42,25 +60,60 @@ class ClinicCubit extends Cubit<ClinicState> {
     required PatientModel patient,
   }) {
     final currentState = state;
-    final stateString = currentState.toString();
-    if (stateString.contains('loaded') && stateString.contains('clinics')) {
-      try {
-        final loadedState = currentState as dynamic;
-        final clinics = loadedState.clinics as List<ClinicModel>;
-        
-        final updatedClinics = clinics.map((clinic) {
+    if (currentState is! _Loaded) {
+      throw RepositoryException('Erro ao adicionar paciente à clínica');
+    }
+
+    final updatedClinics =
+        currentState.clinics.map((clinic) {
           if (clinic.clinicId == clinicId) {
-            final updatedPatients = [patient, ...clinic.patients];
+            return clinic.copyWith(patients: [patient, ...clinic.patients]);
+          }
+          return clinic;
+        }).toList();
+
+    emit(ClinicState.loaded(clinics: updatedClinics));
+  }
+
+  void removePatientFromClinic({
+    required int clinicId,
+    required int patientId,
+  }) {
+    final currentState = state;
+    if (currentState is! _Loaded) return;
+
+    final updatedClinics =
+        currentState.clinics.map((clinic) {
+          if (clinic.clinicId == clinicId) {
+            final updatedPatients =
+                clinic.patients
+                    .where((patient) => patient.patientId != patientId)
+                    .toList();
             return clinic.copyWith(patients: updatedPatients);
           }
           return clinic;
         }).toList();
-        
-        emit(ClinicState.loaded(clinics: updatedClinics));
-      } catch (e) {
-        rethrow;
-      }
-    }
-    throw RepositoryException('Erro ao adicionar paciente à clínica');
+
+    emit(ClinicState.loaded(clinics: updatedClinics));
+  }
+}
+
+extension ClinicStateX on ClinicState {
+  bool get isInitialOrLoading => this is _Initial || this is _Loading;
+
+  bool get shouldReload =>
+      this is _Initial || this is _Error;
+
+  String? get errorMessage {
+    final state = this;
+    if (state is _Error) return state.message;
+    return null;
+  }
+
+  List<ClinicModel>? get clinicsOrNull {
+    final state = this;
+    if (state is _Loaded) return state.clinics;
+    if (state is _ClinicLoaded) return [state.clinic];
+    return null;
   }
 }

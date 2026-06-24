@@ -1,0 +1,4 @@
+enum LineOrientation {
+  vertical,
+  horizontal,
+}

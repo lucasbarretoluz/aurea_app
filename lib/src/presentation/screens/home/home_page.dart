@@ -1,7 +1,9 @@
 import 'package:aurea_app/src/data/models/clinic/clinic_model.dart';
 import 'package:aurea_app/src/logic/cubit/clinic/clinic_cubit.dart';
 import 'package:aurea_app/src/logic/cubit/patient/patient_cubit.dart';
+import 'package:aurea_app/src/logic/cubit/patient/patient_state.dart';
 import 'package:aurea_app/src/presentation/screens/home/widgets/all_patients_section.dart';
+import 'package:aurea_app/src/presentation/screens/home/widgets/empty_clinic_state.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_cards_grid.dart';
 import 'package:aurea_app/src/presentation/widgets/clinic/clinic_tab_bar.dart';
 import 'package:aurea_app/src/presentation/widgets/shimmer/shimmer_rectangle.dart';
@@ -16,47 +18,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final ClinicCubit _clinicCubit;
-
   @override
   void initState() {
     super.initState();
-    _clinicCubit = ClinicCubit()..loadClinics();
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final patientCubit = context.read<PatientCubit>();
-      final stateString = patientCubit.state.toString();
 
-      if (stateString.startsWith('PatientState.initial')) {
-        patientCubit.loadPatients(page: 1, limit: 5);
-      } else if (stateString.startsWith('PatientState.loaded')) {
-        try {
-          final loadedState = patientCubit.state as dynamic;
-          final limit = loadedState.limit as int;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final clinicCubit = context.read<ClinicCubit>();
+      if (clinicCubit.state.shouldReload) {
+        clinicCubit.loadClinics();
+      }
+
+      final patientCubit = context.read<PatientCubit>();
+      final patientState = patientCubit.state;
+
+      switch (patientState) {
+        case Initial():
+          patientCubit.loadPatients(page: 1, limit: 5);
+        case Loaded(:final limit):
           if (limit < 5) {
             patientCubit.loadPatients(page: 1, limit: 5);
           }
-        } catch (_) {
+        case Error():
           patientCubit.loadPatients(page: 1, limit: 5);
-        }
-      } else if (stateString.startsWith('PatientState.error')) {
-        patientCubit.loadPatients(page: 1, limit: 5);
+        default:
+          break;
       }
     });
   }
 
   @override
-  void dispose() {
-    _clinicCubit.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _clinicCubit,
-      child: const HomePageView(),
-    );
+    return const HomePageView();
   }
 }
 
@@ -74,79 +66,68 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicCubit, ClinicState>(
       builder: (context, clinicState) {
-        if (clinicState.toString().startsWith('ClinicState.initial') ||
-            clinicState.toString().startsWith('ClinicState.loading')) {
-          return ShimmerRectangle(
+        if (clinicState.isInitialOrLoading) {
+          return const ShimmerRectangle(
             height: double.infinity,
             width: double.infinity,
           );
         }
 
-        if (clinicState.toString().startsWith('ClinicState.error')) {
-          try {
-            final errorState = clinicState as dynamic;
-                      return Center(
-                        child: Text(
-                          'Erro: ${errorState.message ?? "Erro desconhecido"}',
-                        ),
-                      );
-                    } catch (_) {
-                      return const Center(
-                        child: Text('Erro ao carregar dados'),
-                      );
-                    }
-                  }
-
-        List<ClinicModel> clinics = [];
-        if (clinicState.toString().startsWith('ClinicState.loaded')) {
-          try {
-            final loadedState = clinicState as dynamic;
-            if (loadedState.clinics != null) {
-              clinics = loadedState.clinics as List<ClinicModel>;
-            }
-          } catch (_) {}
+        final errorMessage = clinicState.errorMessage;
+        if (errorMessage != null) {
+          return Center(child: Text('Erro: $errorMessage'));
         }
 
-        final List<String> tabs = clinics.map((c) => c.name).toList();
+        final clinics = clinicState.clinicsOrNull;
+        if (clinics == null) {
+          return const Center(child: Text('Erro ao carregar clínicas'));
+        }
 
-                  if (clinics.isEmpty) {
-                    return const Center(
-                      child: Text('Nenhuma clínica encontrada'),
-                    );
-                  }
-
-                  final selectedClinic =
-                      _selectedTabIndex < clinics.length
-                          ? clinics[_selectedTabIndex]
-                          : null;
-
-                  if (selectedClinic == null) {
-                    return const Center(child: Text('Clínica não encontrada'));
-                  }
-
-        return Column(
-          children: [
-            ClinicTabBar(
-              tabs: tabs,
-              selectedIndex: _selectedTabIndex,
-              onTabSelected: (index) {
-                setState(() {
-                  _selectedTabIndex = index;
-                });
-              },
-            ),
-            SizedBox(
-              height: 300,
-              child: ClinicCardsGrid(
-                    patients: selectedClinic.patients,
-                    clinicName: selectedClinic.name,
-                    clinicId: selectedClinic.clinicId,
-              ),
-            ),
-            const AllPatientsSection(),
-          ],
-        );
+        return _buildHomeContent(context, clinics);
       },
+    );
+  }
+
+  Widget _buildHomeContent(BuildContext context, List<ClinicModel> clinics) {
+    final tabs = clinics.map((clinic) => clinic.name).toList();
+
+    if (clinics.isEmpty) {
+      return EmptyClinicState(
+        isLoading: false,
+        onCreateClinic: (name) async {
+          await context.read<ClinicCubit>().createClinic(name);
+        },
+      );
+    }
+
+    final selectedClinic =
+        _selectedTabIndex < clinics.length ? clinics[_selectedTabIndex] : null;
+
+    if (selectedClinic == null) {
+      return const Center(child: Text('Clínica não encontrada'));
+    }
+
+    return Column(
+      children: [
+        ClinicTabBar(
+          tabs: tabs,
+          selectedIndex: _selectedTabIndex,
+          onTabSelected: (index) {
+            setState(() {
+              _selectedTabIndex = index;
+            });
+          },
+        ),
+        SizedBox(
+          height: 300,
+          child: ClinicCardsGrid(
+            patients: selectedClinic.patients,
+            clinicName: selectedClinic.name,
+            clinicId: selectedClinic.clinicId,
+          ),
+        ),
+        const AllPatientsSection(),
+      ],
     );
   }
 }

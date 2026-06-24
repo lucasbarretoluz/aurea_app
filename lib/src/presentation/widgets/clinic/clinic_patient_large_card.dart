@@ -1,7 +1,6 @@
-import 'package:aurea_app/src/core/enums/gender_enum.dart';
 import 'package:aurea_app/src/core/helpers/string_capitalize_helper.dart';
 import 'package:aurea_app/src/data/models/patient/patient_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:aurea_app/src/presentation/widgets/patient/patient_photo_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,9 +30,10 @@ class ClinicPatientLargeCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Container(
-              color: Colors.grey[400],
-              child: _buildImage(),
+            PatientPhotoThumbnail(
+              photoUrl: patient.profilePhotoUrl,
+              placeholderIconSize: 56,
+              placeholderBackgroundColor: Colors.grey.shade400,
             ),
             Positioned(
               left: 0,
@@ -68,47 +68,4 @@ class ClinicPatientLargeCard extends StatelessWidget {
       ),
     );
   }
-
-  String _getDefaultImage() {
-    if (patient.gender == GenderEnum.female) {
-      return 'assets/images/demo-woman.png';
-    } else if (patient.gender == GenderEnum.male) {
-      return 'assets/images/demo-man.png';
-    }
-    return 'assets/images/demo-woman.png';
-  }
-
-  Widget _buildImage() {
-    if (patient.profilePhotoUrl != null &&
-        patient.profilePhotoUrl!.isNotEmpty) {
-      return CachedNetworkImage(
-        imageUrl: patient.profilePhotoUrl!,
-        fit: BoxFit.cover,
-        fadeInDuration: Duration.zero,
-        fadeOutDuration: Duration.zero,
-        useOldImageOnUrlChange: true,
-        placeholder: (context, url) => Container(
-          color: Colors.grey[400],
-        ),
-        errorWidget: (context, url, error) {
-          return Image.asset(
-            _getDefaultImage(),
-            fit: BoxFit.cover,
-          );
-        },
-      );
-    }
-
-    return Image.asset(
-      _getDefaultImage(),
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Container(
-          color: Colors.grey[400],
-          child: const Icon(Icons.person, size: 80, color: Colors.white70),
-        );
-      },
-    );
-  }
 }
-

@@ -1,0 +1,4 @@
+enum PhotoViewMode {
+  original,
+  planning,
+}

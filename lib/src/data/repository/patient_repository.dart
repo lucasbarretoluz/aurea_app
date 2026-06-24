@@ -35,5 +35,23 @@ class PatientRepository {
       throw RepositoryException('Erro ao buscar pacientes: $e');
     }
   }
+
+  Future<void> deletePatient(int patientId) async {
+    try {
+      final response = await _provider.deletePatient(patientId: patientId);
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return;
+      }
+
+      throw RepositoryException('Erro ao excluir paciente');
+    } on DioException catch (e) {
+      throw RepositoryException(
+        e.response?.data?['message'] ?? 'Erro ao excluir paciente',
+      );
+    } catch (e) {
+      throw RepositoryException('Erro ao excluir paciente: $e');
+    }
+  }
 }
 

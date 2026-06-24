@@ -47,5 +47,24 @@ class ClinicRepository {
       throw RepositoryException('Erro ao buscar clínica: $e');
     }
   }
+
+  Future<ClinicModel> createClinic({required String name}) async {
+    try {
+      final response = await _provider.createClinic(name: name);
+
+      if (response.statusCode == 200 && response.data != null) {
+        return ClinicModel.fromJson(response.data as Map<String, dynamic>);
+      }
+
+      throw RepositoryException('Erro ao criar clínica');
+    } on DioException catch (e) {
+      throw RepositoryException(
+        e.response?.data?['message'] ?? 'Erro ao criar clínica',
+      );
+    } catch (e) {
+      if (e is RepositoryException) rethrow;
+      throw RepositoryException('Erro ao criar clínica: $e');
+    }
+  }
 }
 

@@ -1,7 +1,15 @@
+import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
 import 'package:flutter/material.dart';
 
 class EmptyPatientPhotosView extends StatefulWidget {
-  const EmptyPatientPhotosView({super.key});
+  final VoidCallback onAddPhoto;
+  final bool isUploading;
+
+  const EmptyPatientPhotosView({
+    super.key,
+    required this.onAddPhoto,
+    this.isUploading = false,
+  });
 
   @override
   State<EmptyPatientPhotosView> createState() => _EmptyPatientPhotosViewState();
@@ -41,11 +49,10 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -55,7 +62,7 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
             colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
           ],
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(50),
           bottomRight: Radius.circular(50),
         ),
@@ -77,8 +84,8 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            width: 200,
-                            height: 200,
+                            width: 160,
+                            height: 160,
                             decoration: BoxDecoration(
                               gradient: RadialGradient(
                                 colors: [
@@ -94,8 +101,8 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
                             ),
                           ),
                           Container(
-                            width: 160,
-                            height: 160,
+                            width: 120,
+                            height: 120,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -111,73 +118,16 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
                                   color: colorScheme.primary.withValues(
                                     alpha: 0.25,
                                   ),
-                                  blurRadius: 30,
-                                  spreadRadius: 5,
-                                  offset: const Offset(0, 15),
+                                  blurRadius: 24,
+                                  spreadRadius: 4,
+                                  offset: const Offset(0, 12),
                                 ),
                               ],
                             ),
                             child: Icon(
                               Icons.photo_library_outlined,
-                              size: 70,
+                              size: 52,
                               color: colorScheme.primary.withValues(alpha: 0.9),
-                            ),
-                          ),
-                          Positioned(
-                            top: 10,
-                            right: 10,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    colorScheme.tertiary,
-                                    colorScheme.tertiaryContainer,
-                                  ],
-                                ),
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: colorScheme.tertiary.withValues(
-                                      alpha: 0.5,
-                                    ),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 6),
-                                  ),
-                                ],
-                              ),
-                              child: Icon(
-                                Icons.add_circle_outline,
-                                size: 22,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 15,
-                            left: 15,
-                            child: Container(
-                              width: 32,
-                              height: 32,
-                              decoration: BoxDecoration(
-                                color: colorScheme.secondary,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: colorScheme.secondary.withValues(
-                                      alpha: 0.4,
-                                    ),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Icon(
-                                Icons.image_outlined,
-                                size: 18,
-                                color: Colors.white,
-                              ),
                             ),
                           ),
                         ],
@@ -186,32 +136,42 @@ class _EmptyPatientPhotosViewState extends State<EmptyPatientPhotosView>
                   );
                 },
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 28),
               Text(
                 'Nenhuma foto encontrada',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: colorScheme.onSurface,
                   fontFamily: 'Montserrat',
-                  letterSpacing: -0.8,
-                  height: 1.2,
+                  letterSpacing: -0.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 16),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: Text(
-                  'Este paciente ainda não possui fotos cadastradas. Adicione fotos para começar o planejamento.',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: colorScheme.onSurface.withValues(alpha: 0.7),
-                    fontFamily: 'Montserrat',
-                    height: 1.6,
-                  ),
-                  textAlign: TextAlign.center,
+              const SizedBox(height: 10),
+              Text(
+                'Adicione fotos para começar o planejamento de sorriso.',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
+                  fontFamily: 'Montserrat',
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: LoadingButton(
+                  text: 'Adicionar foto',
+                  isLoading: widget.isUploading,
+                  isDisabled: widget.isUploading,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  height: 48,
+                  borderRadius: 24,
+                  onPressed: widget.onAddPhoto,
                 ),
               ),
             ],

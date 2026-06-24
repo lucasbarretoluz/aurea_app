@@ -23,5 +23,16 @@ class ClinicProvider {
       throw ProviderException(e.toString());
     }
   }
+
+  Future<Response<dynamic>> createClinic({required String name}) async {
+    try {
+      final response = await _api.dio.post(_path, data: {'name': name});
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
 }
 

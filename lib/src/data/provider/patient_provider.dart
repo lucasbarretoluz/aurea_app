@@ -29,5 +29,14 @@ class PatientProvider {
       throw ProviderException(e.toString());
     }
   }
+
+  Future<Response<dynamic>> deletePatient({required int patientId}) async {
+    try {
+      var response = await _api.dio.delete('$_path/$patientId');
+      return response;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
 }
 

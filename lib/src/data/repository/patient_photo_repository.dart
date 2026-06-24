@@ -97,5 +97,31 @@ class PatientPhotoRepository {
       throw RepositoryException('Erro ao buscar fotos do paciente: $e');
     }
   }
+
+  Future<void> deletePatientPhoto({
+    required int patientId,
+    required String path,
+    required String url,
+  }) async {
+    try {
+      final response = await _provider.deletePatientPhoto(
+        patientId: patientId,
+        path: path,
+        url: url,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return;
+      }
+
+      throw RepositoryException('Erro ao excluir foto');
+    } on DioException catch (e) {
+      throw RepositoryException(
+        e.response?.data?['message'] ?? 'Erro ao excluir foto',
+      );
+    } catch (e) {
+      throw RepositoryException('Erro ao excluir foto: $e');
+    }
+  }
 }
 

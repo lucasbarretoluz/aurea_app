@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import '../api/api.dart';
@@ -22,7 +21,7 @@ class PatientPhotoProvider {
       });
 
       var response = await _api.dio.post(
-        '/patients/$patientId/photos',
+        '/patients/$patientId/photo',
         data: formData,
         options: Options(
           headers: {
@@ -46,14 +45,11 @@ class PatientPhotoProvider {
   }) async {
     try {
       final formData = FormData();
-      final List<int> photoTypes = [];
-      
+
       for (var i = 0; i < imageFiles.length; i++) {
         final file = imageFiles[i];
         final fileName = file.path.split('/').last;
-        final isCover = i == coverImageIndex;
-        final photoType = isCover ? 1 : 0;
-        
+
         formData.files.add(
           MapEntry(
             'photos',
@@ -63,13 +59,13 @@ class PatientPhotoProvider {
             ),
           ),
         );
-        
-        photoTypes.add(photoType);
       }
 
       formData.fields.add(MapEntry('namePatient', namePatient));
       formData.fields.add(MapEntry('clinicId', clinicId.toString()));
-      formData.fields.add(MapEntry('profilePhotoIndex', jsonEncode(photoTypes)));
+      formData.fields.add(
+        MapEntry('profilePhotoIndex', (coverImageIndex ?? 0).toString()),
+      );
       
       var response = await _api.dio.post(
         '/patients/photos/multiple',
@@ -94,6 +90,27 @@ class PatientPhotoProvider {
   }) async {
     try {
       var response = await _api.dio.get('/patients/$patientId/photos');
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
+
+  Future<Response<dynamic>> deletePatientPhoto({
+    required int patientId,
+    required String path,
+    required String url,
+  }) async {
+    try {
+      var response = await _api.dio.delete(
+        '/patients/$patientId/photos',
+        data: {
+          'path': path,
+          'url': url,
+        },
+      );
       return response;
     } on DioException {
       rethrow;

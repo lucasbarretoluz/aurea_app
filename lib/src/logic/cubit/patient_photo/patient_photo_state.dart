@@ -6,8 +6,9 @@ class PatientPhotoState with _$PatientPhotoState {
   const factory PatientPhotoState.loading() = Loading;
   const factory PatientPhotoState.uploading() = Uploading;
   const factory PatientPhotoState.loaded({
-    required List<String> urls,
+    required List<PatientPhotoItem> photos,
   }) = Loaded;
+  const factory PatientPhotoState.deleting() = Deleting;
   const factory PatientPhotoState.uploadSuccess({
     required int patientId,
     required int clinicId,
