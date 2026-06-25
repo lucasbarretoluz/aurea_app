@@ -1,14 +1,13 @@
 import 'package:aurea_app/src/presentation/screens/home/widgets/create_clinic_dialog.dart';
 import 'package:aurea_app/src/presentation/widgets/buttons/loading_button.dart';
+import 'package:aurea_app/src/presentation/widgets/toast/custom_toast.dart';
 import 'package:flutter/material.dart';
 
 class EmptyClinicState extends StatelessWidget {
-  final bool isLoading;
   final Future<void> Function(String name) onCreateClinic;
 
   const EmptyClinicState({
     super.key,
-    required this.isLoading,
     required this.onCreateClinic,
   });
 
@@ -51,20 +50,23 @@ class EmptyClinicState extends StatelessWidget {
             const SizedBox(height: 28),
             LoadingButton(
               text: 'Criar clínica',
-              isLoading: isLoading,
-              isDisabled: isLoading,
               backgroundColor: Colors.black,
               textColor: Colors.white,
               height: 48,
               width: 220,
               borderRadius: 24,
               onPressed: () async {
-                final name = await showDialog<String>(
+                final name = await CreateClinicDialog.show(
                   context: context,
-                  builder: (context) => const CreateClinicDialog(),
+                  onSubmit: onCreateClinic,
                 );
-                if (name != null && name.isNotEmpty) {
-                  await onCreateClinic(name);
+
+                if (name != null && context.mounted) {
+                  showToast(
+                    context: context,
+                    title: 'Clínica criada com sucesso',
+                    description: name,
+                  );
                 }
               },
             ),

@@ -13,8 +13,10 @@ class ClinicCubit extends Cubit<ClinicState> {
 
   ClinicCubit() : super(const ClinicState.initial());
 
-  Future<void> loadClinics() async {
-    emit(const ClinicState.loading());
+  Future<void> loadClinics({bool showLoading = true}) async {
+    if (showLoading) {
+      emit(const ClinicState.loading());
+    }
     try {
       final clinics = await _repository.getClinics();
       emit(ClinicState.loaded(clinics: clinics));
@@ -25,21 +27,54 @@ class ClinicCubit extends Cubit<ClinicState> {
     }
   }
 
-  Future<void> createClinic(String name) async {
+  Future<ClinicModel> createClinic(String name) async {
     final trimmed = name.trim();
     if (trimmed.isEmpty) {
-      emit(const ClinicState.error(message: 'Informe o nome da clínica'));
-      return;
+      throw RepositoryException('Informe o nome da clínica');
     }
 
-    emit(const ClinicState.loading());
     try {
-      await _repository.createClinic(name: trimmed);
-      await loadClinics();
-    } on RepositoryException catch (e) {
-      emit(ClinicState.error(message: e.message));
+      final clinic = await _repository.createClinic(name: trimmed);
+      await loadClinics(showLoading: false);
+      return clinic;
+    } on RepositoryException {
+      rethrow;
     } catch (e) {
-      emit(const ClinicState.error(message: 'Erro ao criar clínica'));
+      throw RepositoryException('Erro ao criar clínica');
+    }
+  }
+
+  Future<ClinicModel> updateClinic({
+    required int clinicId,
+    required String name,
+  }) async {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) {
+      throw RepositoryException('Informe o nome da clínica');
+    }
+
+    try {
+      final clinic = await _repository.updateClinic(
+        clinicId: clinicId,
+        name: trimmed,
+      );
+      await loadClinics(showLoading: false);
+      return clinic;
+    } on RepositoryException {
+      rethrow;
+    } catch (e) {
+      throw RepositoryException('Erro ao atualizar clínica');
+    }
+  }
+
+  Future<void> deleteClinic(int clinicId) async {
+    try {
+      await _repository.deleteClinic(clinicId: clinicId);
+      await loadClinics(showLoading: false);
+    } on RepositoryException {
+      rethrow;
+    } catch (e) {
+      throw RepositoryException('Erro ao excluir clínica');
     }
   }
 

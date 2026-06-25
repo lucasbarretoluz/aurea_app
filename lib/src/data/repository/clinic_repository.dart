@@ -66,5 +66,49 @@ class ClinicRepository {
       throw RepositoryException('Erro ao criar clínica: $e');
     }
   }
+
+  Future<ClinicModel> updateClinic({
+    required int clinicId,
+    required String name,
+  }) async {
+    try {
+      final response = await _provider.updateClinic(
+        clinicId: clinicId,
+        name: name,
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        return ClinicModel.fromJson(response.data as Map<String, dynamic>);
+      }
+
+      throw RepositoryException('Erro ao atualizar clínica');
+    } on DioException catch (e) {
+      throw RepositoryException(
+        e.response?.data?['message'] ?? 'Erro ao atualizar clínica',
+      );
+    } catch (e) {
+      if (e is RepositoryException) rethrow;
+      throw RepositoryException('Erro ao atualizar clínica: $e');
+    }
+  }
+
+  Future<void> deleteClinic({required int clinicId}) async {
+    try {
+      final response = await _provider.deleteClinic(clinicId: clinicId);
+
+      if (response.statusCode == 200) {
+        return;
+      }
+
+      throw RepositoryException('Erro ao excluir clínica');
+    } on DioException catch (e) {
+      throw RepositoryException(
+        e.response?.data?['message'] ?? 'Erro ao excluir clínica',
+      );
+    } catch (e) {
+      if (e is RepositoryException) rethrow;
+      throw RepositoryException('Erro ao excluir clínica: $e');
+    }
+  }
 }
 

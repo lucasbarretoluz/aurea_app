@@ -13,6 +13,7 @@ import 'package:aurea_app/src/presentation/screens/notification/notification_pag
 import 'package:aurea_app/src/presentation/screens/patients_add/new_or_edit_patient_page.dart';
 import 'package:aurea_app/src/presentation/screens/patients_handle/patients_handle_page.dart';
 import 'package:aurea_app/src/presentation/screens/profile/profile_page.dart';
+import 'package:aurea_app/src/presentation/screens/settings/clinics_management_page.dart';
 import 'package:aurea_app/src/presentation/screens/settings/settings_page.dart';
 import 'package:aurea_app/src/presentation/screens/sing_up/sing_up_page.dart';
 import 'package:aurea_app/src/presentation/screens/support/support_page.dart';
@@ -100,6 +101,10 @@ class AppRouter {
         GoRoute(
           path: '/settings',
           builder: (context, state) => const SettingsPage(),
+        ),
+        GoRoute(
+          path: '/settings/clinics',
+          builder: (context, state) => const ClinicsManagementPage(),
         ),
         GoRoute(
           path: '/all-patients',

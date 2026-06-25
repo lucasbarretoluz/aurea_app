@@ -169,6 +169,18 @@ class _SettingsPageViewState extends State<SettingsPageView> {
             ),
             const SizedBox(height: 24),
             SettingSection(
+              title: 'Consultórios',
+              children: [
+                SettingTile(
+                  icon: Icons.local_hospital_outlined,
+                  title: 'Gerenciar consultórios',
+                  subtitle: 'Criar, renomear ou excluir consultórios',
+                  onTap: () => context.push('/settings/clinics'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            SettingSection(
               title: 'Conta',
               children: [
                 SettingTile(

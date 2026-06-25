@@ -4,6 +4,7 @@ class ClinicTabBar extends StatelessWidget {
   final List<String> tabs;
   final int selectedIndex;
   final Function(int) onTabSelected;
+  final Function(int)? onTabLongPress;
   final VoidCallback? onAddPressed;
 
   const ClinicTabBar({
@@ -11,6 +12,7 @@ class ClinicTabBar extends StatelessWidget {
     required this.tabs,
     required this.selectedIndex,
     required this.onTabSelected,
+    this.onTabLongPress,
     this.onAddPressed,
   });
 
@@ -28,6 +30,10 @@ class ClinicTabBar extends StatelessWidget {
                   tabs.length,
                   (index) => GestureDetector(
                     onTap: () => onTabSelected(index),
+                    onLongPress:
+                        onTabLongPress != null
+                            ? () => onTabLongPress!(index)
+                            : null,
                     child: Container(
                       margin: const EdgeInsets.only(right: 24),
                       padding: const EdgeInsets.only(bottom: 8),

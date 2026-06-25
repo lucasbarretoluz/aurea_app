@@ -34,5 +34,33 @@ class ClinicProvider {
       throw ProviderException(e.toString());
     }
   }
+
+  Future<Response<dynamic>> updateClinic({
+    required int clinicId,
+    required String name,
+  }) async {
+    try {
+      final response = await _api.dio.put(
+        '$_path/$clinicId',
+        data: {'name': name},
+      );
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
+
+  Future<Response<dynamic>> deleteClinic({required int clinicId}) async {
+    try {
+      final response = await _api.dio.delete('/clinicsDelete/$clinicId');
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      throw ProviderException(e.toString());
+    }
+  }
 }
 
