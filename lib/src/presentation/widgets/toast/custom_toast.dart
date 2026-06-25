@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-void showToast({
+ToastificationItem showToast({
   required BuildContext context,
   required String title,
   String description = '',
   Alignment alignment = Alignment.topCenter,
   ToastificationType? type = ToastificationType.success,
   Duration autoCloseDuration = const Duration(seconds: 4),
+  ToastificationCallbacks callbacks = const ToastificationCallbacks(),
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   
@@ -42,12 +43,13 @@ void showToast({
       iconData = Icons.check_circle;
   }
 
-  toastification.show(
+  return toastification.show(
     context: context,
     type: type ?? ToastificationType.success,
     style: ToastificationStyle.minimal,
     autoCloseDuration: autoCloseDuration,
     alignment: alignment,
+    callbacks: callbacks,
     showProgressBar: false,
     closeButtonShowType: CloseButtonShowType.none,
     dragToClose: true,
