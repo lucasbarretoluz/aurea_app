@@ -21,7 +21,7 @@ class SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final color = isDestructive ? colorScheme.error : colorScheme.primary;
+    final color = isDestructive ? colorScheme.error : colorScheme.onPrimaryContainer;
 
     return Material(
       color: Colors.transparent,

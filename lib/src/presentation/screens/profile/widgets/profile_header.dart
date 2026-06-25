@@ -1,15 +1,20 @@
+import 'package:aurea_app/src/presentation/screens/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String name;
   final String? photoUrl;
   final bool isPremium;
+  final bool isUploadingPhoto;
+  final VoidCallback? onPhotoTap;
 
   const ProfileHeader({
     super.key,
     required this.name,
     this.photoUrl,
     required this.isPremium,
+    this.isUploadingPhoto = false,
+    this.onPhotoTap,
   });
 
   @override
@@ -21,21 +26,10 @@ class ProfileHeader extends StatelessWidget {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            CircleAvatar(
-              radius: 52,
-              backgroundColor: colorScheme.primaryContainer,
-              backgroundImage:
-                  photoUrl != null && photoUrl!.isNotEmpty
-                      ? NetworkImage(photoUrl!)
-                      : null,
-              child:
-                  photoUrl == null || photoUrl!.isEmpty
-                      ? Icon(
-                        Icons.person,
-                        size: 52,
-                        color: colorScheme.onPrimaryContainer,
-                      )
-                      : null,
+            ProfileAvatar(
+              photoUrl: photoUrl,
+              isUploading: isUploadingPhoto,
+              onTap: onPhotoTap,
             ),
             if (isPremium)
               Positioned(

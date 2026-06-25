@@ -14,6 +14,7 @@ abstract class AuthToken with _$AuthToken {
     @Default('') String email,
     @Default('') String phone,
     @Default(false) bool isPremium,
+    String? photo,
   }) = _AuthToken;
 
   factory AuthToken.fromJson(Map<String, dynamic> json) =>

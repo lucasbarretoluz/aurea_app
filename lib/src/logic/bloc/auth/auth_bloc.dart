@@ -50,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             nameUser: token.nameUser,
             email: token.email,
             phone: token.phone,
+            photo: token.photo,
             isPremium: token.isPremium,
           ),
         );
@@ -82,6 +83,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             nameUser: token.nameUser,
             email: token.email,
             phone: token.phone,
+            photo: token.photo,
             isPremium: token.isPremium,
           ),
         );        
@@ -111,6 +113,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             nameUser: token.nameUser,
             email: token.email,
             phone: token.phone,
+            photo: token.photo,
             isPremium: token.isPremium,
           ),
         );
@@ -142,6 +145,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             nameUser: token.nameUser,
             email: token.email,
             phone: token.phone,
+            photo: token.photo,
             isPremium: token.isPremium,
           ),
         );

@@ -38,7 +38,7 @@ class ProfileInfoTile extends StatelessWidget {
               color: colorScheme.primaryContainer.withValues(alpha: 0.35),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: colorScheme.primary, size: 22),
+            child: Icon(icon, color: colorScheme.onPrimaryContainer, size: 22),
           ),
           const SizedBox(width: 14),
           Expanded(

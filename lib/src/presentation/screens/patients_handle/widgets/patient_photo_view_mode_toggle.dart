@@ -1,7 +1,11 @@
 import 'package:aurea_app/src/presentation/screens/patients_handle/models/photo_view_mode.dart';
+import 'package:aurea_app/src/presentation/widgets/toast/custom_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 class PatientPhotoViewModeToggle extends StatelessWidget {
+  static ToastificationItem? _planningUnavailableToast;
+
   final PhotoViewMode mode;
   final bool planningAvailable;
   final ValueChanged<PhotoViewMode> onChanged;
@@ -13,6 +17,30 @@ class PatientPhotoViewModeToggle extends StatelessWidget {
     required this.onChanged,
   });
 
+  void _showPlanningUnavailableToast(BuildContext context) {
+    final activeToast = _planningUnavailableToast;
+    if (activeToast != null &&
+        toastification.findToastificationItem(activeToast.id) != null) {
+      return;
+    }
+
+    void clearActiveToast(ToastificationItem _) {
+      _planningUnavailableToast = null;
+    }
+
+    _planningUnavailableToast = showToast(
+      context: context,
+      title: 'Sorriso ainda não planejado',
+      description: 'Esta foto ainda não tem planejamento de sorriso.',
+      type: ToastificationType.info,
+      autoCloseDuration: const Duration(seconds: 3),
+      callbacks: ToastificationCallbacks(
+        onAutoCompleteCompleted: clearActiveToast,
+        onDismissed: clearActiveToast,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<PhotoViewMode>(
@@ -22,17 +50,21 @@ class PatientPhotoViewModeToggle extends StatelessWidget {
           label: Text('Original'),
           icon: Icon(Icons.image_outlined, size: 18),
         ),
-        ButtonSegment(
+        const ButtonSegment(
           value: PhotoViewMode.planning,
-          label: const Text('Planejamento'),
-          icon: const Icon(Icons.auto_fix_high_outlined, size: 18),
-          enabled: planningAvailable,
+          label: Text('Planejamento'),
+          icon: Icon(Icons.auto_fix_high_outlined, size: 18),
         ),
       ],
       selected: {mode},
       onSelectionChanged: (selection) {
         if (selection.isEmpty) return;
-        onChanged(selection.first);
+        final selected = selection.first;
+        if (selected == PhotoViewMode.planning && !planningAvailable) {
+          _showPlanningUnavailableToast(context);
+          return;
+        }
+        onChanged(selected);
       },
       style: ButtonStyle(
         visualDensity: VisualDensity.compact,
